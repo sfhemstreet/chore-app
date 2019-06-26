@@ -1,1 +1,1 @@
-UChore! task organizer and assignment tool
+UChore, a task organizer and assignment tool
