@@ -8,7 +8,7 @@ const Navigation = ({isSignedIn, onRouteChange}) => {
         return(
             <nav className="db dt-l w-100 border-box pa3 ph5-l">
                 <Logo 
-                    onClick={() => onRouteChange('home')}
+                    onRouteChange={onRouteChange}
                 />   
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
                     <p  
@@ -27,9 +27,9 @@ const Navigation = ({isSignedIn, onRouteChange}) => {
                         Sign Out
                     </p>
                     <p 
-                        onClick={() => onRouteChange('contact')} 
+                        onClick={() => onRouteChange('about')} 
                         className="link dim dark-gray f6 f5-l dib pointer">
-                        Contact
+                        About
                     </p>
                 </div>
             </nav>  
@@ -39,7 +39,7 @@ const Navigation = ({isSignedIn, onRouteChange}) => {
         return(
             <nav className="db dt-l w-100 border-box pa3 ph5-l">
                 <Logo 
-                    onClick={() => onRouteChange('home')}
+                    onRouteChange={onRouteChange}
                 />  
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
                     <p 
@@ -53,9 +53,9 @@ const Navigation = ({isSignedIn, onRouteChange}) => {
                         Register
                     </p>
                     <p 
-                        onClick={() => onRouteChange('contact')} 
+                        onClick={() => onRouteChange('about')} 
                         className="link dim dark-gray f6 f5-l dib pointer">
-                        Contact
+                        About
                     </p>
                 </div>
             </nav>   
