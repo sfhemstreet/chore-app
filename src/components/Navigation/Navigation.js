@@ -1,5 +1,6 @@
 import React from 'react';
-import Logo from '../Logo/Logo.js'
+import { NavLink } from 'react-router-dom';
+import Logo from '../Logo/Logo.js';
 import './Navigation.css';
 
 const Navigation = ({isSignedIn, onRouteChange}) => {
@@ -11,26 +12,26 @@ const Navigation = ({isSignedIn, onRouteChange}) => {
                     onRouteChange={onRouteChange}
                 />   
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
-                    <p  
-                        onClick={() => onRouteChange('creategroup')} 
+                    <NavLink  
+                        to='/creategroup'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Create Group
-                    </p>
-                    <p 
-                        onClick={() => onRouteChange('groups')} 
+                    </NavLink>
+                    <NavLink 
+                        to='/groups'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Groups
-                    </p>
-                    <p 
-                        onClick={() => onRouteChange('signout')} 
+                    </NavLink>
+                    <NavLink 
+                        to='/signout'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Sign Out
-                    </p>
-                    <p 
-                        onClick={() => onRouteChange('about')} 
+                    </NavLink>
+                    <NavLink 
+                        to='/about'
                         className="link dim dark-gray f6 f5-l dib pointer">
                         About
-                    </p>
+                    </NavLink>
                 </div>
             </nav>  
         )
@@ -42,21 +43,18 @@ const Navigation = ({isSignedIn, onRouteChange}) => {
                     onRouteChange={onRouteChange}
                 />  
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
-                    <p 
-                        onClick={() => onRouteChange('signin')} 
+                    <NavLink to='/signin'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Sign In
-                    </p>
-                    <p 
-                        onClick={() => onRouteChange('register')} 
+                    </NavLink>
+                    <NavLink to='/register'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Register
-                    </p>
-                    <p 
-                        onClick={() => onRouteChange('about')} 
+                    </NavLink>
+                    <NavLink to='/about' 
                         className="link dim dark-gray f6 f5-l dib pointer">
                         About
-                    </p>
+                    </NavLink>
                 </div>
             </nav>   
         )
