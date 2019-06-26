@@ -6,7 +6,7 @@ import logo from './logo.png';
 const Logo = ({onRouteChange}) => {
     return(
         <div 
-            className="db dtc-l v-mid mid-gray link dim w-100 w-25-l tc tl-l mb2 mb0-l">
+            className="db dtc-l v-mid mid-gray link w-100 w-25-l tc tl-l mb2 mb0-l">
             <Tilt 
                 className="Tilt shadow-2  br-100 dib w2 h2 pointer" 
                 options={{ max : 55 }} 
