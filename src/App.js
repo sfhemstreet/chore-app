@@ -1,10 +1,17 @@
 import React from 'react';
 import './App.css';
+import Navigation from './components/Navigation/Navigation.js'
 
 const initialState = {
   route: 'home',
-  user: {},
-  id: '',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    groups: [],
+    rank: '',
+  }
 }
 
 class App extends React.Component {
@@ -13,16 +20,21 @@ class App extends React.Component {
     this.state = initialState;
   }
 
+  onRouteChange = (event) => {
+
+  }
+
   render(){
 
-    /*
-    <Navigation />
-    <Home />
-
-    */
     return(
       <div>
-
+        <Navigation 
+          isSignedIn={this.state.isSignedIn}
+          onRouteChange={this.onRouteChange}
+        />
+        { 
+          
+        }  
       </div>
     )
 
