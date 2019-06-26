@@ -34,6 +34,16 @@ class App extends React.Component {
     this.setState({route: route});
   }
 
+  loadUser = (data) => {
+    this.setState({user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      groups: data.groups,
+      rank: data.rank,
+    }})
+  }
+
   render(){
 
     return(
@@ -59,7 +69,10 @@ class App extends React.Component {
             </div>,
           'signin':
             <div> 
-              <SignIn />
+              <SignIn 
+                loadUser={this.loadUser}
+                onRouteChange={this.onRouteChange}
+              />
             </div>,
           'register':
             <div> 
@@ -81,8 +94,6 @@ class App extends React.Component {
         }  
       </div>
     )
-
-
   }
 
 }
