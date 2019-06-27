@@ -11,7 +11,6 @@ import CreateGroup from './components/CreateGroup/CreateGroup.js';
 import Groups from './components/Groups/Groups.js';
 
 const initialState = {
-  route: 'home',
   isSignedIn: false,
   user: {
     id: '',
@@ -26,23 +25,6 @@ class App extends React.Component {
   constructor(props){
     super(props)
     this.state = initialState;
-  }
-
-  onRouteChange = (route) => {
-    if(route === 'signout'){
-      return this.setState(initialState);
-    }
-    this.setState({route: route});
-  }
-
-  loadUser = (data) => {
-    this.setState({user: {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      groups: data.groups,
-      rank: data.rank,
-    }})
   }
 
   render(){
