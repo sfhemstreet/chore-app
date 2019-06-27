@@ -4,7 +4,7 @@ import Tilt from 'react-tilt';
 import './Logo.css';
 import logo from './logo.png';
 
-const Logo = ({onRouteChange}) => {
+const Logo = () => {
     return(
         <div className="db dtc-l v-mid mid-gray link w-100 w-25-l tc tl-l mb2 mb0-l">
             <Tilt 
@@ -12,7 +12,7 @@ const Logo = ({onRouteChange}) => {
                 options={{ max : 55 }} 
                 style={{ height: 100, width: 100 }} >
                 <NavLink to='/' >
-                <img onClick={() => onRouteChange('home')} className=" br-100"  alt="UChore" src={logo}/> 
+                <img className=" br-100"  alt="UChore" src={logo}/> 
                 </ NavLink>
             </Tilt>
         </div>

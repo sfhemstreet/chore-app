@@ -33,10 +33,13 @@ class Register extends React.Component {
         pattern matches password validation for having 3 of 4 of the following items: 
         lowercase, uppercase, numbers, special characters
         */
+        /*
         const re = new RegExp(/^((?=.*[\d])(?=.*[a-z])(?=.*[A-Z])|(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\d\s])|(?=.*[\d])(?=.*[A-Z])(?=.*[^\w\d\s])|(?=.*[\d])(?=.*[a-z])(?=.*[^\w\d\s])).{7,30}$/gm)
         if(event.target.value.match(re)){
             this.setState({registerPassword: event.target.value});
         }
+        */
+        this.setState({registerPassword: event.target.value});
         
     }
     // SUBMIT
