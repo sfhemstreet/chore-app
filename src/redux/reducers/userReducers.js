@@ -23,8 +23,8 @@ export const signinReducer = (state = userInitialState, action = {}) => {
         case REQUEST_SIGNIN_SUCCESS:
             return Object.assign({}, state, { 
                 auth: 'user', 
-                id: action.payload.id, 
-                name: action.payload.name, 
+                user_id: action.payload.user_id, 
+                username: action.payload.username, 
                 email: action.payload.email, 
                 score: action.payload.score,
                 error: 'none' 

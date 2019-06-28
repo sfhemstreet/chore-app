@@ -1,25 +1,36 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import {requestSignIn} from '../../redux/actions/userActions';
+import {signIn} from '../../redux/actions/userActions';
 
-const mapStateToProps = (state) => {
-    
-    console.log('hello');
-    return {
-        auth: 'user'
-    }
-  }
+
   
-  const mapDispatchToProps = (dispatch) => {
-  return {
-    //onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-    onSumbitSignIn: () => dispatch(requestSignIn())
-  }
-  }
+ 
 
 class SignIn extends React.Component {
     
+    constructor(props){
+        super(props);
+        this.state = {
+            signInEmail: '',
+            signInPassword: '',
+        }
+    }
+
+    // EMAIL & PASSWORD INPUT ONCHANGE 
+    onInputChange = (event) => {
+        const {name, value} = event.target;
+        this.setState({ [name]: value});
+    }
+
+    // SUBMIT HANDLER
+    onSubmitSignIn = (e) => {
+        const { signInEmail, signInPassword } = this.state;
+        const { dispatch } = this.props;
+        if (signInEmail &&  signInPassword) {
+            dispatch(signIn(signInEmail, signInPassword));
+        }
+    }
     
 
     render(){
@@ -35,11 +46,11 @@ class SignIn extends React.Component {
                                     <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                                     <div className="mt3">
                                         <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                                        <input onChange={this.onEmailChange} className="pa2 input-reset ba bg-transparent hover-bg-near-white w-100" type="email" />
+                                        <input onChange={this.onInputChange} className="pa2 input-reset ba bg-transparent hover-bg-near-white w-100" name="signInEmail" type="email" />
                                     </div>
                                     <div className="mv3">
                                         <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                                        <input onChange={this.onPasswordChange} className="b pa2 input-reset ba bg-transparent hover-bg-near-white w-100" type="password" />
+                                        <input onChange={this.onInputChange} className="b pa2 input-reset ba bg-transparent hover-bg-near-white w-100" name="signInPassword" type="password" />
                                     </div>
                                     </fieldset>
                                     <div className="">
@@ -62,4 +73,11 @@ class SignIn extends React.Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+const mapStateToProps = (state) => {
+    return(
+        {}
+    )
+    
+}
+
+export default connect(mapStateToProps)(SignIn);

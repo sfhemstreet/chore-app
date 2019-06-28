@@ -7,25 +7,22 @@ import './Navigation.css';
 import {signOutUser} from '../../redux/actions/userActions';
 
 const mapStateToProps = (state) => {
+    console.log(state)
     return {
-        searchField: state.searchRobots.searchField,
-        robots: state.requestRobots.robots,
-        isPending: state.requestRobots.isPending,
-        error: state.requestRobots.error,
+        auth: state.signinReducer.auth
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-        onRequestRobots: () => dispatch(requestRobots())
+        
     }
 }
 
 
-const Navigation = () => {
-
-    if(false){
+const Navigation = (props) => {
+    const {auth} = props;
+    if(auth === 'user'){
         return(
             <nav className="db dt-l w-100 border-box pa3 ph5-l">
                 <Logo />   

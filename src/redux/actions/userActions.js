@@ -8,31 +8,33 @@ import {REQUEST_SIGNIN_PENDING,
 
 
 // SIGN IN
-export const requestSignIn = () => (dispatch) => {
+export const signIn = (signInEmail, signInPassword) => (dispatch) => {
+    console.log(signInEmail,signInPassword)
     dispatch({ type: REQUEST_SIGNIN_PENDING })
-    fetch('localhost:3000/signin', {
+    fetch('http://localhost:3000/signin', {
         method: 'post',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({
-            // FIX THIS FOR REDUX
-            email: this.props.signInEmail,
-            password: this.props.signInPassword
+            email: signInEmail,
+            password: signInPassword
         })
     })
     .then(response => response.json())
+    //.then(data => console.log(data))
     .then(data => dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data }))
-    .catch(error => dispatch({ type: REQUEST_SIGNIN_FAILED, payload: error}));  
+    .catch(error => dispatch({ type: REQUEST_SIGNIN_FAILED, payload: error}));
+    
 }
 
 // REGISTER
-export const requestRegister = () => (dispatch) => {
+export const register = () => (dispatch) => {
     /* FIX THIS FOR REDUX
     if(!this.state.email || !this.state.name || !this.state.password){
         return console.log('Whatttt');
     }
     */
     dispatch({ type: REQUEST_REGISTER_PENDING })
-    fetch('localhost:3000/register', {
+    fetch('http://localhost:3000/register', {
         method: 'post',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({
