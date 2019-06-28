@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
 import './App.css';
 import Navigation from './components/Navigation/Navigation.js';
@@ -10,38 +11,36 @@ import GuestHome from './components/Home/GuestHome.js';
 import CreateGroup from './components/CreateGroup/CreateGroup.js';
 import Groups from './components/Groups/Groups.js';
 
-const initialState = {
-  isSignedIn: false,
-  user: {
-    id: '',
-    name: '',
-    email: '',
-    groups: [],
-    rank: '',
-  }
+import {requestSignIn} from './redux/actions/userActions.js';
+
+const mapStateToProps = (state) => {
+    
+        console.log('hello');
+    
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        //onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+        onSumbitSignIn: () => dispatch(requestSignIn())
+    }
 }
 
 class App extends React.Component {
-  constructor(props){
-    super(props)
-    this.state = initialState;
-  }
+  
 
   render(){
 
     return(
       <div>
-        <Navigation 
-          isSignedIn={this.state.isSignedIn}
-          onRouteChange={this.onRouteChange}
-        />
+        <Navigation />
         <Switch >
-          <Route exact path='/' render={() => <GuestHome />}/>
-          <Route exact path='/signin' render={() => <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>}/>
-          <Route exact path='/register' render={() => <Register />}/>
-          <Route exact path='/about' render={() => <About />}/>
-          <Route exact path='/creategroup' render={() => <CreateGroup />}/>
-          <Route exact path='/groups' render={() => <Groups />}/>
+          <Route exact path='/'             render={() => <GuestHome />}/>
+          <Route exact path='/signin'       render={() => <SignIn />}/>
+          <Route exact path='/register'     render={() => <Register />}/>
+          <Route exact path='/about'        render={() => <About />}/>
+          <Route exact path='/creategroup'  render={() => <CreateGroup />}/>
+          <Route exact path='/groups'       render={() => <Groups />}/>
         </Switch>
       </div>
     )
@@ -49,4 +48,4 @@ class App extends React.Component {
 
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

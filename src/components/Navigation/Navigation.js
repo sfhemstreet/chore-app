@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom';
 import Logo from '../Logo/Logo.js';
 import './Navigation.css';
 
-const Navigation = ({isSignedIn}) => {
+const Navigation = () => {
 
-    if(isSignedIn){
+    if(true){
         return(
             <nav className="db dt-l w-100 border-box pa3 ph5-l">
                 <Logo />   
