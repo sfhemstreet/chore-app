@@ -23,8 +23,8 @@ export const signinReducer = (state = userInitialState, action = {}) => {
         case REQUEST_SIGNIN_SUCCESS:
             return Object.assign({}, state, { 
                 auth: 'user', 
-                id: action.payload.id, 
-                name: action.payload.name, 
+                user_id: action.payload.user_id, 
+                username: action.payload.username, 
                 email: action.payload.email, 
                 score: action.payload.score,
                 error: 'none' 
@@ -44,6 +44,20 @@ const registerInitialState = {
 
 export const registerReducer = (state = registerInitialState, action = {}) => {
     switch(action.type){
-
+        case REQUEST_REGISTER_PENDING:
+            return Object.assign({}, state, { auth: 'guest' });
+        case REQUEST_REGISTER_SUCCESS:
+            return Object.assign({}, state, { 
+                auth: 'user', 
+                id: action.payload.id, 
+                name: action.payload.name, 
+                email: action.payload.email, 
+                score: action.payload.score,
+                error: 'none' 
+              });
+        case REQUEST_REGISTER_FAILED:
+            return Object.assign({}, state, { error: action.payload , auth: 'guest' });
+        default:
+            return state;
     }
 }

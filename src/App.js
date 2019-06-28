@@ -14,34 +14,54 @@ import Groups from './components/Groups/Groups.js';
 import {requestSignIn} from './redux/actions/userActions.js';
 
 const mapStateToProps = (state) => {
-    
-        console.log('hello');
-    
+    return {
+      auth: state.signinReducer.auth
+    }
+
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        //onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-        onSumbitSignIn: () => dispatch(requestSignIn())
-    }
+  return {
+    //onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+    //onSumbitSignIn: () => dispatch(requestSignIn())
+  }
 }
 
 class App extends React.Component {
-  
+  constructor(props){
+    super(props);
 
-  render(){
-
+  }
+  renderGuestRoutes = () => {
     return(
-      <div>
-        <Navigation />
-        <Switch >
+      <Switch >
           <Route exact path='/'             render={() => <GuestHome />}/>
           <Route exact path='/signin'       render={() => <SignIn />}/>
           <Route exact path='/register'     render={() => <Register />}/>
           <Route exact path='/about'        render={() => <About />}/>
+      </Switch>
+    )
+  }
+
+  renderUserRoutes = () => {
+    return(
+        <Switch>
+          <Route exact path='/'             render={() => <UserHome />}/>
           <Route exact path='/creategroup'  render={() => <CreateGroup />}/>
           <Route exact path='/groups'       render={() => <Groups />}/>
         </Switch>
+    )
+  }
+
+  render(){
+    const {auth} = this.props;
+    return(
+      <div>
+        <Navigation />
+        {auth === 'user' ?
+        this.renderUserRoutes()
+        :
+        this.renderGuestRoutes()}
       </div>
     )
   }
