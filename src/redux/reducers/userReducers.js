@@ -1,6 +1,9 @@
 import {REQUEST_SIGNIN_PENDING,
         REQUEST_SIGNIN_SUCCESS,
-        REQUEST_SIGNIN_FAILED} from '../constants/user_constants.js';
+        REQUEST_SIGNIN_FAILED,
+        REQUEST_REGISTER_PENDING,
+        REQUEST_REGISTER_SUCCESS,
+        REQUEST_REGISTER_FAILED } from '../constants/user_constants.js';
 
 
 const userInitialState = {
@@ -30,5 +33,17 @@ export const signinReducer = (state = userInitialState, action = {}) => {
             return Object.assign({}, state, { error: action.payload , auth: 'guest' });
         default:
             return state;
+    }
+}
+
+const registerInitialState = {
+    name: '',
+    email: '',
+    password: ''
+}
+
+export const registerReducer = (state = registerInitialState, action = {}) => {
+    switch(action.type){
+
     }
 }

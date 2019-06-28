@@ -5,15 +5,16 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, combineReducers} from 'redux';
 import {createLogger} from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
-//import {} from'./redux/reducers';
+import {signinReducer} from'./redux/reducers/userReducers.js';
+//import {getGroupsReducer} from'./redux/reducers/groupReducers.js';
 import 'tachyons';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const logger = createLogger();
-//const rootReducer = combineReducers({ }); // PUT REDUCERS HERE
-const store = createStore(applyMiddleware(thunkMiddleware, logger));
+const rootReducer = signinReducer; //combineReducers({ }); // PUT REDUCERS HERE
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger));
 
 
 ReactDOM.render(

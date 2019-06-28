@@ -1,40 +1,11 @@
 import React from 'react';
+import {NavLink} from 'react-router-dom';
 
 class SignIn extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            signInEmail: '',
-            signInPassword: ''
-        }
-    }
-
-    // EMAIL
-    onEmailChange = (event) => {
-        /*
-        const reEmail = new RegExp(/[a-z\d]+([\.\_]?[a-z\d]+)+@[a-z\d]+(\.[a-z]+)+/igm);
-        if(event.target.value.match(reEmail)){
-            this.setState({signInEmail: event.target.value});
-        }
-        */
-        this.setState({signInEmail: event.target.value});
-    }
-    // PASSWORD 
-    onPasswordChange = (event) => {
-        this.setState({signInPassword: event.target.value});
-    }
-
-    onSubmitSignIn = (event) => {
-        if(!this.state.signInEmail || !this.state.signInPassword){
-            return console.log('Bad Input');
-        }
-        else{
-            console.log('Good Input')
-        }
-    }
+    
 
     render(){
-        const {onRouteChange} = this.props;
+        
         return (
             <div>
                 <div className="center mw5 mw6-ns br3 hidden ba b--black-10 mv4">
@@ -57,9 +28,9 @@ class SignIn extends React.Component {
                                         <input onClick={this.onSubmitSignIn} className="b ph3 pv2 input-reset ba b--black bg-transparent grow hover-bg-near-black hover-white pointer f6 dib" type="submit" value="Sign in"/>
                                     </div>
                                     <div className="lh-copy mt3">
-                                        <p 
-                                            onClick={() => onRouteChange('register')}
-                                            href="#0" className="f6 link dim black db pointer">Register</p>
+                                        <NavLink to='/register' >
+                                        <p className="f6 link dim black db pointer">Register</p>
+                                        </NavLink>
                                         {/*<p href="#0" class="f6 link dim black db">Forgot your password?</p>*/}
                                     </div>
                                 </div>
