@@ -15,15 +15,15 @@ import {requestSignIn} from './redux/actions/userActions.js';
 
 const mapStateToProps = (state) => {
     
-        console.log('hello');
-    
+  //console.log('hello');
+
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        //onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
-        onSumbitSignIn: () => dispatch(requestSignIn())
-    }
+return {
+  //onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+  //onSumbitSignIn: () => dispatch(requestSignIn())
+}
 }
 
 class App extends React.Component {

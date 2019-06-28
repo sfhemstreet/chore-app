@@ -1,7 +1,25 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
+import {requestSignIn} from '../../redux/actions/userActions';
+
+const mapStateToProps = (state) => {
+    
+    console.log('hello');
+    return {
+        auth: 'user'
+    }
+  }
+  
+  const mapDispatchToProps = (dispatch) => {
+  return {
+    //onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+    onSumbitSignIn: () => dispatch(requestSignIn())
+  }
+  }
 
 class SignIn extends React.Component {
+    
     
 
     render(){
@@ -44,4 +62,4 @@ class SignIn extends React.Component {
 
 }
 
-export default SignIn;
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

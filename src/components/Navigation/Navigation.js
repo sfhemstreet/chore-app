@@ -1,11 +1,31 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import Logo from '../Logo/Logo.js';
 import './Navigation.css';
 
+import {signOutUser} from '../../redux/actions/userActions';
+
+const mapStateToProps = (state) => {
+    return {
+        searchField: state.searchRobots.searchField,
+        robots: state.requestRobots.robots,
+        isPending: state.requestRobots.isPending,
+        error: state.requestRobots.error,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value)),
+        onRequestRobots: () => dispatch(requestRobots())
+    }
+}
+
+
 const Navigation = () => {
 
-    if(true){
+    if(false){
         return(
             <nav className="db dt-l w-100 border-box pa3 ph5-l">
                 <Logo />   
@@ -59,5 +79,5 @@ const Navigation = () => {
 
 }
 
-export default Navigation;
+export default connect(mapStateToProps,mapDispatchToProps)(Navigation);
 
