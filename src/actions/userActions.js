@@ -7,8 +7,10 @@ import {REQUEST_SIGNIN_PENDING,
         SIGN_OUT_USER } from '../constants/user_constants.js';
 
 
+
+
 // SIGN IN
-export const signIn = (signInEmail, signInPassword) => (dispatch) => {
+export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
     console.log(signInEmail,signInPassword)
     dispatch({ type: REQUEST_SIGNIN_PENDING })
     fetch('http://localhost:3000/signin', {
@@ -20,8 +22,10 @@ export const signIn = (signInEmail, signInPassword) => (dispatch) => {
         })
     })
     .then(response => response.json())
-    //.then(data => console.log(data))
-    .then(data => dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data }))
+    .then(data => {
+        history.push('/home')
+        dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data })
+    })
     .catch(error => dispatch({ type: REQUEST_SIGNIN_FAILED, payload: error}));
     
 }
@@ -45,12 +49,14 @@ export const register = () => (dispatch) => {
         })
     })
     .then(response => response.json())
-    .then(data => dispatch({ type: REQUEST_REGISTER_SUCCESS, payload: data }))
+    .then(data => {
+        dispatch({ type: REQUEST_REGISTER_SUCCESS, payload: data })
+    })
     .catch(error => dispatch({ type: REQUEST_REGISTER_FAILED, payload: error})); 
     
 }
 
 // SIGN OUT
-export const signOutUser = () => (
-    { type: SIGN_OUT_USER }
-);
+export const signOut = () => (dispatch) => {
+    dispatch({ type: SIGN_OUT_USER });
+};
