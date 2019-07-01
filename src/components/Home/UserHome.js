@@ -1,4 +1,6 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
 class UserHome extends React.Component{
     constructor(props){
@@ -18,4 +20,4 @@ class UserHome extends React.Component{
 
 }
 
-export default UserHome;
+export default withRouter(connect()(UserHome));

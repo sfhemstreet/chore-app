@@ -1,23 +1,19 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import Logo from '../Logo/Logo.js';
 import './Navigation.css';
 
-import {signOutUser} from '../../redux/actions/userActions';
+
 
 const mapStateToProps = (state) => {
-    console.log(state)
+    console.log('NAV',state)
     return {
-        auth: state.signinReducer.auth
+        auth: state.userAccess.auth
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        
-    }
-}
+
 
 
 const Navigation = (props) => {
@@ -38,7 +34,7 @@ const Navigation = (props) => {
                         Groups
                     </NavLink>
                     <NavLink 
-                        to='/signout'
+                        to='/signin'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Sign Out
                     </NavLink>
@@ -76,5 +72,5 @@ const Navigation = (props) => {
 
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Navigation);
+export default withRouter(connect(mapStateToProps)(Navigation));
 

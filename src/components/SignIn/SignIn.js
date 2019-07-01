@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import {signIn} from '../../redux/actions/userActions';
-
+import {signIn, signOut} from '../../actions/userActions';
+import {withRouter} from 'react-router-dom';
 
   
  
@@ -11,10 +11,14 @@ class SignIn extends React.Component {
     
     constructor(props){
         super(props);
+
+        this.props.dispatch(signOut());
+        
         this.state = {
             signInEmail: '',
             signInPassword: '',
         }
+        
     }
 
     // EMAIL & PASSWORD INPUT ONCHANGE 
@@ -28,7 +32,7 @@ class SignIn extends React.Component {
         const { signInEmail, signInPassword } = this.state;
         const { dispatch } = this.props;
         if (signInEmail &&  signInPassword) {
-            dispatch(signIn(signInEmail, signInPassword));
+            dispatch(signIn(signInEmail, signInPassword, this.props.history));
         }
     }
     
@@ -74,10 +78,10 @@ class SignIn extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return(
-        {}
-    )
+    return{
+        auth: state.userAccess.auth
+    }
     
 }
 
-export default connect(mapStateToProps)(SignIn);
+export default withRouter(connect(mapStateToProps)(SignIn));
