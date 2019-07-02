@@ -1,8 +1,12 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
+import {register, signOut} from '../../actions/userActions';
 
 class Register extends React.Component {
     constructor(props){
         super(props)
+        this.props.dispatch(signOut());
         this.state = {
             registerName: '',
             registerEmail: '',
@@ -12,10 +16,13 @@ class Register extends React.Component {
 
     // NAME
     onNameChange = (event) => {
+        /*
         const re = new RegExp(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/igm)
         if(event.target.value.match(re)){
             this.setState({registerName: event.target.value});
         }
+        */
+        this.setState({registerName: event.target.value});
     }
     // EMAIL
     onEmailChange = (event) => {
@@ -44,11 +51,13 @@ class Register extends React.Component {
     }
     // SUBMIT
     onRegisterSubmit = (event) => {
-        if(!this.state.registerEmail || !this.state.registerName || !this.state.registerPassword){
+        const {registerEmail, registerName, registerPassword} = this.state;
+        if(!registerEmail || !registerName || !registerPassword){
             return console.log('Bad Input');
         }
         else{
-            console.log('Good Input')
+            console.log(registerEmail)
+            this.props.dispatch(register(registerName,registerEmail,registerPassword,this.props.history))
         }
         
     }
@@ -90,4 +99,10 @@ class Register extends React.Component {
 
 }
 
-export default Register;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.userAccess.auth 
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(Register));

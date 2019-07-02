@@ -11,7 +11,6 @@ import {REQUEST_SIGNIN_PENDING,
 
 // SIGN IN
 export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
-    console.log(signInEmail,signInPassword)
     dispatch({ type: REQUEST_SIGNIN_PENDING })
     fetch('http://localhost:3000/signin', {
         method: 'post',
@@ -23,36 +22,37 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
     })
     .then(response => response.json())
     .then(data => {
-        history.push('/home')
         dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data })
+        history.push('/home')
     })
-    .catch(error => dispatch({ type: REQUEST_SIGNIN_FAILED, payload: error}));
+    .catch(error => {
+        console.log(error)
+        dispatch({ type: REQUEST_SIGNIN_FAILED, payload: error})}
+    );
     
 }
 
 // REGISTER
-export const register = () => (dispatch) => {
-    /* FIX THIS FOR REDUX
-    if(!this.state.email || !this.state.name || !this.state.password){
-        return console.log('Whatttt');
-    }
-    */
+export const register = (registerName, registerEmail, registerPassword, history) => (dispatch) => {
     dispatch({ type: REQUEST_REGISTER_PENDING })
     fetch('http://localhost:3000/register', {
         method: 'post',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({
-            // FIX THIS FOR REDUX
-            email: this.props.registerEmail,
-            password: this.props.registerPassword,
-            name: this.props.registerName
+            email: registerEmail,
+            password: registerPassword,
+            username: registerName
         })
     })
     .then(response => response.json())
     .then(data => {
         dispatch({ type: REQUEST_REGISTER_SUCCESS, payload: data })
+        history.push('/signin')
     })
-    .catch(error => dispatch({ type: REQUEST_REGISTER_FAILED, payload: error})); 
+    .catch(error => {
+        console.log(error)
+        dispatch({ type: REQUEST_REGISTER_FAILED, payload: error})}
+    ); 
     
 }
 
