@@ -7,7 +7,6 @@ import './Navigation.css';
 
 
 const mapStateToProps = (state) => {
-    console.log('NAV',state)
     return {
         auth: state.userAccess.auth
     }
