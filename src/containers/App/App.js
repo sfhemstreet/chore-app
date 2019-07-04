@@ -12,25 +12,36 @@ import GuestHome from '../../components/Home/GuestHome.js';
 import CreateGroup from '../../components/CreateGroup/CreateGroup.js';
 import Groups from '../../components/Groups/Groups.js';
 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import ProtectedRoute from '../../components/ProtectedRoute';
 
+toast.configure({
+  position:"bottom-center",
+  autoClose:5000,
+  hideProgressBar:false,
+  newestOnTop:false,
+  rtl:false
+})
 
 class App extends React.Component {
   
   render(){
-    console.log('APP STATE',this.props)
+    //console.log('APP STATE',this.props)
     const {auth} = this.props;
     return(
       <div>
         <Navigation />
         <Switch>
           <Route exact path='/'             render={() => <GuestHome  />}/>
-          <Route exact path='/home'         render={() => <UserHome   />}/>
-          <Route exact path='/creategroup'  render={() => <CreateGroup/>}/>
-          <Route exact path='/groups'       render={() => <Groups     />}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/home'         render={() => <UserHome   />}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/creategroup'  render={() => <CreateGroup/>}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/groups'       render={() => <Groups     />}/>
           <Route exact path='/signin'       render={() => <SignIn     />}/>
           <Route exact path='/register'     render={() => <Register   />}/>
           <Route exact path='/about'        render={() => <About      />}/>
         </Switch>
+        <ToastContainer />
       </div>
     )
   }
