@@ -6,7 +6,7 @@ import {REQUEST_SIGNIN_PENDING,
         REQUEST_REGISTER_FAILED,
         SIGN_OUT_USER } from '../constants/user_constants.js';
 
-
+import { toast } from "react-toastify";
 
 
 // SIGN IN
@@ -22,13 +22,27 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
     })
     .then(response => response.json())
     .then(data => {
-        dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data })
-        history.push('/home')
+        console.log(data)
+        if(data.token){
+            dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data })
+            history.push('/home')
+        }
+        else {
+            dispatch({ type: REQUEST_SIGNIN_FAILED, payload: data})
+            toast.error(data, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+                });
+        }
     })
     .catch(error => {
-        console.log(error)
-        dispatch({ type: REQUEST_SIGNIN_FAILED, payload: error})}
-    );
+        console.log(error);
+        dispatch({ type: REQUEST_SIGNIN_FAILED, payload: error})
+    });
     
 }
 
@@ -46,13 +60,41 @@ export const register = (registerName, registerEmail, registerPassword, history)
     })
     .then(response => response.json())
     .then(data => {
-        dispatch({ type: REQUEST_REGISTER_SUCCESS, payload: data })
-        history.push('/signin')
+        if(data.user_id){
+            dispatch({ type: REQUEST_REGISTER_SUCCESS, payload: data });
+            history.push('/signin');
+            toast.success("Registered! You can now sign in.", {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        }
+        else {
+            dispatch({ type: REQUEST_REGISTER_FAILED, payload: data});
+            toast.error(data, {
+                position: "bottom-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        }
     })
     .catch(error => {
-        console.log(error)
-        dispatch({ type: REQUEST_REGISTER_FAILED, payload: error})}
-    ); 
+        dispatch({ type: REQUEST_REGISTER_FAILED, payload: error});
+        toast.error(error, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+            });
+    }); 
     
 }
 

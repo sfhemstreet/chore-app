@@ -20,4 +20,4 @@ class UserHome extends React.Component{
 
 }
 
-export default withRouter(connect()(UserHome));
+export default withRouter(UserHome);

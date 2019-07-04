@@ -29,10 +29,10 @@ export const userAccess = (state = userInitialState, action = {}) => {
         case REQUEST_SIGNIN_SUCCESS:
             return Object.assign({}, state, { 
                 auth: 'user', 
-                user_id: action.payload.user_id, 
-                username: action.payload.username, 
-                email: action.payload.email, 
-                score: action.payload.score,
+                user_id: action.payload.userData.user_id, 
+                username: action.payload.userData.username, 
+                email: action.payload.userData.email, 
+                score: action.payload.userData.score,
                 error: 'none' 
               });
         case REQUEST_SIGNIN_FAILED:
@@ -58,6 +58,9 @@ export const userAccess = (state = userInitialState, action = {}) => {
         case REQUEST_REGISTER_SUCCESS:
             return Object.assign({}, state, { 
                 auth: 'guest', 
+                user_id: action.payload.userData.user_id, 
+                username: action.payload.userData.username, 
+                email: action.payload.userData.email, 
                 });
         case REQUEST_REGISTER_FAILED:
             return Object.assign({}, state, { error: action.payload , auth: 'guest' });
