@@ -7,13 +7,10 @@ const ProtectedRoute = ({render: Component, auth, ...rest}) => {
     return (
         <Route {...rest}
         render={(props) => {
-            console.log(auth)
             if(auth === 'user'){
-                console.log('success!!!')
                 return <Component {...props} />
             }
             else{
-                console.log("failed protected")
                 return(
                     <Redirect to={
                         {

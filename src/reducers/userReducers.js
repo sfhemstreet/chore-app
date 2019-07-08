@@ -58,9 +58,7 @@ export const userAccess = (state = userInitialState, action = {}) => {
         case REQUEST_REGISTER_SUCCESS:
             return Object.assign({}, state, { 
                 auth: 'guest', 
-                user_id: action.payload.userData.user_id, 
-                username: action.payload.userData.username, 
-                email: action.payload.userData.email, 
+                email: action.payload.email, 
                 });
         case REQUEST_REGISTER_FAILED:
             return Object.assign({}, state, { error: action.payload , auth: 'guest' });
