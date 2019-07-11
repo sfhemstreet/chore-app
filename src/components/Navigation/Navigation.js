@@ -8,7 +8,7 @@ import './Navigation.css';
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.userAccess.auth
+        auth: state.user.auth
     }
 }
 
