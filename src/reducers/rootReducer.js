@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
-import {userAccess} from'./userReducers.js';
+import {user} from './userReducers.js';
+import {group} from './groupReducers.js';
 
-const rootReducer = combineReducers({userAccess}); 
+const rootReducer = combineReducers({user, group}); 
 
 export default rootReducer;

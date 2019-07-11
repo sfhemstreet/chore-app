@@ -9,31 +9,29 @@ import {REQUEST_SIGNIN_PENDING,
 
 const userInitialState = {
     auth: 'guest',
-    user_id: '',
     username: '',
     email: '',
-    groups: [],
     score: '',
+    isPending: false,
     error: ''
 }
 
 
 
 // SIGNIN, SIGNOUT, REGISTER
-export const userAccess = (state = userInitialState, action = {}) => {
+export const user = (state = userInitialState, action = {}) => {
     switch(action.type){
         // SIGN IN
 
         case REQUEST_SIGNIN_PENDING:
-            return Object.assign({}, state, { auth: 'guest' });
+            return Object.assign({}, state, { auth: 'guest', isPending: true });
         case REQUEST_SIGNIN_SUCCESS:
             return Object.assign({}, state, { 
                 auth: 'user', 
-                user_id: action.payload.userData.user_id, 
-                username: action.payload.userData.username, 
+                username: action.payload.userData.user_name, 
                 email: action.payload.userData.email, 
                 score: action.payload.userData.score,
-                error: 'none' 
+                isPending: false 
               });
         case REQUEST_SIGNIN_FAILED:
             return Object.assign({}, state, { error: action.payload , auth: 'guest' });
@@ -43,12 +41,10 @@ export const userAccess = (state = userInitialState, action = {}) => {
         case SIGN_OUT_USER:
             return Object.assign({}, state, {
                 auth: 'guest',
-                user_id: '',
                 username: '',
                 email: '',
-                groups: [],
                 score: '',
-                error: ''
+                isPending: false,
             });
         
         // REGISTER 

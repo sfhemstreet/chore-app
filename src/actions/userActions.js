@@ -14,7 +14,12 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
     dispatch({ type: REQUEST_SIGNIN_PENDING })
     fetch('http://localhost:3000/signin', {
         method: 'post',
-        headers: {'Content-Type' : 'application/json'},
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
         body: JSON.stringify({
             email: signInEmail,
             password: signInPassword
@@ -22,10 +27,10 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data)
-        if(data.token){
-            dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data })
-            history.push('/home')
+        //console.log(data)
+        if(data.userData){
+            dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data });
+            history.push('/profile');
         }
         else {
             dispatch({ type: REQUEST_SIGNIN_FAILED, payload: data})

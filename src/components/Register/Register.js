@@ -101,7 +101,7 @@ class Register extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.userAccess.auth 
+        auth: state.user.auth 
     }
 }
 

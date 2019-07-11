@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.userAccess.auth
+        auth: state.user.auth
     }
 }
 
@@ -20,7 +20,7 @@ const Logo = (props) => {
                 style={{ height: 100, width: 100 }} >
                 {
                     props.auth === 'user' ?
-                    <NavLink to='/home' >
+                    <NavLink to='/profile' >
                     <img className=" br-100"  alt="UChore" src={logo}/> 
                     </ NavLink>
                     :

@@ -7,8 +7,8 @@ import Navigation from '../../components/Navigation/Navigation.js';
 import SignIn from '../../components/SignIn/SignIn.js';
 import Register from '../../components/Register/Register.js';
 import About from '../../components/About/About.js';
-import UserHome from '../../components/Home/UserHome.js';
-import GuestHome from '../../components/Home/GuestHome.js';
+import Home from '../../components/Home/Home.js';
+import Profile from '../../components/Profile/Profile.js';
 import CreateGroup from '../CreateGroup/CreateGroup.js';
 import Groups from '../../components/Groups/Groups.js';
 
@@ -27,14 +27,12 @@ toast.configure({
 class App extends React.Component {
   
   render(){
-    //console.log('APP STATE',this.props)
-    const {auth} = this.props;
     return(
       <div>
         <Navigation />
         <Switch>
-          <Route exact path='/'             render={() => <GuestHome  />}/>
-          <ProtectedRoute auth={this.props.auth} exact path='/home'         render={() => <UserHome   />}/>
+          <Route exact path='/'             render={() => <Home  />}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/profile'      render={() => <Profile    />}/>
           <ProtectedRoute auth={this.props.auth} exact path='/creategroup'  render={() => <CreateGroup/>}/>
           <ProtectedRoute auth={this.props.auth} exact path='/groups'       render={() => <Groups     />}/>
           <Route exact path='/signin'       render={() => <SignIn     />}/>
@@ -51,15 +49,9 @@ class App extends React.Component {
 
 
 const mapStateToProps = (state) => {
-  const {userAccess} = state;
+  const {user} = state;
   return {
-    auth: userAccess.auth,
-    user_id: userAccess.user_id,
-    username: userAccess.username,
-    email: userAccess.email,
-    groups: userAccess.groups,
-    score: userAccess.score,
-    error: userAccess.error
+    auth: user.auth,
   }
 
 }
