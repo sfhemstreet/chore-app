@@ -9,7 +9,7 @@ import Register from '../../components/Register/Register.js';
 import About from '../../components/About/About.js';
 import Home from '../../components/Home/Home.js';
 import Profile from '../../components/Profile/Profile.js';
-import CreateGroup from '../CreateGroup/CreateGroup.js';
+import CreateGroup from '../../components/CreateGroup/CreateGroup.js';
 import Groups from '../../components/Groups/Groups.js';
 
 import { toast, ToastContainer } from 'react-toastify';

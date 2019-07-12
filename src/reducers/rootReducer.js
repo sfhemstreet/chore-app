@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {user} from './userReducers.js';
-import {group} from './groupReducers.js';
+//import {chore} from './choreReducers.js';
 
-const rootReducer = combineReducers({user, group}); 
+const rootReducer = combineReducers({user}); 
 
 export default rootReducer;

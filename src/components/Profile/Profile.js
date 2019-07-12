@@ -1,28 +1,42 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {getGroups} from '../../actions/groupActions';
+import {getChores} from '../../actions/choreActions';
+import ScrollBox from '../ScrollBox.js';
+import MyChores from './MyChores';
+import MyGroups from './MyGroups';
+import MyCreatedGroups from './MyCreatedGroups';
 
 class Profile extends React.Component {
-    
-
-
     componentDidMount(){
-        
-        this.props.fetchAllGroupInfo();
+        this.props.requestChoreUpdate();
     }
 
     render(){
         return (
             <div>
                 <div>
-                Profile
+                Hello {this.props.username}!
                 </div>
                 { this.props.isPending ?
                         <div>LOADING</div>
                 :
                 (<div>
-                    {this.props.groups.toString()}
+                    <ScrollBox>
+                        <MyChores 
+                            chores={this.props.chores}
+                        />
+                    </ScrollBox>
+                    <ScrollBox>
+                        <MyGroups 
+                            groups={this.props.groups}
+                        />
+                    </ScrollBox>
+                    <ScrollBox>
+                        <MyCreatedGroups 
+                            createdGroups={this.props.createdGroups}
+                        />
+                    </ScrollBox>
                 </div>)
                 }
 
@@ -36,19 +50,19 @@ class Profile extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchAllGroupInfo: () => dispatch(getGroups())
+        requestChoreUpdate: () => dispatch(getChores())
     }
 }
 
 const mapStateToProps = (state) => {
-    const {user, group} = state;
+    const {user} = state;
     return {
       auth: user.auth,
       username: user.username,
       email: user.email,
-      groups: group.groups,
-      isPending: group.isPending,
-      //inCompleteGroup : user.inCompleteGroup,
+      chores: user.chores,
+      groups: user.groups,
+      createdGroups: user.createdGroups,
       score: user.score,
       error: user.error
     }

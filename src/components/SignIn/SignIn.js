@@ -4,9 +4,6 @@ import {NavLink} from 'react-router-dom';
 import {signIn, signOut} from '../../actions/userActions';
 import {withRouter} from 'react-router-dom';
 
-  
- 
-
 class SignIn extends React.Component {
     
     constructor(props){
