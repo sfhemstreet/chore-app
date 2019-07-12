@@ -4,16 +4,11 @@ import { NavLink, withRouter } from 'react-router-dom';
 import Logo from '../Logo/Logo.js';
 import './Navigation.css';
 
-
-
 const mapStateToProps = (state) => {
     return {
         auth: state.user.auth
     }
 }
-
-
-
 
 const Navigation = (props) => {
     const {auth} = props;

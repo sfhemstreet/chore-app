@@ -1,28 +1,34 @@
-import {REQUEST_SIGNIN_PENDING,
-        REQUEST_SIGNIN_SUCCESS,
-        REQUEST_SIGNIN_FAILED,
-        REQUEST_REGISTER_PENDING,
-        REQUEST_REGISTER_SUCCESS,
-        REQUEST_REGISTER_FAILED,
-        SIGN_OUT_USER } from '../constants/user_constants.js';
+import {
+    REQUEST_SIGNIN_PENDING,
+    REQUEST_SIGNIN_SUCCESS,
+    REQUEST_SIGNIN_FAILED,
+    REQUEST_REGISTER_PENDING,
+    REQUEST_REGISTER_SUCCESS,
+    REQUEST_REGISTER_FAILED,
+    SIGN_OUT_USER } from '../constants/user_constants.js';
+
+import {
+    REQUEST_CHORES_PENDING, 
+    REQUEST_CHORES_SUCCESS, 
+    REQUEST_CHORES_FAILED } from '../constants/chore_constants';
 
 
 const userInitialState = {
     auth: 'guest',
     username: '',
     email: '',
+    chores: [],
+    groups: {},
+    createdGroups: [],
     score: '',
     isPending: false,
     error: ''
 }
 
-
-
-// SIGNIN, SIGNOUT, REGISTER
+// SIGNIN, SIGNOUT, REGISTER, UPDATE CHORES
 export const user = (state = userInitialState, action = {}) => {
     switch(action.type){
         // SIGN IN
-
         case REQUEST_SIGNIN_PENDING:
             return Object.assign({}, state, { auth: 'guest', isPending: true });
         case REQUEST_SIGNIN_SUCCESS:
@@ -37,27 +43,49 @@ export const user = (state = userInitialState, action = {}) => {
             return Object.assign({}, state, { error: action.payload , auth: 'guest' });
         
         // SIGN OUT
-
         case SIGN_OUT_USER:
             return Object.assign({}, state, {
                 auth: 'guest',
                 username: '',
                 email: '',
+                chores: [],
+                groups: {},
+                createdGroups: [],
                 score: '',
                 isPending: false,
             });
         
         // REGISTER 
-
         case REQUEST_REGISTER_PENDING:
-            return Object.assign({}, state, { auth: 'guest' });
+            return Object.assign({}, state, { auth: 'guest', isPending: true });
         case REQUEST_REGISTER_SUCCESS:
             return Object.assign({}, state, { 
                 auth: 'guest', 
                 email: action.payload.email, 
+                isPending: false
                 });
         case REQUEST_REGISTER_FAILED:
-            return Object.assign({}, state, { error: action.payload , auth: 'guest' });
+            return Object.assign({}, state, { error: action.payload , auth: 'guest', isPending: false });
+
+        // UPDATE CHORES
+        case REQUEST_CHORES_PENDING:
+            return Object.assign({}, state, { 
+                isPending: true 
+                });
+        case REQUEST_CHORES_SUCCESS:
+            return Object.assign({}, state, { 
+                chores: action.payload.chores.userChores,
+                groups: action.payload.chores.groups,
+                createdGroups: action.payload.chores.createdGroups,
+                isPending: false
+                });
+        case REQUEST_CHORES_FAILED:
+            return Object.assign({}, state, { 
+                error: action.payload, 
+                isPending: false
+                });
+    
+        // DEFAULT
         default:
             return state;
     }
