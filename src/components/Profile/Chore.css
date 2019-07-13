@@ -1,0 +1,12 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "chore due status";
+  }
+  
+  .chore { grid-area: chore; }
+  
+  .due { grid-area: due; }
+
+  .done { grid-area: status; }
