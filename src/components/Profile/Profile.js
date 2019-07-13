@@ -4,8 +4,8 @@ import {withRouter} from 'react-router-dom';
 import {getChores} from '../../actions/choreActions';
 import ScrollBox from '../ScrollBox.js';
 import MyChores from './MyChores';
-import MyGroups from './MyGroups';
 import MyCreatedGroups from './MyCreatedGroups';
+import welcomeMessage from '../../utils/welcomeMessage';
 
 class Profile extends React.Component {
     componentDidMount(){
@@ -13,31 +13,34 @@ class Profile extends React.Component {
     }
 
     render(){
+
+        const message = welcomeMessage(this.props.username);
+       
         return (
             <div>
-                <div>
-                Hello {this.props.username}!
-                </div>
+                <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">
+                {message}
+                </h2>
                 { this.props.isPending ?
-                        <div>LOADING</div>
+                    <div>LOADING</div>
                 :
-                (<div>
-                    <ScrollBox>
-                        <MyChores 
-                            chores={this.props.chores}
-                        />
-                    </ScrollBox>
-                    <ScrollBox>
-                        <MyGroups 
-                            groups={this.props.groups}
-                        />
-                    </ScrollBox>
-                    <ScrollBox>
-                        <MyCreatedGroups 
-                            createdGroups={this.props.createdGroups}
-                        />
-                    </ScrollBox>
-                </div>)
+                    <div>
+                        <ScrollBox className="pa3 pa5-ns">
+                            <MyChores 
+                                chores={this.props.chores}
+                            />
+                        </ScrollBox>
+                        { 
+                        Object.keys(this.props.createdGroups).length > 0 ?
+                        (<ScrollBox>
+                            <MyCreatedGroups 
+                                createdGroups={this.props.createdGroups}
+                            />
+                        </ScrollBox>) 
+                        : (null)
+                        }
+                        
+                    </div>
                 }
 
             </div>
@@ -64,7 +67,8 @@ const mapStateToProps = (state) => {
       groups: user.groups,
       createdGroups: user.createdGroups,
       score: user.score,
-      error: user.error
+      error: user.error,
+      isPending: user.isPending
     }
 }
 
