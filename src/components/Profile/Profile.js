@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {getChores} from '../../actions/choreActions';
+import {getChores, submitChore} from '../../actions/choreActions';
 import ScrollBox from '../ScrollBox.js';
 import MyChores from './MyChores';
 import MyCreatedGroups from './MyCreatedGroups';
@@ -12,10 +12,14 @@ class Profile extends React.Component {
         this.props.requestChoreUpdate();
     }
 
+    sendCompletedChore = (choreID) => {
+        this.props.submitCompletedChore(choreID)
+    }
+
     render(){
 
         const message = welcomeMessage(this.props.username);
-       
+        console.log(this.props.chores)
         return (
             <div>
                 <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">
@@ -28,6 +32,7 @@ class Profile extends React.Component {
                         <ScrollBox className="pa3 pa5-ns">
                             <MyChores 
                                 chores={this.props.chores}
+                                onChoreCompleted={this.sendCompletedChore}
                             />
                         </ScrollBox>
                         { 
@@ -42,7 +47,6 @@ class Profile extends React.Component {
                         
                     </div>
                 }
-
             </div>
             
             
@@ -53,7 +57,8 @@ class Profile extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        requestChoreUpdate: () => dispatch(getChores())
+        requestChoreUpdate: () => dispatch(getChores()),
+        submitCompletedChore: (choreID) => dispatch(submitChore(choreID))
     }
 }
 
