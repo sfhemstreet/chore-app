@@ -1,23 +1,24 @@
 import React from 'react';
-import ScrollBox from '../ScrollBox.js';
 import MyGroups from './MyGroups.js';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 
-class Groups extends React.Component {
+class GroupsPage extends React.Component {
     
 
     render(){
         return(
             <div>
                 GROUPS PAGE
-                {/*
-                <ScrollBox>
-                    <MyGroups 
-                        groups={this.props.groups}
-                    />
-                </ScrollBox>
+                {/* 
+                    Object.keys(this.props.createdGroups).length > 0 ?
+                    (<ScrollBox>
+                        <MyCreatedGroups 
+                            createdGroups={this.props.createdGroups}
+                        />
+                    </ScrollBox>) 
+                    : (null)
                 */}
             </div>
         )
@@ -30,13 +31,11 @@ const mapStateToProps = (state) => {
       auth: user.auth,
       username: user.username,
       email: user.email,
-      chores: user.chores,
       groups: user.groups,
       createdGroups: user.createdGroups,
-      createdBy_Email: user.created_by_email,
       score: user.score,
       error: user.error
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Groups));
+export default withRouter(connect(mapStateToProps)(GroupsPage));

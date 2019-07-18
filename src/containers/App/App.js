@@ -10,7 +10,7 @@ import About from '../../components/About/About.js';
 import Home from '../../components/Home/Home.js';
 import Profile from '../../components/Profile/Profile.js';
 import CreateGroup from '../../components/CreateGroup/CreateGroup.js';
-import Groups from '../../components/Groups/Groups.js';
+import GroupsPage from '../../components/Groups/GroupsPage.js';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -34,7 +34,7 @@ class App extends React.Component {
           <Route exact path='/'             render={() => <Home  />}/>
           <ProtectedRoute auth={this.props.auth} exact path='/profile'      render={() => <Profile    />}/>
           <ProtectedRoute auth={this.props.auth} exact path='/creategroup'  render={() => <CreateGroup/>}/>
-          <ProtectedRoute auth={this.props.auth} exact path='/groups'       render={() => <Groups     />}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/groups'       render={() => <GroupsPage     />}/>
           <Route exact path='/signin'       render={() => <SignIn     />}/>
           <Route exact path='/register'     render={() => <Register   />}/>
           <Route exact path='/about'        render={() => <About      />}/>

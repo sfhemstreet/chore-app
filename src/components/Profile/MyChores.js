@@ -1,10 +1,13 @@
 import React from 'react';
 import Chore from './Chore';
+import ScrollBox from '../ScrollBox';
 import './Chore.css';
 
 const MyChores = ({chores, onChoreCompleted}) => {
 
-    const organizedChores = chores.sort((a,b) => a.due_date > b.due_date ? 1 : -1) 
+    const organizedChores = chores.sort((a,b) => {
+        return a.due_date > b.due_date ? 1 : -1
+    }) 
 
     const renderChores = organizedChores.map((_,i) => {
         return (
@@ -24,14 +27,18 @@ const MyChores = ({chores, onChoreCompleted}) => {
     });
 
     return (
-        <div className="mt0">
+        <div className="mt0 mb4">
             <h1 className="tc black-90">Your Chores</h1>
             <div className='grid_container center mw6 mv0 mb0' >
                 <h3 className='chore f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Chore</h3>
                 <h3 className='due f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Due Date</h3>
                 <h3 className='status f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Status</h3>
             </div>
-            <ul className="list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2 ">{renderChores}</ul> 
+            <ul className="list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2 ">
+                <ScrollBox >
+                     {renderChores}
+                </ScrollBox>
+            </ul> 
         </div>
         
     ) 
