@@ -12,7 +12,7 @@ class Chore extends React.Component {
             num : this.props.num,
             assignDate : (new Date(this.props.assignDate)).toDateString(),
             choreName : this.props.choreName,
-            completeDate : this.props.completeDate,
+            completeDate : this.props.completeDate !== null ? (new Date(this.props.completeDate)).toDateString() : null,
             description : this.props.description,
             dueDate : (new Date(this.props.dueDate)).toDateString(),
             groupName : this.props.groupName,
@@ -33,7 +33,16 @@ class Chore extends React.Component {
     render(){
         
         const {assignDate, choreName, completeDate, description, dueDate, groupName, isDone, isPopUp, num} = this.state; 
-
+        // dont display full chore name if over 25 char
+        let displayName = choreName;
+        if(choreName.length > 25){
+            displayName = choreName.substring(0,25) + '...';
+        }
+        // used by popup and status bar
+        const now = Date.now();
+        const daysLeft = Math.floor((Date.parse(dueDate)/86400000) - (now/86400000)) + 1;
+        const percent = ((now - Date.parse(assignDate)) / (Date.parse(dueDate) - Date.parse(assignDate))) * 100;
+        // text when user clicks on chore
         const popUpText = {
             info: 
                 <dl className='lh-title pa4 mt0'>
@@ -44,7 +53,7 @@ class Chore extends React.Component {
                     <dd className='ml0 f4 b'>{description}</dd></>)
                     : null}
                     <dt className='f6  mt2'>Due Date</dt>
-                    <dd className='ml0 f4 b'>{dueDate}</dd>
+                    {percent >= 100 && !isDone ? <dd className='ml0 f4 b red'>{dueDate}</dd> : <dd className='ml0 f4 b'>{dueDate}</dd>}
                     <dt className='f6  mt2'>Group</dt>
                     <dd className='ml0 f4 b'>{groupName}</dd>
                     <dt className='f6  mt2'>Assigned On</dt>
@@ -58,19 +67,12 @@ class Chore extends React.Component {
                 </dl>
         };
 
-        let displayName = choreName;
-        if(choreName.length > 25){
-            displayName = choreName.substring(0,25) + '...';
-        }
-
-        const now = Date.now();
-        const daysLeft = Math.floor((Date.parse(dueDate)/86400000) - (now/86400000)) + 1;
-        const percent = ((now - Date.parse(assignDate)) / (Date.parse(dueDate) - Date.parse(assignDate))) * 100;
+        
 
         return (
-            <li className={(num % 2) === 0 ? 'bg-white' : 'bg-near-white'}>
-                <div className="pa3">
-                    <div className='grid_container pointer grow' onClick={this.onTogglePopUp} >
+            <li className={(num % 2) === 0 ? 'bg-white  pointer' : 'bg-near-white pointer'} onClick={this.onTogglePopUp}>
+                <div className="pa3 grow">
+                    <div className='grid_container '  >
                         <div className='chore center pa2 b hover-blue'  >{displayName}</div>
                         <div className='due center pa2 b hover-blue' >{dueDate}</div>
                         <StatusBar  className='status center pa2 pointer grow' status={percent} timeLeft={daysLeft} isCompleted={isDone} />

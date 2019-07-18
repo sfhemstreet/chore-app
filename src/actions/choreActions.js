@@ -30,16 +30,15 @@ export const getChores = () => (dispatch) => {
         }
     })
     .catch(error => {
-        //console.log(error);
         dispatch({ type: REQUEST_CHORES_FAILED, payload: error })
     });
 }
 
 export const submitChore = (choreID) => (dispatch) => {
-   /*
+   
     dispatch({type: SUBMIT_CHORE_PENDING});
     fetch('http://localhost:3000/submitchore', { 
-        method: 'patch',
+        method: 'PATCH',
         mode: 'cors',
         credentials: 'include',
         headers: {
@@ -47,24 +46,21 @@ export const submitChore = (choreID) => (dispatch) => {
             'Accept': 'application/json',
         },
         body: JSON.stringify({
-            chore: choreID
+            choreID: choreID
         })
     })
     .then(response => response.json())
-    .then(data => {
-        console.log(data)
-        if(data.chores){
-            dispatch({ type: SUBMIT_CHORE_SUCCESS, payload: data });
+    .then(res => {
+        if(res === 'Chore Submitted'){
+            dispatch({ type: SUBMIT_CHORE_SUCCESS });
         }
         else {
-            dispatch({ type: SUBMIT_CHORE_FAILED, payload: data })
+            dispatch({ type: SUBMIT_CHORE_FAILED })
         }
     })
     .catch(error => {
-        //console.log(error);
-        dispatch({ type: SUBMIT_CHORE_FAILED, payload: error })
+        dispatch({ type: SUBMIT_CHORE_FAILED })
     });
-    */
-   return null
+    
 }
 

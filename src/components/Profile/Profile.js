@@ -29,13 +29,13 @@ class Profile extends React.Component {
                     <div>LOADING</div>
                 :
                     <div>
-                        <ScrollBox className="pa3 pa5-ns">
+                        
                             <MyChores 
                                 chores={this.props.chores}
                                 onChoreCompleted={this.sendCompletedChore}
                             />
-                        </ScrollBox>
-                        { 
+                        
+                        {/* 
                         Object.keys(this.props.createdGroups).length > 0 ?
                         (<ScrollBox>
                             <MyCreatedGroups 
@@ -43,7 +43,7 @@ class Profile extends React.Component {
                             />
                         </ScrollBox>) 
                         : (null)
-                        }
+                        */}
                         
                     </div>
                 }
