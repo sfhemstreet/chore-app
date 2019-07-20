@@ -30,7 +30,7 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
         //console.log(data)
         if(data.userData){
             dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data });
-            history.push('/profile');
+            history.push('/dash');
         }
         else {
             dispatch({ type: REQUEST_SIGNIN_FAILED, payload: data})

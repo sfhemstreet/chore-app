@@ -3,8 +3,6 @@ import StatusBar from '../StatusBar/StatusBar';
 import PopUp from '../PopUp/PopUp';
 import './Chore.css';
 
-import {submitChore} from '../../actions/choreActions';
-
 class Chore extends React.Component {
     constructor(props){
         super(props);
@@ -71,9 +69,9 @@ class Chore extends React.Component {
 
         return (
             <li className={(num % 2) === 0 ? 'bg-white  pointer' : 'bg-near-white pointer'} onClick={this.onTogglePopUp}>
-                <div className="pa3 grow">
+                <div className="pa3 grow underline-hover">
                     <div className='grid_container '  >
-                        <div className='chore center pa2 b hover-blue'  >{displayName}</div>
+                        <div className='chore center pa2 b hover-blue '  >{displayName}</div>
                         <div className='due center pa2 b hover-blue' >{dueDate}</div>
                         <StatusBar  className='status center pa2 pointer grow' status={percent} timeLeft={daysLeft} isCompleted={isDone} />
                     </div>

@@ -14,9 +14,9 @@ const StatusBar = ({status, timeLeft, isCompleted}) => {
         status = 100;
     }
     // its due today
-    else if(timeLeft === 0) {
+    if(timeLeft === 0) {
         text = 'Due Today!';
-        urgencyColor = 'orange';
+        urgencyColor = 'yellow';
     }
     // due in 1 or more days
     else{
@@ -44,8 +44,6 @@ const StatusBar = ({status, timeLeft, isCompleted}) => {
         </div>
     )
         
-    
-
 
 }
 

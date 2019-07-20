@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NewGroupOutput = () => {
+const NewGroupConfirm = ({chores,people,submit,goForward,goBack}) => {
     
 
     
@@ -10,3 +10,5 @@ const NewGroupOutput = () => {
     )
     
 }
+
+export default NewGroupConfirm;
