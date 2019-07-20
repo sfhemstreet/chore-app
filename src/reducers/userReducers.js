@@ -74,9 +74,9 @@ export const user = (state = userInitialState, action = {}) => {
                 });
         case REQUEST_CHORES_SUCCESS:
             return Object.assign({}, state, { 
-                chores: action.payload.chores.userChores,
-                groups: action.payload.chores.groups,
-                createdGroups: action.payload.chores.createdGroups,
+                chores: action.payload.chores,
+                groups: action.payload.groups,
+                createdGroups: action.payload.createdGroups,
                 isPending: false
                 });
         case REQUEST_CHORES_FAILED:

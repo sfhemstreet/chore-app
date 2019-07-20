@@ -2,7 +2,7 @@ import React from 'react';
 
 const ScrollBox = (props) => {
     return (
-        <div style={{overflowY: 'scroll', maxHeight: '475px'}}>
+        <div style={{overflowY: 'scroll', maxHeight: `${props.maxHeight}px`}}>
             {props.children}
         </div>
         

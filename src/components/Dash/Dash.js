@@ -2,12 +2,10 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {getChores, submitChore} from '../../actions/choreActions';
-import ScrollBox from '../ScrollBox.js';
-import MyChores from './MyChores';
-import MyCreatedGroups from './MyCreatedGroups';
+import MyChores from '../MyChores/MyChores';
 import welcomeMessage from '../../utils/welcomeMessage';
 
-class Profile extends React.Component {
+class Dash extends React.Component {
     componentDidMount(){
         this.props.requestChoreUpdate();
     }
@@ -29,30 +27,15 @@ class Profile extends React.Component {
                     <div>LOADING</div>
                 :
                     <div>
-                        
                             <MyChores 
                                 chores={this.props.chores}
                                 onChoreCompleted={this.sendCompletedChore}
                             />
-                        
-                        {/* 
-                        Object.keys(this.props.createdGroups).length > 0 ?
-                        (<ScrollBox>
-                            <MyCreatedGroups 
-                                createdGroups={this.props.createdGroups}
-                            />
-                        </ScrollBox>) 
-                        : (null)
-                        */}
-                        
                     </div>
                 }
             </div>
-            
-            
         )
     }
-    
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -69,12 +52,10 @@ const mapStateToProps = (state) => {
       username: user.username,
       email: user.email,
       chores: user.chores,
-      groups: user.groups,
-      createdGroups: user.createdGroups,
       score: user.score,
       error: user.error,
       isPending: user.isPending
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dash));

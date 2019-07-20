@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChoreOptions = () => {
+const ChoreOptions = ({chores,people,optionsChange,goForward,goBack}) => {
     
 
     
@@ -12,3 +12,5 @@ const ChoreOptions = () => {
     )
     
 }
+
+export default ChoreOptions;

@@ -17,25 +17,25 @@ const Navigation = (props) => {
             <nav className="db dt-l w-100 border-box pa3 ph5-l">
                 <Logo />   
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
-                    <NavLink  
-                        to='/creategroup'
+                    <NavLink 
+                        to='/dash'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
-                        Create Group
+                        Home
                     </NavLink>
                     <NavLink 
                         to='/groups'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Groups
                     </NavLink>
+                    <NavLink  
+                        to='/creategroup'
+                        className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
+                        Create New Group
+                    </NavLink>
                     <NavLink 
                         to='/signin'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Sign Out
-                    </NavLink>
-                    <NavLink 
-                        to='/about'
-                        className="link dim dark-gray f6 f5-l dib pointer">
-                        About
                     </NavLink>
                 </div>
             </nav>  
@@ -46,6 +46,10 @@ const Navigation = (props) => {
             <nav className="db dt-l w-100 border-box pa3 ph5-l">
                 <Logo />  
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
+                    <NavLink to='/'
+                        className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
+                        Home
+                    </NavLink>
                     <NavLink to='/signin'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Sign In
@@ -53,10 +57,6 @@ const Navigation = (props) => {
                     <NavLink to='/register'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Register
-                    </NavLink>
-                    <NavLink to='/about' 
-                        className="link dim dark-gray f6 f5-l dib pointer">
-                        About
                     </NavLink>
                 </div>
             </nav>   

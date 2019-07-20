@@ -1,7 +1,7 @@
 import React from 'react';
-import Chore from './Chore';
+import Chore from '../Chore/Chore';
 import ScrollBox from '../ScrollBox';
-import './Chore.css';
+import '../Chore/Chore.css';
 
 const MyChores = ({chores, onChoreCompleted}) => {
 
@@ -35,7 +35,7 @@ const MyChores = ({chores, onChoreCompleted}) => {
                 <h3 className='status f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Status</h3>
             </div>
             <ul className="list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2 ">
-                <ScrollBox >
+                <ScrollBox maxHeight={'475'}>
                      {renderChores}
                 </ScrollBox>
             </ul> 

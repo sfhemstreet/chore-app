@@ -1,0 +1,24 @@
+
+.user_container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "name score";
+}
+
+  .name { grid-area: name; }
+
+  .score { grid-area: score; }
+
+.chores_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "chore due status";
+  }
+  
+  .chore { grid-area: chore; }
+  
+  .due { grid-area: due; }
+
+  .status { grid-area: status; }
