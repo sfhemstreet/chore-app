@@ -39,11 +39,11 @@ class SignIn extends React.Component {
     render(){
         
         return (
-            <div className='vh-100 bg-near-white dt w-100'>
+            <div className='vh-100 bg-light-blue dt w-100'>
                 <div className="">
                     <div className="">
-                        <div className="center  mw6-ns br3 hidden ba b--black-10 mv4 bg-white">
-                            <h1 className="f4 bg-near-white br3 br--top black-80 mv0 pv2 ph3 bg-light-blue">Sign In</h1>
+                        <div className="center  mw6-ns br3 hidden  mv4 bg-near-white">
+                            <h1 className="f4 br3 br--top black-80 mv0 pv2 ph3 bg-blue white">Sign In</h1>
                             <div className="pa3 bt b--black-10">
                                 <div className="f6 f5-ns lh-copy measure mv0">
                                     <main className="pa4 black-80">
@@ -73,8 +73,8 @@ class SignIn extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="measure center tc f7 f4-m f3-l fw2 black-90">
-                        <h1>{this.state.quote}</h1>
+                    <div className="measure center tc f7 f4-m f3-l fw2 black ">
+                        <div>{this.state.quote}</div>
                     </div>
                 </div>
             </div>

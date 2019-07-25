@@ -1,6 +1,6 @@
  .status_bar {
     width: 100%;
-    height: 30px;
+    height: contain;
     color: black;
     text-align: center;
     line-height: 30px;

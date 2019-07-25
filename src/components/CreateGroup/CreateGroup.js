@@ -9,9 +9,11 @@ class CreateGroup extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            people: [],
-            chores: [],
-            stage: 0,
+            groupName : '',
+            numPeople : 0,
+            people : [],
+            chores : [],
+            stage : 0,
         }
     }
 
@@ -20,11 +22,14 @@ class CreateGroup extends React.Component {
     }
 
     onDecreaseStage = (event) => {
+        if((this.state.stage - 1) === 1 ){
+            this.setState({ people : new Array(this.state.numPeople) })
+        }
         this.setState({ stage: this.state.stage - 1 })
     }
 
     onChangeNum = (num) => {
-        this.setState({ people: new Array(Number(num)) })
+        this.setState({ people: new Array(Number(num)), numPeople : Number(num) })
     }
 
     onChangePeople = (peopleInfo) => {
@@ -79,13 +84,11 @@ class CreateGroup extends React.Component {
         const outPut = renderStage();
 
         return (
-            <div>{outPut}</div>
+            <div className='vh-100 bg-light-purple dt w-100' >
+                {outPut}
+            </div> 
         )
-        
     }
-
-
-
 }
 
 export default CreateGroup;
