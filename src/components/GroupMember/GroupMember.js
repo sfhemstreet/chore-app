@@ -29,7 +29,7 @@ const GroupMember = ({memberInfo}) => {
     return (
         <div className="">
             <div className='user_container center mw6 mv0 mb0' >
-                <div className='name f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >{memberName}</div>
+                <div className='name f7 f4-m f3-l fw2 black b mt0 lh-copy tc center' >{memberName}</div>
                 <div className='score f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center'>{memberChores[0].score}</div>
             </div>
             <ul className="list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2 ">

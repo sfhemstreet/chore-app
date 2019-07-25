@@ -10,7 +10,7 @@ class GroupChore extends React.Component {
             num : this.props.num,
             assignName : this.props.assignName,
             assignDate : (new Date(this.props.assignDate)).toDateString(),
-            choreName : this.props.choreName !== null ? this.props.choreName : 'No Chores',
+            choreName : this.props.choreName,
             completeDate : this.props.completeDate !== null ? (new Date(this.props.completeDate)).toDateString() : null,
             description : this.props.description,
             groupName : this.props.groupName,
@@ -34,6 +34,18 @@ class GroupChore extends React.Component {
     render(){
         
         const { assignName, assignDate, choreName, completeDate, description, dueDate, groupName, isDone, isPopUp, num} = this.state; 
+        // catch chores that are null AKA no chores for this user
+        if(this.state.choreName === null){
+            return (
+                <li className={(num % 2) === 0 ? 'bg-white  pointer' : 'bg-near-white pointer'} onClick={this.onTogglePopUp}>
+                    <div className="pa3 grow underline-hover">
+                        <div className='grid_container '  >
+                            <div className='chore center pa2 b hover-blue '  >No Chores Due</div>
+                        </div>
+                    </div>
+                </li> 
+            )
+        }
         // dont display full chore name if over 25 char
         let displayName = choreName;
         if(choreName.length > 25){

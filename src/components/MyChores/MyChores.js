@@ -29,7 +29,7 @@ const MyChores = ({chores, onChoreCompleted}) => {
     return (
         <div className="mt0 mb4">
             <h1 className="tc black-90">Your Chores</h1>
-            <div className='grid_container center mw6 mv0 mb0' >
+            <div className='grid_container center mw6 mv0 mb0 p0' >
                 <h3 className='chore f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Chore</h3>
                 <h3 className='due f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Due Date</h3>
                 <h3 className='status f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Status</h3>
