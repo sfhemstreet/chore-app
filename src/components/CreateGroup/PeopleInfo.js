@@ -1,6 +1,7 @@
 import React from 'react';
 import NextButton from '../form_components/NextButton';
 import BackButton from '../form_components/BackButton';
+import regexCheck from '../../utils/regexCheck';
 
 const PeopleInfo = ({people,peopleChange,goForward,goBack}) => {
 
@@ -20,16 +21,12 @@ const PeopleInfo = ({people,peopleChange,goForward,goBack}) => {
     // check for valid email, duplicates, etc
     const checkInput = () => {
         let allGood = true;
-        p.forEach(input => {
-            console.log('khjwed', input)
+        for(let x = 0; x < p.length; x++){
+            let input = p[x];
             if(input !== '' && input !== null && input !== undefined){
-                const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                const valid = input.match(regex);
-                if(!valid){
-                    allGood = false;
-                }
-                if(input > 0){
-                    if(input - 1 === input){
+                allGood = regexCheck(input, 'email');
+                if(x > 0){
+                    if(p[x - 1] === input){
                         allGood = false;
                     }
                 }
@@ -37,7 +34,7 @@ const PeopleInfo = ({people,peopleChange,goForward,goBack}) => {
             else{
                 allGood = false;
             }
-        });
+        }
         if(allGood){
             onSubmit();
         }

@@ -4,6 +4,7 @@ import PeopleInfo from './PeopleInfo';
 import ChoreSelection from './ChoreSelection';
 import ChoreOptions from './ChoreOptions';
 import NewGroupConfirm from './NewGroupConfirm';
+import ProgressLine from '../ProgressLine/ProgressLine';
 
 class CreateGroup extends React.Component {
     constructor(props){
@@ -18,30 +19,34 @@ class CreateGroup extends React.Component {
     }
 
     onAdvanceStage = (event) => {
-        this.setState({ stage: this.state.stage + 1 })
+        this.setState({ stage: this.state.stage + 1 });
     }
 
     onDecreaseStage = (event) => {
         if((this.state.stage - 1) === 1 ){
-            this.setState({ people : new Array(this.state.numPeople) })
+            this.setState({ people : new Array(this.state.numPeople) });
         }
-        this.setState({ stage: this.state.stage - 1 })
+        this.setState({ stage: this.state.stage - 1 });
+    }
+
+    onChangeGroupName = (name) => {
+        this.setState({ groupName : name });
     }
 
     onChangeNum = (num) => {
-        this.setState({ people: new Array(Number(num)), numPeople : Number(num) })
+        this.setState({ people: new Array(Number(num)), numPeople : Number(num) });
     }
 
     onChangePeople = (peopleInfo) => {
-        this.setState({ people: peopleInfo })
+        this.setState({ people: peopleInfo });
     }
 
     onChangeChores = (choresSelected) => {
-        this.setState({ chores: choresSelected })
+        this.setState({ chores: choresSelected });
     }
 
     onChangeOptions = (choresInfo) => {
-        this.setState({ chores: choresInfo })
+        this.setState({ chores: choresInfo });
     }
 
     onSubmitChoreGroup = (event) => {
@@ -57,7 +62,7 @@ class CreateGroup extends React.Component {
             switch(this.state.stage){
                 case 0 : 
                     return (
-                        <NumPeople numChange={this.onChangeNum} goForward={this.onAdvanceStage} />
+                        <NumPeople groupNameChange={this.onChangeGroupName} numChange={this.onChangeNum} goForward={this.onAdvanceStage} />
                     )
                 case 1 :
                     return (
@@ -85,6 +90,7 @@ class CreateGroup extends React.Component {
 
         return (
             <div className='vh-100 bg-light-purple dt w-100' >
+                <ProgressLine progress={this.state.stage} />
                 {outPut}
             </div> 
         )

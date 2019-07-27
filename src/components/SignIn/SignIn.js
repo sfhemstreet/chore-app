@@ -4,6 +4,7 @@ import {NavLink} from 'react-router-dom';
 import {signIn, signOut} from '../../actions/userActions';
 import {withRouter} from 'react-router-dom';
 import randomQuote from '../../utils/choreQuotes';
+import regexCheck from '../../utils/regexCheck';
 
 class SignIn extends React.Component {
     
@@ -30,7 +31,7 @@ class SignIn extends React.Component {
     onSubmitSignIn = (e) => {
         const { signInEmail, signInPassword } = this.state;
         const { dispatch } = this.props;
-        if (signInEmail &&  signInPassword) {
+        if(regexCheck(signInEmail, 'email') &&  signInPassword) {
             dispatch(signIn(signInEmail, signInPassword, this.props.history));
         }
     }

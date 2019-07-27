@@ -1,0 +1,40 @@
+.line_container {
+    width: 50%;
+    margin-top: 20px;
+}
+
+.line {
+    display: block;
+    border: 1px solid black ;
+    height: 5px;
+    width: 100%;
+    background-color: black;
+   
+}
+
+.step {
+    display: inline-block;
+    border: 1px solid black;
+    min-height: 25px;
+    min-width: 25px;
+    border-radius: 50%;
+    background-color: darkgreen;
+}
+
+.incompleteStep {
+    display: block;
+    border: 1px solid black;
+    min-height: 25px;
+    min-width: 25px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+.onStep {
+    display: block;
+    border: 1px solid black;
+    min-height: 25px;
+    min-width: 25px;
+    border-radius: 50%;
+    background-color: red;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {register, signOut} from '../../actions/userActions';
+import regexCheck from '../../utils/regexCheck';
 
 class Register extends React.Component {
     constructor(props){
@@ -16,47 +17,24 @@ class Register extends React.Component {
 
     // NAME
     onNameChange = (event) => {
-        /*
-        const re = new RegExp(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/igm)
-        if(event.target.value.match(re)){
-            this.setState({registerName: event.target.value});
-        }
-        */
         this.setState({registerName: event.target.value});
     }
     // EMAIL
     onEmailChange = (event) => {
-        /*
-        const re = new RegExp(/[a-z\d]+([\.\_]?[a-z\d]+)+@[a-z\d]+(\.[a-z]+)+/igm)
-        if(event.target.value.match(re)){
-            this.setState({registerEmail: event.target.value});
-        }
-        */
        this.setState({registerEmail: event.target.value});
     }
     // PASSWORD 
     onPasswordChange = (event) => {
-        /*
-        pattern matches password validation for having 3 of 4 of the following items: 
-        lowercase, uppercase, numbers, special characters
-        */
-        /*
-        const re = new RegExp(/^((?=.*[\d])(?=.*[a-z])(?=.*[A-Z])|(?=.*[a-z])(?=.*[A-Z])(?=.*[^\w\d\s])|(?=.*[\d])(?=.*[A-Z])(?=.*[^\w\d\s])|(?=.*[\d])(?=.*[a-z])(?=.*[^\w\d\s])).{7,30}$/gm)
-        if(event.target.value.match(re)){
-            this.setState({registerPassword: event.target.value});
-        }
-        */
         this.setState({registerPassword: event.target.value});
-        
     }
     // SUBMIT
     onRegisterSubmit = (event) => {
         const {registerEmail, registerName, registerPassword} = this.state;
-        if(!registerEmail || !registerName || !registerPassword){
+        if(!regexCheck(registerEmail, 'email') || !regexCheck(registerName, 'special') || !regexCheck(registerPassword,'password')){
             return console.log('Bad Input');
         }
         else{
-            console.log(registerEmail)
+            //console.log(registerEmail)
             this.props.dispatch(register(registerName,registerEmail,registerPassword,this.props.history))
         }
         
