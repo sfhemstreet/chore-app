@@ -19,7 +19,7 @@ class Dash extends React.Component {
         const message = welcomeMessage(this.props.username);
         console.log(this.props.chores)
         return (
-            <div className='vh-100 bg-light-blue'>
+            <div className='vh-100 bg-light-blue dt w-100'>
                 <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">
                 {message}
                 </h2>

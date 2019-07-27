@@ -14,13 +14,13 @@ const Navigation = (props) => {
     const {auth} = props;
     if(auth === 'user'){
         return(
-            <nav className="db dt-l w-100 border-box pa3 ph5-l">
+            <nav className="db dt-l w-100 border-box pa3 ph5-l bg-near-white">
                 <Logo />   
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
                     <NavLink 
                         to='/dash'
                         className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
-                        Home
+                        Chores
                     </NavLink>
                     <NavLink 
                         to='/groups'
@@ -43,7 +43,7 @@ const Navigation = (props) => {
     }
     else{
         return(
-            <nav className="db dt-l w-100 border-box pa3 ph5-l">
+            <nav className="db dt-l w-100 border-box pa3 ph5-l bg-near-white">
                 <Logo />  
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
                     <NavLink to='/'

@@ -4,6 +4,7 @@ import BackButton from '../form_components/BackButton';
 import AddButton from '../form_components/AddButton';
 import ChoreSelectBox from '../form_components/ChoreSelectBox';
 import {CHORE_LIST} from '../../constants/chore_constants';
+import regexCheck from '../../utils/regexCheck';
 
 class ChoreSelection extends React.Component {
 	constructor(props){
@@ -21,8 +22,7 @@ class ChoreSelection extends React.Component {
 
 	addCustomChore = (event) => {
 		if(this.state.customChore !== ''){
-			const regex = /^[\sa-zA-Z0-9_.-]*$/;
-			if(this.state.customChore.match(regex)){
+			if(regexCheck(this.state.customChore, 'plain')){
 				let sc = [...this.state.selectedChores];
 				sc.unshift(this.state.customChore);
 				this.setState({selectedChores : sc, customChore : ''});
@@ -63,7 +63,6 @@ class ChoreSelection extends React.Component {
 	}
 
 	render() {
-		
 		
 		return (
 			<div className='center mw6-ns br3 hidden mv4 bg-transparent'>

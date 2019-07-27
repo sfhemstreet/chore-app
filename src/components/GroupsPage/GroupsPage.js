@@ -42,15 +42,18 @@ class GroupsPage extends React.Component {
                         
                     {
                         Object.keys(this.props.groups).length > 0 ?
-                        (
                             <div>
                                 <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">Your Groups</h2>
                                 <div>
                                     {renderAllGroups}
                                 </div>
                             </div>
-                        ) 
-                        : <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">No Groups... Wanna make one?</h2>
+                        : 
+                            <div>
+                                <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">You aren't in any groups...</h2>
+                                <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">Wanna make one?</h2>
+                            </div>
+                            
                     }
                     </div>
                 }

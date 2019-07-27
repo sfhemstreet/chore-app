@@ -27,19 +27,24 @@ const MyChores = ({chores, onChoreCompleted}) => {
     });
 
     return (
-        <div className="mt0 mb4">
-            <h1 className="tc black-90">Your Chores</h1>
-            <div className='grid_container center mw6 mv0 mb0 p0' >
-                <h3 className='chore f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Chore</h3>
-                <h3 className='due f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Due Date</h3>
-                <h3 className='status f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Status</h3>
+        chores.length > 0 ? 
+            <div className="mt0 mb4">
+                <h1 className="tc black-90">Your Chores</h1>
+                <div className='grid_container center mw6 mv0 mb0 p0' >
+                    <h3 className='chore f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Chore</h3>
+                    <h3 className='due f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Due Date</h3>
+                    <h3 className='status f7 f4-m f3-l fw2 black-90 mt0 lh-copy tc center' >Status</h3>
+                </div>
+                <ul className="list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2 ">
+                    <ScrollBox maxHeight={'475'}>
+                        {renderChores}
+                    </ScrollBox>
+                </ul> 
             </div>
-            <ul className="list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2 ">
-                <ScrollBox maxHeight={'475'}>
-                     {renderChores}
-                </ScrollBox>
-            </ul> 
-        </div>
+        :
+            <div className="mt0 mb4">
+                <h1 className="tc black-90">You don't have any chores</h1>
+            </div>
         
     ) 
 }
