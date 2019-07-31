@@ -1,4 +1,4 @@
-const regexCheck = (input, type) => {
+const regexCheck = (input, type = '') => {
     let regex = new RegExp(/^[a-zA-Z0-9_.-]*$/);
     switch(type){
         case 'plain':
@@ -11,7 +11,10 @@ const regexCheck = (input, type) => {
             regex = new RegExp(/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/);
             break;
         case 'special':
-            regex = new RegExp(/^[$!@&#*%?^a-z A-Z0-9_.-]*$/);
+            regex = new RegExp(/^[$!@&#*%?^a-z A-Z0-9_.-]*$/);                                 
+            break;
+        case 'yyyy-mm-dd':
+            regex = new RegExp(/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/);
             break;
         default:
             regex = new RegExp(/^[a-zA-Z0-9_.-]*$/);

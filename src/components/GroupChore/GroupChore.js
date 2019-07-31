@@ -84,7 +84,7 @@ class GroupChore extends React.Component {
         
 
         return (
-            <li className={(num % 2) === 0 ? 'bg-white  pointer' : 'bg-near-white pointer'} onClick={this.onTogglePopUp}>
+            <li className={(num % 2) !== 0 ? 'bg-white  pointer' : 'bg-near-white pointer'} onClick={this.onTogglePopUp}>
                 <div className="pa3 grow underline-hover">
                     <div className='grid_container '  >
                         <div className='chore center pa2 b hover-blue '  >{displayName}</div>

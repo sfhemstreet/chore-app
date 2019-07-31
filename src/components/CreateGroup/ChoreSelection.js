@@ -11,7 +11,7 @@ class ChoreSelection extends React.Component {
 		super(props);
 		this.state = {
 			customChore: '',
-			selectedChores : [],
+			selectedChores : localStorage.getItem('chores') === null ? [] : localStorage.getItem('chores').split(','),
 			allChores : CHORE_LIST,
 		}
 	}
@@ -27,6 +27,7 @@ class ChoreSelection extends React.Component {
 				sc.unshift(this.state.customChore);
 				this.setState({selectedChores : sc, customChore : ''});
 				document.getElementById('customChoreInput').value = '';
+				localStorage.setItem('chores', sc);
 			}
 		}
 	}
@@ -35,37 +36,28 @@ class ChoreSelection extends React.Component {
 		let sc = [...this.state.selectedChores];
 		sc.unshift(chore);
 		this.setState({selectedChores : sc});
-		this.removeFromAllChores(chore);
+		localStorage.setItem('chores', sc);
 	}
 
 	removeChore = (chore) => {
 		let sc = [...this.state.selectedChores];
 		sc.splice(sc.indexOf(chore),1);
 		this.setState({selectedChores : sc});
-		this.addBackToAllChore(chore)
-	}
-
-	removeFromAllChores = (chore) => {
-		let ac = [...this.state.allChores];
-		ac.splice(ac.indexOf(chore),1);
-		this.setState({allChores : ac});
-	}
-
-	addBackToAllChore = (chore) => {
-		let ac = [...this.state.allChores];
-		ac.unshift(chore);
-		this.setState({allChores : ac});
+		localStorage.setItem('chores', sc);
 	}
 
 	onSubmitSelectedChores = () => {
+		localStorage.setItem('stage', '3');
+		localStorage.setItem('chores', this.state.selectedChores);
 		this.props.choreChange(this.state.selectedChores)
 		this.props.goForward();
 	}
 
 	render() {
-		
+		const renderedSelectableChores = this.state.allChores.filter(chore => !this.state.selectedChores.includes(chore));
+
 		return (
-			<div className='center mw6-ns br3 hidden mv4 bg-transparent'>
+			<div className='center mw6-ns br3 hidden mv4 bg-light-blue'>
 				<h1 className="f4 black b mv0 pv2 ph3 tc">Select Chores</h1>
 				<div className="pa3 bt b--black-10">
                 	<div className="f6 f5-ns lh-copy measure mv0">
@@ -74,11 +66,11 @@ class ChoreSelection extends React.Component {
 								<fieldset className="ba b--transparent ph0 mh0">
 									<div className='flex '>
 										<div  className="pa2">
-											<h4 className="f4 black b mv0 pv2 ph3 tc">Click a chore to add it to your list</h4>
-											<ChoreSelectBox click={this.addChore} items={this.state.allChores} userChores={false}/>
+											<h4 className=" black  mv0 pv2 ph3 tc">Click a chore to add it to your list</h4>
+											<ChoreSelectBox click={this.addChore} items={renderedSelectableChores} userChores={false}/>
 										</div>
 										<div className='pa2'>
-											<h4 className='f4 black b mv0 pv2 ph3 tc'>Chores you select go here!</h4>
+											<h4 className=' black  mv0 pv2 ph3 tc'>Chores you select go here!</h4>
 											<ChoreSelectBox click={this.removeChore} items={this.state.selectedChores} userChores={true}/>
 										</div>
 									</div>
