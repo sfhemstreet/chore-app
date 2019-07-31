@@ -19,22 +19,22 @@ const Navigation = (props) => {
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
                     <NavLink 
                         to='/dash'
-                        className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
+                        className="link hover-blue dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Chores
                     </NavLink>
                     <NavLink 
                         to='/groups'
-                        className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
+                        className="link hover-green dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Groups
                     </NavLink>
                     <NavLink  
                         to='/creategroup'
-                        className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
-                        Create New Group
+                        className="link hover-purple dark-gray f6 f5-l dib mr3 mr4-l pointer">
+                        Create Group
                     </NavLink>
                     <NavLink 
                         to='/signin'
-                        className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
+                        className="link hover-red dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Sign Out
                     </NavLink>
                 </div>
@@ -47,15 +47,15 @@ const Navigation = (props) => {
                 <Logo />  
                 <div className="db dtc-l v-mid w-100 w-75-l tc tr-l">
                     <NavLink to='/'
-                        className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
+                        className="link hover-blue dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Home
                     </NavLink>
                     <NavLink to='/signin'
-                        className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
+                        className="link hover-green dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Sign In
                     </NavLink>
                     <NavLink to='/register'
-                        className="link dim dark-gray f6 f5-l dib mr3 mr4-l pointer">
+                        className="link hover-purple dark-gray f6 f5-l dib mr3 mr4-l pointer">
                         Register
                     </NavLink>
                 </div>

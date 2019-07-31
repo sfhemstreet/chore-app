@@ -4,7 +4,7 @@ import {
     REQUEST_CHORES_FAILED, 
     SUBMIT_CHORE_PENDING,
     SUBMIT_CHORE_SUCCESS,
-    SUBMIT_CHORE_FAILED
+    SUBMIT_CHORE_FAILED,
         } from '../constants/chore_constants';
 
 
@@ -63,4 +63,6 @@ export const submitChore = (choreID) => (dispatch) => {
     });
     
 }
+
+
 

@@ -11,11 +11,7 @@ export const SUBMIT_CHORE_FAILED = 'SUBMIT_CHORE_FAILED';
 
 
 
-
-
-
-
-
+// LIST OF CHORES
 export const CHORE_LIST = [
     "Dust/Wipe surfaces",
     "Dust/Clean Windows",
