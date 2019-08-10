@@ -1,6 +1,5 @@
 import React from 'react';
 import GroupMember from '../GroupMember/GroupMember';
-import ScrollBox from '../ScrollBox';
 
 const Group = ({groupInfo}) => {
     
@@ -28,12 +27,10 @@ const Group = ({groupInfo}) => {
     });
 
     return (
-        <div  className='list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2'>
-            <h3 className='tc black-90 ' >{groupName}</h3>
+        <div  className='list center mw6 pa3 ba b--light-silver bg-light-blue br2'>
+            <h2 className='tc black-90' >{groupName}</h2>
             <div>
-                <ScrollBox maxHeight={'475'}>
-                    {renderAllMembers}
-                </ScrollBox>
+                {renderAllMembers}
             </div>
         </div>
         

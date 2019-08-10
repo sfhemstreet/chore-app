@@ -8,15 +8,15 @@ const StatusBar = ({status, timeLeft, isCompleted}) => {
     let textColor = 'black';
     
     // over due
-    if(status >= 100){
+    if(timeLeft < 0){
         text = 'OVER DUE';
         urgencyColor = 'red';
         status = 100;
     }
-    // its due today
-    else if(timeLeft === 0) {
+    else if(timeLeft === 0){
         text = 'Due Today!';
         urgencyColor = 'yellow';
+        status = 100;
     }
     // due in 1 or more days
     else{
@@ -37,14 +37,12 @@ const StatusBar = ({status, timeLeft, isCompleted}) => {
         urgencyColor = 'blue';
         textColor = 'white';
     }
-    
+    console.log(timeLeft, urgencyColor)
     return (
-        <div >
-           <div className='status_bar pointer b' style={{color: textColor ,background: `linear-gradient(to right,  ${urgencyColor} 0%,${urgencyColor} ${status}%,#dddddd ${status}%,#dddddd 100%)`}}>{text}</div> 
+        <div>
+           <div className='status_bar pointer b' style={{color: textColor, background: `linear-gradient(to right, ${urgencyColor} 0%,${urgencyColor} ${status}%,#dddddd ${status}%,#dddddd 100%)`}}>{text}</div> 
         </div>
     )
-        
-
 }
 
 export default StatusBar;

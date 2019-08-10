@@ -2,7 +2,7 @@ import React from 'react';
 import Group from '../Group/Group.js';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-
+import {uid} from 'react-uid';
 import {getChores} from '../../actions/choreActions';
 
 class GroupsPage extends React.Component {
@@ -27,13 +27,16 @@ class GroupsPage extends React.Component {
 
         const renderAllGroups = groupsArray.map((_,i) => {
             return (
-                <Group key={i} groupInfo={groupsArray[i]} />
+                <div key={uid('Group',i)} className='pa3'>
+                   <Group groupInfo={groupsArray[i]} /> 
+                </div>
+                
             )
         })
 
         return(
             
-            <div>
+            <div className='vh-100 bg-near-white dt w-100'>
                 
                 {this.props.isPending ? 
                     <div>LOADING</div> 
@@ -44,7 +47,7 @@ class GroupsPage extends React.Component {
                         Object.keys(this.props.groups).length > 0 ?
                             <div>
                                 <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">Your Groups</h2>
-                                <div>
+                                <div className=''>
                                     {renderAllGroups}
                                 </div>
                             </div>

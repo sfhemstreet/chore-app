@@ -33,10 +33,12 @@ class ChoreSelection extends React.Component {
 	}
 
 	addChore = (chore) => {
+	
 		let sc = [...this.state.selectedChores];
 		sc.unshift(chore);
 		this.setState({selectedChores : sc});
-		localStorage.setItem('chores', sc);
+		localStorage.setItem('chores', sc);	
+		this.props.choreOptionChange()
 	}
 
 	removeChore = (chore) => {

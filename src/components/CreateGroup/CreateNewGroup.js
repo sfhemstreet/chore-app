@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {submitCreatedGroup} from '../../actions/groupActions';
 import NumPeople from './NumPeople';
-import PeopleInfo from './PeopleInfo';
 import ChoreSelection from './ChoreSelection';
 import ChoreOptions from './ChoreOptions';
 import NewGroupConfirm from './NewGroupConfirm';
@@ -13,14 +12,12 @@ import {assignChores} from '../../utils/assignChores';
 import GroupName from './GroupName';
 import AddPeople from './AddPeople';
 
-
-class CreateGroup extends React.Component {
+class CreateNewGroup extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             groupName : '',
-            numPeople : 2,
-            people : [this.props.email, ''],
+            people : [''],
             chores : [],
             stage : 0,
             choresWithOptions : {}
@@ -35,19 +32,12 @@ class CreateGroup extends React.Component {
             if(localStorage.getItem('stage') !== null){
                 //check if storage stage is greater than current
                 if(this.state.stage < localStorage.getItem('stage')){
-                    // check number of people
-                    if(localStorage.getItem('numPeople') !== null){
-                        this.setState({ numPeople : Number(localStorage.getItem('numPeople')) });
-                    }
-                    else{
-                        this.setState({ stage : 0, numPeople : 2, people : [this.props.email, ''], chores : [], choresWithOptions : {} });
-                    }
                     // check groupname 
                     if(localStorage.getItem('groupName') !== null){
                         this.setState({groupName : localStorage.getItem('groupName')});
                     }
                     else {
-                        this.setState({ stage : 0, people : [this.props.email, ''], chores : [], groupName : '', choresWithOptions : {} });
+                        this.setState({ stage : 0, people : [''], chores : [], groupName : '', choresWithOptions : {} });
                         return null;
                     }
                     //check people
@@ -66,7 +56,7 @@ class CreateGroup extends React.Component {
                         this.setState({ people : p });
                     }
                     else{
-                        this.setState({ stage : 1, people : this.fillPeopleHelper(this.state.numPeople), chores : [], choresWithOptions : {} });
+                        this.setState({ stage : 1, people : this.state.people, chores : [], choresWithOptions : {} });
                         return null;
                     }
                     //check chores
@@ -104,17 +94,18 @@ class CreateGroup extends React.Component {
         
     }
 
-    fillPeopleHelper = (number) => {
-        let array = new Array(number).fill('');
-        array[0] = this.props.email;
-        return array;
-    }
-
     onAdvanceStage = (event) => {
         this.setState({ stage: this.state.stage + 1 });
     }
 
     onDecreaseStage = (event) => {
+        if(this.state.stage - 1 === 1){
+            let p = [...this.state.people];
+            if(p.includes(this.props.email)){
+                p.splice(p.indexOf(this.props.email),1);
+                this.setState({people : p});
+            }
+        }
         this.setState({ stage: this.state.stage - 1 });
     }
 
@@ -122,12 +113,10 @@ class CreateGroup extends React.Component {
         this.setState({ groupName : name });
     }
 
-    onChangeNum = (num) => {
-        this.setState({ people : this.fillPeopleHelper(Number(num)) ,numPeople : Number(num) });
-    }
-
     onChangePeople = (peopleInfo) => {
-        this.setState({ people: peopleInfo });
+        let pI = [...peopleInfo];
+        pI.unshift(this.props.email);
+        this.setState({ people: pI });
     }
 
     onChangeChores = (choresSelected) => {
@@ -158,14 +147,11 @@ class CreateGroup extends React.Component {
             switch(this.state.stage){
                 case 0 : 
                     return (
-                        
                         <GroupName groupNameChange={this.onChangeGroupName} nameOfGroup={this.state.groupName} goForward={this.onAdvanceStage}/>
-                        //<NumPeople groupNameChange={this.onChangeGroupName} numChange={this.onChangeNum} goForward={this.onAdvanceStage} numberOfPeople={this.state.numPeople} nameOfGroup={this.state.groupName}/>
                     )
                 case 1 :
                     return (
-                        <AddPeople numChange={this.onChangeNum} people={this.state.people} peopleChange={this.onChangePeople} goForward={this.onAdvanceStage} goBack={this.onDecreaseStage}/>
-                        //<PeopleInfo people={this.state.people} peopleChange={this.onChangePeople} goForward={this.onAdvanceStage} goBack={this.onDecreaseStage} />
+                        <AddPeople people={this.state.people} peopleChange={this.onChangePeople} goForward={this.onAdvanceStage} goBack={this.onDecreaseStage}/>
                     )
                 case 2 : 
                     return (
@@ -188,7 +174,7 @@ class CreateGroup extends React.Component {
         const outPut = renderStage();
 
         return (
-            <div className='vh-100 bg-near-white dt w-100' >
+            <div className='vh-100 bg-light-blue dt w-100' >
                 {groupName !== '' ? <div className='f4 black b mv0 pv2 ph3 tc'>{groupName}</div> : null}
                 <ProgressLine progress={this.state.stage} />
                 {outPut}
@@ -217,4 +203,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateGroup));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateNewGroup));

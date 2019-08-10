@@ -12,8 +12,8 @@ const ChoreSelectBox = ({items, click, userChores}) => {
     const renderItems = items.map((_,i) => {
         return(
             <li key={i} className={(i % 2) === 0 ? 'bg-white  pointer' : 'bg-near-white pointer'} onClick={() => itemSelected(items[i])}  >
-                <div className="pa1 grow underline-hover">
-                    {userChores === true ? <div className='center pa1 b hover-red tc' >{items[i]}</div>  : <div className='center pa1 b hover-blue tc' >{items[i]}</div>}
+                <div className="pa1 underline-hover">
+                    {userChores === true ? <div className='center pa1 b hover-red tc ' >{items[i]}</div>  : <div className='center pa1 b hover-blue tc' >{items[i]}</div>}
                 </div>
             </li> 
         )

@@ -10,6 +10,9 @@ import About from '../../components/About/About.js';
 import Home from '../../components/Home/Home.js';
 import Dash from '../../components/Dash/Dash';
 import CreateGroup from '../../components/CreateGroup/CreateGroup.js';
+
+import CreateNewGroup from '../../components/CreateGroup/CreateNewGroup.js';
+
 import GroupsPage from '../../components/GroupsPage/GroupsPage.js';
 
 import { toast, ToastContainer } from 'react-toastify';
@@ -19,7 +22,6 @@ import ProtectedRoute from '../../components/ProtectedRoute';
 toast.configure({
   position:"bottom-center",
   autoClose:5000,
-  hideProgressBar:false,
   newestOnTop:false,
   rtl:false
 })
@@ -33,7 +35,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/'             render={() => <Home  />}/>
           <ProtectedRoute auth={this.props.auth} exact path='/dash'      render={() => <Dash    />}/>
-          <ProtectedRoute auth={this.props.auth} exact path='/creategroup'  render={() => <CreateGroup/>}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/creategroup'  render={() => <CreateNewGroup/>}/>
           <ProtectedRoute auth={this.props.auth} exact path='/groups'       render={() => <GroupsPage     />}/>
           <Route exact path='/signin'       render={() => <SignIn     />}/>
           <Route exact path='/register'     render={() => <Register   />}/>

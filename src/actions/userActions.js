@@ -36,8 +36,7 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
             dispatch({ type: REQUEST_SIGNIN_FAILED, payload: data})
             toast.error(data, {
                 position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: false,
+                autoClose: 2000,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true
@@ -70,8 +69,7 @@ export const register = (registerName, registerEmail, registerPassword, history)
             history.push('/signin');
             toast.success("Registered! You can now sign in.", {
                 position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: false,
+                autoClose: 2000,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true
@@ -81,8 +79,7 @@ export const register = (registerName, registerEmail, registerPassword, history)
             dispatch({ type: REQUEST_REGISTER_FAILED, payload: data});
             toast.error(data, {
                 position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: false,
+                autoClose: 2000,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true
@@ -93,8 +90,7 @@ export const register = (registerName, registerEmail, registerPassword, history)
         dispatch({ type: REQUEST_REGISTER_FAILED, payload: error});
         toast.error(error, {
             position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
+            autoClose: 2000,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true
