@@ -1,40 +1,54 @@
 import React from 'react';
 import BackButton from '../form_components/BackButton';
 import SubmitButton from '../form_components/SubmitButton';
+import ScrollBox from '../ScrollBox';
+import './CreateGroup.css';
 
 const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
+    
+    localStorage.setItem('confirmChoreGroup','true');
+    
+    let p = {};
+    people.forEach(person => {
+        p[person] = true;
+    });
 
     const onPermissionsChange = (event) => {
+        p[event.target.name] = event.target.value === 'true';
+    }
 
+    const submitGroup = () => {
+        submit(p)
     }
 
     const renderPeopleList = people.map((_,i) => {
         return (
-            <div key={people[i] + i}>
-                <div className={i === 0 ? "pa2 b--black-10" : "pa2 bt b--black-10"}>
-                    <h3 className="mb1">{people[i]}</h3>
-                    <div className="">Permissions:
-                        <select onChange={onPermissionsChange} className='pa1 db f6 lh-title' >
-                            <option value='true' >Can Add Chores to Group</option>
-                            <option value='false' >Not Allowed to Add Chores to Group</option>
-                        </select>
-                    </div>
+            <li key={people[i] + i} className={i % 2 === 0 ? "bg-white" : "bg-near-white"}>
+                <div className="pa2 b--black-10 ml2 confirm_people_grid" >
+                    <div className="name mt0 lh-copy tc center">{people[i]}</div>
+                    {i === 0 ? 
+                    <div className='permissions mt0 lh-copy tc center'>Admin</div>
+                    :
+                    <select onChange={onPermissionsChange} className='permissions mt0 lh-copy tc center' name={people[i]}>
+                        <option value='true' >Can Add Chores to Group</option>
+                        <option value='false' >Not Allowed to Add Chores</option>
+                    </select>}
                 </div>
-            </div>
+            </li>
         )
     });
-    
+
     const renderChoreList = chores.map((_,i) => {
         return (
-            <div key={chores[i] + i}>
-                <div  className={i === 0 ? "pa2 b--black-10" : "pa2 bt b--black-10"}>
-                    <h3 className="">{chores[i]}</h3>
-                    <div className="">Due Date - {choreOptions[chores[i]].dueDate}</div>
-                    <div className="">Assign {choreOptions[chores[i]].assignment}</div>
-                    {choreOptions[chores[i]].description === '' ? null : <div className="">Description - {choreOptions[chores[i]].description}</div>}
-                    <div className="">Exempt - {choreOptions[chores[i]].exempt}</div>
+            <li key={chores[i] + i} className={i % 2 === 0 ? "bg-white" : "bg-near-white"} name={chores[i]}>
+                <div  className={choreOptions[chores[i]].description === '' ? "pa1 b--black-10 ml2 confirm_chores_title_grid" : "pa1 b--black-10 ml2 confirm_chores_grid "}>
+                    <div className="chore underline mt0 lh-copy tc center b pa1">{chores[i]}</div>
+                    <div className="due mt0 lh-copy tc center pa1 dib">Due On : <div className="due mt0 lh-copy tc center pa1 b dib">{choreOptions[chores[i]].dueDate}</div></div>
+                    <div className="assign mt0 lh-copy tc center pa1 dib">Assign : <div className="due mt0 lh-copy tc center pa1 b dib">{choreOptions[chores[i]].assignment}</div></div>
+                    <div className="exempt mt0 lh-copy tc center pa1 dib">Exemption : <div className="due mt0 lh-copy tc center pa1 b dib">{choreOptions[chores[i]].exempt}</div></div> 
+                    {choreOptions[chores[i]].description === '' ? null : <div className="description mmt0 lh-copy b--black-10 bt tc center pa1">"{choreOptions[chores[i]].description}"</div>}
                 </div>
-            </div>
+            </li>
         )
     });
 
@@ -47,18 +61,33 @@ const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
                         <div className="measure center">
                             <fieldset className="ba b--transparent ph0 mh0">
                                 <div>
-                                    <h4 className=' black  mv0 pv2 ph3 tc'>Emails of Group Members</h4>
-                                    <div>{renderPeopleList}</div>
+                                    <h4 className=' black  mv0 pv2 ph3 tc'>Emails / Permissions of Group Members</h4>
+                                    <ul className="list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2 ">
+                                        <ScrollBox maxHeight={200}>
+                                            {renderPeopleList}
+                                        </ScrollBox>
+                                    </ul>
                                 </div>
                             </fieldset>
                             <fieldset className="ba b--transparent ph0 mh0 ">
                                 <div>
                                     <h4 className=' black  mv0 pv2 ph3 tc bt b--black-10 pa3'>Chores</h4>
-                                    <div>{renderChoreList}</div>
+                                    {/*<div className='confirm_chores_title_grid mv0 mb0 pa0' >
+                                        <div className='chore f7 f4-m f3-l fw2 black-90 mt0 mb0 lh-copy tc center' >Chore</div>
+                                        <div className='due f7 f4-m f3-l fw2 black-90 mt0 mb0 lh-copy tc center' >Due Date</div>
+                                        <div className='assign f7 f4-m f3-l fw2 black-90 mt0 mb0 lh-copy tc center' >Assign</div>
+                                        <div className='exempt f7 f4-m f3-l fw2 black-90 mt0 mb0 lh-copy tc center' >Exempt</div>
+                                    </div>*/}
+                                    <ul className="list pl0 ml0 mv0 mt0 mb0 pa0 center  ba b--light-silver br2 ">
+                                        <ScrollBox maxHeight={300} >
+                                            {renderChoreList}
+                                        </ScrollBox>
+                                    </ul>
+                                    
                                 </div>
                                 <div className='tc pa2 ma2'>
                                     <BackButton click={goBack}/>
-                                    <SubmitButton click={submit}/>
+                                    <SubmitButton click={submitGroup}/>
                                 </div> 
                             </fieldset>
                         </div>
@@ -66,8 +95,7 @@ const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
                 </div>
             </div>
         </div>
-    )
-    
+    )      
 }
 
 export default NewGroupConfirm;

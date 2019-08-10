@@ -2,14 +2,18 @@ import React from 'react';
 import NextButton from '../form_components/NextButton';
 import BackButton from '../form_components/BackButton';
 import regexCheck from '../../utils/regexCheck';
+import TextInput from '../form_components/TextInput';
+import XButton from '../form_components/XButton';
+import {uid} from 'react-uid';
+import genInputKeys from '../../utils/genInputKeys';
 
 class PeopleInfo extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            highlightRed : new Array(this.props.people.length).fill(false),
+            highlightRed : new Array(this.props.people).fill(false),
             emails : [...this.props.people],
-            inputs : [...this.props.people]
+            inputs : genInputKeys(this.props.people.length)
         }
     }
 
@@ -19,27 +23,51 @@ class PeopleInfo extends React.Component {
             localStorage.setItem('people',[...emails]);
         }
     }
+
+    addPerson = () => {
+        const {emails , inputs} = this.state;
+        let e = [...emails];
+        let i = [...inputs];
+        // create new entry in array
+        e.push('');
+        // create new random ID for a react key 
+        i.push(uid(`NEWinput${e[e.length - 1]}`,Math.random()));
+        this.setState({ emails : e, inputs : i });
+    }
     
-    updateInfo = (event) => {
+    deletePerson = (index) => {
+        const {emails , inputs} = this.state;
+        let e = [...emails];
+        let i = [...inputs];
+        // get rid of person
+        e.splice(index, 1);
+        i.splice(index, 1);
+        this.setState({ emails : e, inputs : i });
+        // delete this person from local storage
+        if(localStorage.getItem('people') !== null){
+            let p = localStorage.getItem('people').split(',');
+            p.splice(p.indexOf(e[index]),1);
+            localStorage.setItem('people', p); 
+        }
+    }
+
+    updateInfo = (newInput, index) => {
         const {emails, highlightRed} = this.state;
         let newHighlightRed = [...highlightRed];
-        const email = event.target.value;
         let newEmails = [...emails];
-
-        newEmails[Number(event.target.name)] = email;
+       
+        newEmails[index] = newInput;
         this.setState({ emails : newEmails });
 
-        if(newHighlightRed[Number(event.target.name)]){
-            if(regexCheck(email, 'email')){
+        if(newHighlightRed[index]){
+            if(regexCheck(newInput, 'email')){
                 let localP = localStorage.getItem('people').split(',');
-                localP[Number(event.target.name)] = email;
+                localP[index] = newInput;
                 localStorage.setItem('people', [...localP]);
-                newHighlightRed[Number(event.target.name)] = false;
+                newHighlightRed[index] = false;
                 this.setState({ highlightRed : newHighlightRed });
             }
         }
-            
-        
     } 
 
     checkInput = () => {
@@ -72,33 +100,35 @@ class PeopleInfo extends React.Component {
     }
 
     onSubmit = (event) => {
-        const {emails} = this.state;
+        const {emails, num} = this.state;
         const {peopleChange,goForward} = this.props;
+        // set local storage
         localStorage.setItem('stage', '2');
         localStorage.setItem('people',[...emails]);
+        localStorage.setItem('numPeople',num);
+        // send emails to parent go to next step
         peopleChange(emails);
         goForward();
     }
     
     render(){
-        const {highlightRed, inputs} = this.state;
+        const {highlightRed, inputs, emails} = this.state;
+        const {goBack} = this.props;
+        console.log('render emails', emails);
+
         const renderInputs = inputs.map((_,i) => {
-            
             return (
-                
-                <div key={inputs[i] + i} className='pa2'>
-                   {i === 0 ?  
-                    <>{inputs[i]}</>
-                    :
-                    <>Email {(i + 1)}
-                    <input onChange={this.updateInfo} className={highlightRed[i] ? "pa2 input-reset ba bg-light-red hover-bg-near-white w-100" : "pa2 input-reset ba hover-bg-near-white w-100"} name={i} type="email" defaultValue={inputs[i]}></input>
-                    </>
-                    }
+                <div key={inputs[i]} className='pa2'>
+                    <div>Email {(i + 1)}
+                        <div className='flex'>
+                            <TextInput change={this.updateInfo} index={i} red={highlightRed[i]} defaultText={emails[i]} />
+                            {i === 0 ? null : <XButton click={this.deletePerson} index={i} />}   
+                        </div>
+                    </div>
                 </div>
             )
-
         })
-        const {goBack} = this.props;
+       
         return (
             <div className='center mw6-ns br3 hidden mv4 bg-light-blue'>
                 <h2 className=" black  mv0 pv2 ph3 tc">Please Enter Other Group Member Emails</h2>
@@ -110,6 +140,9 @@ class PeopleInfo extends React.Component {
                                     <div className="">
                                         <div>
                                         {renderInputs}
+                                        </div>
+                                        <div className='flex center pa2'>
+                                            <div className="f6 link br2 ph3 pv2 mb2 dib white bg-blue grow pointer" onClick={this.addPerson}>Add Person</div>
                                         </div>
                                         <div className='tc pa2 ma2'>
                                             <BackButton click={goBack}/>

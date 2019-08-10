@@ -1,0 +1,35 @@
+.confirm_chores_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: "chore chore due due" "assign assign exempt exempt" "description description description description";
+  
+}
+  
+.chore { grid-area: chore; }
+  
+.due { grid-area: due; }
+
+.assign { grid-area: assign; }
+
+.exempt { grid-area: exempt; }
+
+.description { grid-area: description}
+
+.confirm_people_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    grid-template-rows: 1fr;
+    grid-template-areas: "name permissions";
+}
+
+.name { grid-area: name; }
+
+.permissions { grid-area: permissions; }
+
+.confirm_chores_title_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "chore chore due due" "assign assign exempt exempt";
+}

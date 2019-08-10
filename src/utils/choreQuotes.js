@@ -50,7 +50,7 @@ const randomQuote = () => {
         <div>"I hate housework. You make the beds, you wash the dishes and six months later you have to start all over again."
         <div>Joan Rivers</div></div>,
     
-        <div>"Have a place for everything and keediv the thing somewhere else; this is not a piece of advice, it is merely a custom." 
+        <div>"Have a place for everything and keep the thing somewhere else; this is not a piece of advice, it is merely a custom." 
         <div>Mark Twain</div></div>,
     
         <div>"Housework can't kill you, but why take a chance?"

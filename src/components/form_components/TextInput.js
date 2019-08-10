@@ -1,35 +1,27 @@
 import React from 'react';
 
-const TextInput = ({placeHolderText = '', textType = '', change, nameAttribute = '' }) => {
-
-    const onCheckValidity = (event) => {
-        const text = event.target.value;
-        let regex = /^[a-zA-Z0-9_.-]*$/;
-        switch(textType){
-            case 'plain':
-                regex = /^[a-zA-Z0-9_.-]*$/;
-                break;
-            case 'email':
-                regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                break;
-            case 'password':
-                regex = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
-                break;
-            default:
-                regex = /^[a-zA-Z0-9_.-]*$/;
-        }
-        const valid = text.match(regex);
-        if(valid){
-            change(text);
-        }
-        else{
-            change('*ERROR*')
+class TextInput extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            text : this.props.defaultText,
         }
     }
 
-    return (
-        <input name={nameAttribute} placeholder={placeHolderText} onChange={onCheckValidity} type={textType} className="pa2 input-reset ba hover-bg-near-white w-100"></input>
-    ) 
+    onTextChange = (event) => {
+        const input = event.target.value;
+        this.setState({text : input});
+        this.props.change(input, this.props.index);
+    }
+    
+    render(){
+        return (
+            <input onChange={this.onTextChange} className={this.props.red ? "pa2 input-reset ba bg-light-red hover-bg-near-white w-100" : "pa2 input-reset ba hover-bg-near-white w-100"} type="email" defaultValue={this.state.text}></input>
+        )
+    }
+    
+        
+  
 } 
 
     

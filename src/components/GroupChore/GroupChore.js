@@ -33,14 +33,15 @@ class GroupChore extends React.Component {
 
     render(){
         
-        const { assignName, assignDate, choreName, completeDate, description, dueDate, groupName, isDone, isPopUp, num} = this.state; 
+        const { assignName, assignDate, choreName, completeDate, description, dueDate, groupName, isDone, isPopUp, num} = this.state;
+        const displayDueDate = dueDate.slice(0, dueDate.length - 4);
         // catch chores that are null AKA no chores for this user
         if(this.state.choreName === null){
             return (
-                <li className={(num % 2) === 0 ? 'bg-white  pointer' : 'bg-near-white pointer'} onClick={this.onTogglePopUp}>
-                    <div className="pa3 grow underline-hover">
-                        <div className='grid_container '  >
-                            <div className='chore center pa2 b hover-blue '  >No Chores Due</div>
+                <li className='bg-near-white'>
+                    <div className="pa3">
+                        <div className='grid_container '>
+                            <div className='chore center pa2 b'>No Chores Due</div>
                         </div>
                     </div>
                 </li> 
@@ -88,7 +89,7 @@ class GroupChore extends React.Component {
                 <div className="pa3 grow underline-hover">
                     <div className='grid_container '  >
                         <div className='chore center pa2 b hover-blue '  >{displayName}</div>
-                        <div className='due center pa2 b hover-blue' >{dueDate}</div>
+                        <div className='due center pa2 b hover-blue' >{displayDueDate}</div>
                         <StatusBar  className='status center pa2 pointer grow' status={percent} timeLeft={daysLeft} isCompleted={isDone} />
                     </div>
                 </div>

@@ -18,7 +18,7 @@
     min-height: 25px;
     min-width: 25px;
     border-radius: 50%;
-    background-color: darkgreen;
+    background-color: black;
 }
 
 .incompleteStep {
@@ -35,6 +35,6 @@
     border: 1px solid black;
     min-height: 25px;
     min-width: 25px;
-    border-radius: 50%;
-    background-color: red;
+    border-radius: 10%;
+    background-color: black;
 }
