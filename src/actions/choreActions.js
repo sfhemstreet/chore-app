@@ -11,7 +11,7 @@ import { SIGN_OUT_USER } from '../constants/user_constants';
 
 export const getChores = () => (dispatch) => {
     dispatch({type: REQUEST_CHORES_PENDING});
-    fetch('http://localhost:3000/getchores', { 
+    fetch('http://localhost:4000/getchores', { 
         method: 'get',
         mode: 'cors',
         credentials: 'include',
@@ -37,7 +37,7 @@ export const getChores = () => (dispatch) => {
 export const submitChore = (choreID) => (dispatch) => {
    
     dispatch({type: SUBMIT_CHORE_PENDING});
-    fetch('http://localhost:3000/submitchore', { 
+    fetch('http://localhost:4000/submitchore', { 
         method: 'PATCH',
         mode: 'cors',
         credentials: 'include',
