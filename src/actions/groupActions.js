@@ -4,6 +4,8 @@ import {
     CREATE_GROUP_FAILED,
 } from '../constants/group_constants';
 
+import {SIGN_OUT_USER} from '../constants/user_constants.js';
+
 import { toast } from "react-toastify";
 
 export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
@@ -36,6 +38,9 @@ export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
             });
             history.push('/dash');
             localStorage.clear();
+        }
+        else if(res === "MUST LOGIN"){
+            dispatch({ type: SIGN_OUT_USER });
         }
         else {
             dispatch({ type: CREATE_GROUP_FAILED , payload: res});

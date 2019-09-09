@@ -7,7 +7,7 @@ import XButton from '../form_components/XButton';
 import {uid} from 'react-uid';
 import genInputKeys from '../../utils/genInputKeys';
 
-class PeopleInfo extends React.Component {
+class AddPeople extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -81,11 +81,12 @@ class PeopleInfo extends React.Component {
                     newHighlightRed[x] = true;
                     allGood = false;
                 }
-                if(x > 0){
-                    if(emails[x - 1] === input){
-                        newHighlightRed[x] = true;
-                        allGood = false;
-                    }
+                // check for duplicates
+                let e = [...emails];
+                e.splice(x,1);
+                if(e.includes(input)){
+                    allGood = false;
+                    newHighlightRed[x] = true;
                 }
             }
             else{
@@ -118,14 +119,17 @@ class PeopleInfo extends React.Component {
 
         const renderInputs = inputs.map((_,i) => {
             return (
-                <div key={inputs[i]} className='pa2'>
-                    <div>Email {(i + 1)}
+                <div key={inputs[i]}>{i === 0 ? null 
+                    :
+                <div className='pa2'>
+                    <div>Email {i}
                         <div className='flex'>
                             <TextInput change={this.updateInfo} index={i} red={highlightRed[i]} defaultText={emails[i]} />
                             {i === 0 ? null : <XButton click={this.deletePerson} index={i} />}   
                         </div>
                     </div>
                 </div>
+                }</div>
             )
         })
        
@@ -161,4 +165,4 @@ class PeopleInfo extends React.Component {
     
 }
 
-export default PeopleInfo;
+export default AddPeople;

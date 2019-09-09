@@ -6,8 +6,6 @@ const Group = ({groupInfo}) => {
     const groupName = groupInfo.name.replace('_', ' ');
     const memberData = groupInfo.memberInfo;
 
-    console.log(groupName, memberData)
-
     const createMembersArray = (members) => {
         let array = [];
         Object.entries(members).forEach((m) => {
@@ -32,11 +30,8 @@ const Group = ({groupInfo}) => {
             <div>
                 {renderAllMembers}
             </div>
-        </div>
-        
+        </div> 
     )
-    
-
 }
 
 export default Group;

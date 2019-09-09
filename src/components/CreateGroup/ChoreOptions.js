@@ -5,6 +5,7 @@ import regexCheck from '../../utils/regexCheck';
 import ScrollBox from '../ScrollBox';
 import {todaysDate} from '../../utils/todaysDate';
 import {makeChoreObjs, makeHLRObjs, checkChoresForOptions} from '../../utils/choreOptionHelpers';
+import {uid} from 'react-uid';
 
 class ChoreOptions extends React.Component {
     constructor(props){
@@ -141,13 +142,13 @@ class ChoreOptions extends React.Component {
 
         const renderSelectOptions = people.map((_,i) => {
             return (
-                <option key={people[i] + i} value={people[i]}>{people[i]}</option>
+                <option key={uid(`selectOption${people[i]}`, i)} value={people[i]}>{people[i]}</option>
             )
         });
 
         const renderChoreOptions = chores.map((_,i) => {
             return (
-                <div key={chores[i] + i} className={i % 2 === 0 ? "pa2 b--black-10 bg-white" : "pa2 b--black-10 bg-near-white"}>
+                <div key={uid(`choreoption${chores[i]}`, i)} className={i % 2 === 0 ? "pa2 b--black-10 bg-white" : "pa2 b--black-10 bg-near-white"}>
                     <h3 className="underline">{chores[i]}</h3>
                     <div className="">Due Date</div>
                     <input onChange={this.updateDueDate} name={chores[i]} type='date' min={todaysDate()} defaultValue={choresWOptions[chores[i]].dueDate} className={/*highlightred[chores[i]].dueDate ? 'bg-red' :*/ null}></input>
