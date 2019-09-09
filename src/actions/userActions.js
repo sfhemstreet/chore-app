@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 // SIGN IN
 export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
     dispatch({ type: REQUEST_SIGNIN_PENDING })
-    fetch('http://localhost:3000/signin', {
+    fetch('http://localhost:4000/signin', {
         method: 'post',
         mode: 'cors',
         credentials: 'include',
@@ -53,7 +53,7 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
 // REGISTER
 export const register = (registerName, registerEmail, registerPassword, history) => (dispatch) => {
     dispatch({ type: REQUEST_REGISTER_PENDING })
-    fetch('http://localhost:3000/register', {
+    fetch('http://localhost:4000/register', {
         method: 'post',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({

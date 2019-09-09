@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
 
     dispatch({type: CREATE_GROUP_PENDING});
-    fetch('http://localhost:3000/creategroup', { 
+    fetch('http://localhost:4000/creategroup', { 
         method: 'POST',
         mode: 'cors',
         credentials: 'include',
