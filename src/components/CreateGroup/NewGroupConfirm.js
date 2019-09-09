@@ -2,7 +2,8 @@ import React from 'react';
 import BackButton from '../form_components/BackButton';
 import SubmitButton from '../form_components/SubmitButton';
 import ScrollBox from '../ScrollBox';
-import './CreateGroup.css';
+import './CreateNewGroup.css';
+import {uid} from 'react-uid';
 
 const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
     
@@ -23,7 +24,7 @@ const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
 
     const renderPeopleList = people.map((_,i) => {
         return (
-            <li key={people[i] + i} className={i % 2 === 0 ? "bg-white" : "bg-near-white"}>
+            <li key={uid(`cg_peoplelist${people[i]}`, i)} className={i % 2 === 0 ? "bg-white" : "bg-near-white"}>
                 <div className="pa2 b--black-10 ml2 confirm_people_grid" >
                     <div className="name mt0 lh-copy tc center">{people[i]}</div>
                     {i === 0 ? 
@@ -40,7 +41,7 @@ const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
 
     const renderChoreList = chores.map((_,i) => {
         return (
-            <li key={chores[i] + i} className={i % 2 === 0 ? "bg-white" : "bg-near-white"} name={chores[i]}>
+            <li key={uid(`cg_chore${chores[i]}`,i)} className={i % 2 === 0 ? "bg-white" : "bg-near-white"} name={chores[i]}>
                 <div  className={choreOptions[chores[i]].description === '' ? "pa1 b--black-10 ml2 confirm_chores_title_grid" : "pa1 b--black-10 ml2 confirm_chores_grid "}>
                     <div className="chore underline mt0 lh-copy tc center b pa1">{chores[i]}</div>
                     <div className="due mt0 lh-copy tc center pa1 dib">Due On : <div className="due mt0 lh-copy tc center pa1 b dib">{choreOptions[chores[i]].dueDate}</div></div>
@@ -72,12 +73,6 @@ const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
                             <fieldset className="ba b--transparent ph0 mh0 ">
                                 <div>
                                     <h4 className=' black  mv0 pv2 ph3 tc bt b--black-10 pa3'>Chores</h4>
-                                    {/*<div className='confirm_chores_title_grid mv0 mb0 pa0' >
-                                        <div className='chore f7 f4-m f3-l fw2 black-90 mt0 mb0 lh-copy tc center' >Chore</div>
-                                        <div className='due f7 f4-m f3-l fw2 black-90 mt0 mb0 lh-copy tc center' >Due Date</div>
-                                        <div className='assign f7 f4-m f3-l fw2 black-90 mt0 mb0 lh-copy tc center' >Assign</div>
-                                        <div className='exempt f7 f4-m f3-l fw2 black-90 mt0 mb0 lh-copy tc center' >Exempt</div>
-                                    </div>*/}
                                     <ul className="list pl0 ml0 mv0 mt0 mb0 pa0 center  ba b--light-silver br2 ">
                                         <ScrollBox maxHeight={300} >
                                             {renderChoreList}

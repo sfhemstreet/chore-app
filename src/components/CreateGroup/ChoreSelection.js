@@ -16,6 +16,16 @@ class ChoreSelection extends React.Component {
 		}
 	}
 
+	componentDidMount(){
+		console.log('in cdm')
+		if(this.state.selectedChores.length === 1){
+			if(this.state.selectedChores[0] === ''){
+				console.log('in ifififififi')
+				this.setState({ selectedChores : [] });
+			}
+		} 
+	}
+
 	editCustomChore = (event) => {
 		this.setState({customChore : event.target.value})
 	}

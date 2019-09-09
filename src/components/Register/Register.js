@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {NavLink,withRouter} from 'react-router-dom';
 import {register, signOut} from '../../actions/userActions';
 import regexCheck from '../../utils/regexCheck';
 
@@ -65,6 +65,12 @@ class Register extends React.Component {
                                     </fieldset>
                                     <div className="">
                                         <input onClick={this.onRegisterSubmit} className="b ph3 pv2 input-reset ba b--black  grow hover-bg-near-black hover-white pointer f6 dib" type="submit" value="Register"/>
+                                    </div>
+                                    <div className="lh-copy mt3">
+                                        <NavLink to='/signin' >
+                                        <p className="f6 link dim black db pointer">Already Registered? Sign In</p>
+                                        </NavLink>
+                                        {/*<p href="#0" class="f6 link dim black db">Forgot your password?</p>*/}
                                     </div>
                                 </div>
                             </main>

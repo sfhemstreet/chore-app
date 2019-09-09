@@ -37,7 +37,7 @@ const StatusBar = ({status, timeLeft, isCompleted}) => {
         urgencyColor = 'blue';
         textColor = 'white';
     }
-    console.log(timeLeft, urgencyColor)
+    
     return (
         <div>
            <div className='status_bar pointer b' style={{color: textColor, background: `linear-gradient(to right, ${urgencyColor} 0%,${urgencyColor} ${status}%,#dddddd ${status}%,#dddddd 100%)`}}>{text}</div> 

@@ -6,6 +6,7 @@ import {
     SUBMIT_CHORE_SUCCESS,
     SUBMIT_CHORE_FAILED,
         } from '../constants/chore_constants';
+import { SIGN_OUT_USER } from '../constants/user_constants';
 
 
 export const getChores = () => (dispatch) => {
@@ -21,7 +22,6 @@ export const getChores = () => (dispatch) => {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data)
         if(data.chores){
             dispatch({ type: REQUEST_CHORES_SUCCESS, payload: data });
         }
@@ -53,6 +53,9 @@ export const submitChore = (choreID) => (dispatch) => {
     .then(res => {
         if(res === 'Chore Submitted'){
             dispatch({ type: SUBMIT_CHORE_SUCCESS });
+        }
+        else if(res === "MUST LOGIN"){
+            dispatch({ type: SIGN_OUT_USER });
         }
         else {
             dispatch({ type: SUBMIT_CHORE_FAILED })

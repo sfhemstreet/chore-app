@@ -9,19 +9,17 @@ import Register from '../../components/Register/Register.js';
 import About from '../../components/About/About.js';
 import Home from '../../components/Home/Home.js';
 import Dash from '../../components/Dash/Dash';
-import CreateGroup from '../../components/CreateGroup/CreateGroup.js';
-
 import CreateNewGroup from '../../components/CreateGroup/CreateNewGroup.js';
-
 import GroupsPage from '../../components/GroupsPage/GroupsPage.js';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+
 import ProtectedRoute from '../../components/ProtectedRoute';
 
 toast.configure({
   position:"bottom-center",
-  autoClose:5000,
+  autoClose:2000,
   newestOnTop:false,
   rtl:false
 })

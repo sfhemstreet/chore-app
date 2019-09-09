@@ -2,22 +2,21 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {submitCreatedGroup} from '../../actions/groupActions';
-import NumPeople from './NumPeople';
+import {assignChores} from '../../utils/assignChores';
+//compontents
+import GroupName from './GroupName';
+import AddPeople from './AddPeople';
 import ChoreSelection from './ChoreSelection';
 import ChoreOptions from './ChoreOptions';
 import NewGroupConfirm from './NewGroupConfirm';
 import ProgressLine from '../ProgressLine/ProgressLine';
-import {assignChores} from '../../utils/assignChores';
-
-import GroupName from './GroupName';
-import AddPeople from './AddPeople';
 
 class CreateNewGroup extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             groupName : '',
-            people : [''],
+            people : [this.props.email,''],
             chores : [],
             stage : 0,
             choresWithOptions : {}
@@ -37,7 +36,7 @@ class CreateNewGroup extends React.Component {
                         this.setState({groupName : localStorage.getItem('groupName')});
                     }
                     else {
-                        this.setState({ stage : 0, people : [''], chores : [], groupName : '', choresWithOptions : {} });
+                        this.setState({ stage : 0, people : [this.props.email,''], chores : [], groupName : '', choresWithOptions : {} });
                         return null;
                     }
                     //check people
@@ -99,13 +98,6 @@ class CreateNewGroup extends React.Component {
     }
 
     onDecreaseStage = (event) => {
-        if(this.state.stage - 1 === 1){
-            let p = [...this.state.people];
-            if(p.includes(this.props.email)){
-                p.splice(p.indexOf(this.props.email),1);
-                this.setState({people : p});
-            }
-        }
         this.setState({ stage: this.state.stage - 1 });
     }
 
@@ -114,9 +106,7 @@ class CreateNewGroup extends React.Component {
     }
 
     onChangePeople = (peopleInfo) => {
-        let pI = [...peopleInfo];
-        pI.unshift(this.props.email);
-        this.setState({ people: pI });
+        this.setState({ people: peopleInfo });
     }
 
     onChangeChores = (choresSelected) => {
@@ -125,7 +115,6 @@ class CreateNewGroup extends React.Component {
 
     onChangeOptions = (choresInfo) => {
         this.setState({ choresWithOptions: choresInfo });
-        console.log('options change')
     }
 
     onSubmitChoreGroup = (peopleInfo) => {
@@ -141,17 +130,17 @@ class CreateNewGroup extends React.Component {
 
 
     render(){
-        const {groupName} = this.state;
+        const {groupName, stage, people, chores, choresWithOptions} = this.state;
 
         const renderStage = () => {
-            switch(this.state.stage){
+            switch(stage){
                 case 0 : 
                     return (
-                        <GroupName groupNameChange={this.onChangeGroupName} nameOfGroup={this.state.groupName} goForward={this.onAdvanceStage}/>
+                        <GroupName groupNameChange={this.onChangeGroupName} nameOfGroup={groupName} goForward={this.onAdvanceStage}/>
                     )
                 case 1 :
                     return (
-                        <AddPeople people={this.state.people} peopleChange={this.onChangePeople} goForward={this.onAdvanceStage} goBack={this.onDecreaseStage}/>
+                        <AddPeople people={people} peopleChange={this.onChangePeople} goForward={this.onAdvanceStage} goBack={this.onDecreaseStage}/>
                     )
                 case 2 : 
                     return (
@@ -159,15 +148,15 @@ class CreateNewGroup extends React.Component {
                     )
                 case 3 :
                     return (
-                        <ChoreOptions chores={this.state.chores} people={this.state.people} choresWithOptions={this.state.choresWithOptions} optionChange={this.onChangeOptions} group={this.state.groupName} goForward={this.onAdvanceStage} goBack={this.onDecreaseStage} />
+                        <ChoreOptions userEmail={this.props.email} chores={chores} people={people} choresWithOptions={choresWithOptions} optionChange={this.onChangeOptions} group={groupName} goForward={this.onAdvanceStage} goBack={this.onDecreaseStage} />
                     )
                 case 4 : 
                     return (
-                        <NewGroupConfirm group={this.state.groupName} chores={this.state.chores} choreOptions={this.state.choresWithOptions} people={this.state.people} submit={this.onSubmitChoreGroup} goBack={this.onDecreaseStage} />
+                        <NewGroupConfirm userEmail={this.props.email} group={groupName} chores={chores} choreOptions={choresWithOptions} people={people} submit={this.onSubmitChoreGroup} goBack={this.onDecreaseStage} />
                     )
                 default:
                     return (
-                        <NumPeople numChange={this.onChangeNum} goForward={this.onAdvanceStage} />
+                        <GroupName groupNameChange={this.onChangeGroupName} nameOfGroup={groupName} goForward={this.onAdvanceStage}/>
                     )
             }
         }
@@ -175,8 +164,8 @@ class CreateNewGroup extends React.Component {
 
         return (
             <div className='vh-100 bg-light-blue dt w-100' >
-                {groupName !== '' ? <div className='f4 black b mv0 pv2 ph3 tc'>{groupName}</div> : null}
                 <ProgressLine progress={this.state.stage} />
+                {groupName !== '' ? <div className='f4 black mv0 pv2 ph3 tc'>{groupName}</div> : null}
                 {outPut}
             </div> 
         )
