@@ -3,7 +3,7 @@ import './PopUp.css';
 
 const PopUp = (props) => {
     return (
-        <div className='popup center'  onClick={props.close}> 
+        <div className='popup center' onClick={props.close}> 
             <div className='popup_inner lh-copy measure  center bg-light-gray pa3 ' onClick={props.close} >{props.text}</div>
         </div>
     )

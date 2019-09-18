@@ -45,7 +45,7 @@ class CreateNewGroup extends React.Component {
                         let full = true;
                         p.forEach(person => {
                             if(person === ''){
-                                this.setState({ stage : 1, people : p });
+                                this.setState({ stage : 1, people : [this.props.email].concat(p) });
                                 full = false;
                             }
                         });
@@ -73,7 +73,7 @@ class CreateNewGroup extends React.Component {
                         this.setState({ stage : 3, choresWithOptions : cwo });
                     }
                     else{
-                        this.setState({ stage : 3, choresWithOptions : {} });
+                        this.setState({ stage : 2, choresWithOptions : {} });
                         return null;
                     }
                     // check if confirmChoreGroup is true
@@ -118,7 +118,8 @@ class CreateNewGroup extends React.Component {
     }
 
     onSubmitChoreGroup = (peopleInfo) => {
-        const assignedChores = assignChores(this.state.people, this.state.choresWithOptions)
+        const assignedChores = assignChores(this.state.people, this.state.choresWithOptions);
+        console.log('should be true and false next to stuf!',peopleInfo)
         const groupInfo = {
             users : peopleInfo,
             chores : assignedChores,

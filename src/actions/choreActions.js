@@ -25,6 +25,9 @@ export const getChores = () => (dispatch) => {
         if(data.chores){
             dispatch({ type: REQUEST_CHORES_SUCCESS, payload: data });
         }
+        else if(data === "MUST LOGIN"){
+            dispatch({ type: SIGN_OUT_USER });
+        }
         else {
             dispatch({ type: REQUEST_CHORES_FAILED, payload: data })
         }

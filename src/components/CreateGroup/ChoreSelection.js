@@ -17,12 +17,8 @@ class ChoreSelection extends React.Component {
 	}
 
 	componentDidMount(){
-		console.log('in cdm')
-		if(this.state.selectedChores.length === 1){
-			if(this.state.selectedChores[0] === ''){
-				console.log('in ifififififi')
-				this.setState({ selectedChores : [] });
-			}
+		if(this.state.selectedChores.length === 1 && this.state.selectedChores[0] === ''){
+			this.setState({ selectedChores : [] });
 		} 
 	}
 
@@ -31,19 +27,16 @@ class ChoreSelection extends React.Component {
 	}
 
 	addCustomChore = (event) => {
-		if(this.state.customChore !== ''){
-			if(regexCheck(this.state.customChore, 'plain')){
-				let sc = [...this.state.selectedChores];
-				sc.unshift(this.state.customChore);
-				this.setState({selectedChores : sc, customChore : ''});
-				document.getElementById('customChoreInput').value = '';
-				localStorage.setItem('chores', sc);
-			}
+		if(regexCheck(this.state.customChore, 'plain') && this.state.customChore !== ''){
+			let sc = [...this.state.selectedChores];
+			sc.unshift(this.state.customChore);
+			this.setState({selectedChores : sc, customChore : ''});
+			document.getElementById('customChoreInput').value = '';
+			localStorage.setItem('chores', sc);
 		}
 	}
 
 	addChore = (chore) => {
-	
 		let sc = [...this.state.selectedChores];
 		sc.unshift(chore);
 		this.setState({selectedChores : sc});

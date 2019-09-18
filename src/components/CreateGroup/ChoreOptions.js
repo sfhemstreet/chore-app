@@ -2,7 +2,6 @@ import React from 'react';
 import NextButton from '../form_components/NextButton';
 import BackButton from '../form_components/BackButton';
 import regexCheck from '../../utils/regexCheck';
-import ScrollBox from '../ScrollBox';
 import {todaysDate} from '../../utils/todaysDate';
 import {makeChoreObjs, makeHLRObjs, checkChoresForOptions} from '../../utils/choreOptionHelpers';
 import {uid} from 'react-uid';
@@ -148,23 +147,22 @@ class ChoreOptions extends React.Component {
 
         const renderChoreOptions = chores.map((_,i) => {
             return (
-                <div key={uid(`choreoption${chores[i]}`, i)} className={i % 2 === 0 ? "pa2 b--black-10 bg-white" : "pa2 b--black-10 bg-near-white"}>
+                <div key={uid(`choreoption${chores[i]}`, i)} className={i % 2 === 0 ? "pa2 ma3 b--black-10 bg-white" : "pa2 ma3 b--black-10 bg-near-white"}>
                     <h3 className="underline">{chores[i]}</h3>
                     <div className="">Due Date</div>
-                    <input onChange={this.updateDueDate} name={chores[i]} type='date' min={todaysDate()} defaultValue={choresWOptions[chores[i]].dueDate} className={/*highlightred[chores[i]].dueDate ? 'bg-red' :*/ null}></input>
+                    <input onChange={this.updateDueDate} name={chores[i]} type='date' min={todaysDate()} defaultValue={choresWOptions[chores[i]].dueDate} ></input>
                     <div className="">Assign {i > 0 ? null : "(Random, or pick who does this chore)"}</div>
-                    <select onChange={this.updateAssignment} name={chores[i]} defaultValue={choresWOptions[chores[i]].assignment} className={highlightred[chores[i]].assignment ? 'pa1 db f6 lh-title bg-red' : 'pa1 db f6 lh-title'} >
+                    <select onChange={this.updateAssignment} name={chores[i]} defaultValue={choresWOptions[chores[i]].assignment} className={highlightred[chores[i]].assignment ? 'pa1 db tc f6 lh-title bg-red' : 'pa1 db tc f6 lh-title'} >
                         <option value='Randomly'>Randomly</option>
                         {renderSelectOptions}
                     </select>
                     <div className="">Exemption {i > 0 ? "(Optional)" : "(Optional, selected person will not get this chore)"}</div>
-                    <select onChange={this.updateExempt} name={chores[i]} defaultValue={choresWOptions[chores[i]].exempt} className={highlightred[chores[i]].exempt ? 'pa1 db f6 lh-title bg-red' : 'pa1 db f6 lh-title'} >
+                    <select onChange={this.updateExempt} name={chores[i]} defaultValue={choresWOptions[chores[i]].exempt} className={highlightred[chores[i]].exempt ? 'pa1 db tc f6 lh-title bg-red' : 'pa1 db tc f6 lh-title'} >
                         <option value='None'>None</option>
                         {renderSelectOptions}
                     </select>
                     <div className="">Description (Optional)</div>
-                    <input onChange={this.updateDescription} className={highlightred[chores[i]].description ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100":"pa2 input-reset ba  hover-bg-near-white w-100"} name={chores[i]} type='text' defaultValue={choresWOptions[chores[i]].description}></input>
-                    
+                    <input onChange={this.updateDescription} className={highlightred[chores[i]].description ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100":"pa2 input-reset ba  hover-bg-near-white w-100"} name={chores[i]} type='text' defaultValue={choresWOptions[chores[i]].description}></input>    
                 </div>
             )
         });
@@ -173,23 +171,15 @@ class ChoreOptions extends React.Component {
             <div className='center mw6-ns br3 hidden mv4 bg-light-blue'>
                 <h1 className="f4 black b mv0 pv2 ph3 tc">Edit Chores for {group}</h1>
                 <div className="pa3 bt b--black-10">
-                    <div className="f6 f5-ns lh-copy measure mv0">
-                        <main className="black-80">
-                            <div className="measure center">
-                                <fieldset className="ba b--transparent ph0 mh0">
-                                    <div>
-                                        <ScrollBox maxHeight={575}>
-                                            <div>{renderChoreOptions}</div>
-                                        </ScrollBox> 
-                                    </div>
-                                    <div className='tc pa2 ma2'>
-                                        <BackButton click={goBack}/>
-                                        <NextButton click={this.onSubmit}/>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </main>
-                    </div>
+                    <fieldset className="ba b--transparent ph0 mh0">
+                        <div>
+                            <div className=''>{renderChoreOptions}</div>
+                        </div>
+                        <div className='tc pa2 ma2'>
+                            <BackButton click={goBack}/>
+                            <NextButton click={this.onSubmit}/>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
         )    
