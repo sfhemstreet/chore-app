@@ -100,7 +100,7 @@ class AddPeople extends React.Component {
         }
     }
 
-    onSubmit = (event) => {
+    onSubmit = () => {
         const {emails, num} = this.state;
         const {peopleChange,goForward} = this.props;
         // set local storage
@@ -125,7 +125,7 @@ class AddPeople extends React.Component {
                     <div>Email {i}
                         <div className='flex'>
                             <TextInput change={this.updateInfo} index={i} red={highlightRed[i]} defaultText={emails[i]} />
-                            {i === 0 ? null : <XButton click={this.deletePerson} index={i} />}   
+                            {i === 1 ? null : <XButton click={this.deletePerson} index={i} />}   
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,7 @@ const userInitialState = {
     chores: [],
     groups: {},
     createdGroups: [],
+    groupAuth: {},
     score: '',
     isPending: false,
     error: ''
@@ -51,6 +52,7 @@ export const user = (state = userInitialState, action = {}) => {
                 chores: [],
                 groups: {},
                 createdGroups: [],
+                groupAuth: {},
                 score: '',
                 isPending: false,
             });
@@ -77,6 +79,7 @@ export const user = (state = userInitialState, action = {}) => {
                 chores: action.payload.chores,
                 groups: action.payload.groups,
                 createdGroups: action.payload.createdGroups,
+                groupAuth: action.payload.auth,
                 isPending: false
                 });
         case REQUEST_CHORES_FAILED:

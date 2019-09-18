@@ -21,7 +21,6 @@ const GroupMember = ({memberInfo}) => {
                 completeDate = {memberChores[i].complete_date}
                 description = {memberChores[i].description} 
                 dueDate = {memberChores[i].due_date}
-                groupName = {memberChores[i].g_name.replace('_', ' ')}
             />
         )
     });

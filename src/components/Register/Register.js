@@ -30,7 +30,7 @@ class Register extends React.Component {
     // SUBMIT
     onRegisterSubmit = (event) => {
         const {registerEmail, registerName, registerPassword} = this.state;
-        if(!regexCheck(registerEmail, 'email') || !regexCheck(registerName, 'special') || !regexCheck(registerPassword,'password')){
+        if(!regexCheck(registerEmail, 'email') || !regexCheck(registerName, 'special') || !regexCheck(registerPassword,'special')){
             return console.log('Bad Input');
         }
         else{

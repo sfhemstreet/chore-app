@@ -41,7 +41,7 @@ const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
 
     const renderChoreList = chores.map((_,i) => {
         return (
-            <li key={uid(`cg_chore${chores[i]}`,i)} className={i % 2 === 0 ? "bg-white" : "bg-near-white"} name={chores[i]}>
+            <li key={uid(`cg_chore${chores[i]}`,i)} className={i % 2 === 0 ? "bg-white pa2" : "bg-near-white pa2"} name={chores[i]}>
                 <div  className={choreOptions[chores[i]].description === '' ? "pa1 b--black-10 ml2 confirm_chores_title_grid" : "pa1 b--black-10 ml2 confirm_chores_grid "}>
                     <div className="chore underline mt0 lh-copy tc center b pa1">{chores[i]}</div>
                     <div className="due mt0 lh-copy tc center pa1 dib">Due On : <div className="due mt0 lh-copy tc center pa1 b dib">{choreOptions[chores[i]].dueDate}</div></div>
@@ -64,9 +64,7 @@ const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
                                 <div>
                                     <h4 className=' black  mv0 pv2 ph3 tc'>Emails / Permissions of Group Members</h4>
                                     <ul className="list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2 ">
-                                        <ScrollBox maxHeight={200}>
-                                            {renderPeopleList}
-                                        </ScrollBox>
+                                        {renderPeopleList}
                                     </ul>
                                 </div>
                             </fieldset>
@@ -74,11 +72,8 @@ const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
                                 <div>
                                     <h4 className=' black  mv0 pv2 ph3 tc bt b--black-10 pa3'>Chores</h4>
                                     <ul className="list pl0 ml0 mv0 mt0 mb0 pa0 center  ba b--light-silver br2 ">
-                                        <ScrollBox maxHeight={300} >
-                                            {renderChoreList}
-                                        </ScrollBox>
+                                        {renderChoreList}
                                     </ul>
-                                    
                                 </div>
                                 <div className='tc pa2 ma2'>
                                     <BackButton click={goBack}/>
