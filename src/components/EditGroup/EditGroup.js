@@ -7,14 +7,13 @@ import DeleteGroup from './DeleteGroup';
     EDITGROUP
     - add/remove members
     - delete group
-*/
+*/  
 
 class EditGroup extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             editingPeople: false,
-            removedPeople: [],
             groupMembers: getEmails(this.props.groupData),
             groupName: this.props.groupName,
             deleting: false 
@@ -33,13 +32,8 @@ class EditGroup extends React.Component {
         this.setState({ editingPeople: false, deleting: false });
     }
 
-    removeMembers = (email) => {
-        this.setState({ removedPeople: [...this.state.removedPeople, email] });
-    }
-
-    submitChanges = (addedPeople) => {
-        const {removedPeople} = this.state;
-        this.props.submitEdits(removedPeople, addedPeople);
+    submitChanges = (removed, added, changed) => {
+        this.props.submitEdits(removed, added, changed);
     }
 
     deleteGroup = () => {
@@ -56,13 +50,13 @@ class EditGroup extends React.Component {
                 </div>
                 <div className="pa3 bt b--black-10">
                 {
-                    editingPeople ? <EditMembers currentMembers={groupMembers} remove={this.removeMembers} close={this.onClose} submit={this.submitChanges} />
+                    editingPeople ? <EditMembers userEmail={this.props.userEmail} groupData={this.props.groupData} currentMembers={groupMembers} remove={this.removeMembers} close={this.onClose} submit={this.submitChanges} />
                     :
                     deleting ? <DeleteGroup close={this.onClose} submit={this.deleteGroup} />
                     :
                     <div>
-                        <div className='tc f3 pointer hover-white pa2' onClick={this.onEditGroupMembers} >Add/Remove Group Members</div>
-                        <div className='tc f3 pointer hover-red pa2 ' onClick={this.onDelete} >Delete Group</div>
+                        <div className='tc f3 pointer hover-white pa2' onClick={this.onEditGroupMembers} >Add/Remove Group Members <br/> Change Who Can Add Chores</div>
+                        <div className='tc f3 pointer hover-red pa2 mt2' onClick={this.onDelete} >Delete Group</div>
                     </div>
                 }
                 </div>

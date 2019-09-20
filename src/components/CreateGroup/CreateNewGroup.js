@@ -165,7 +165,7 @@ class CreateNewGroup extends React.Component {
 
         return (
             <div className='vh-100 bg-light-blue dt w-100' >
-                <ProgressLine progress={this.state.stage} />
+                <ProgressLine progress={this.state.stage} size={9}/>
                 {groupName !== '' ? <div className='f4 black mv0 pv2 ph3 tc'>{groupName}</div> : null}
                 {outPut}
             </div> 

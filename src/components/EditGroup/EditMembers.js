@@ -7,6 +7,8 @@ import genInputKeys from '../../utils/genInputKeys';
 import BackButton from '../form_components/BackButton';
 import SubmitButton from '../form_components/SubmitButton';
 import NextButton from '../form_components/NextButton';
+import ProgressLine from '../ProgressLine/ProgressLine'
+import {getEmails_Permissions} from '../../utils/addChoresHelpers';
 
 class EditMembers extends React.Component {
     constructor(props){
@@ -16,7 +18,10 @@ class EditMembers extends React.Component {
             emails : [...this.props.currentMembers],
             inputs : genInputKeys(this.props.currentMembers.length),
             step: 0,
-            emailObjs: null
+            updated: {},
+            added: {},
+            removed: [],
+            all: {}
         }
     }
 
@@ -26,43 +31,54 @@ class EditMembers extends React.Component {
     }
     
     deletePerson = (index) => {
-        const {emails , inputs} = this.state;
-        const {currentMembers, remove} = this.props;
+        const {emails , inputs, removed, added, updated } = this.state;
+        const {currentMembers} = this.props;
         let e = [...emails];
         let i = [...inputs];
-        // check if removing from members
-        if(currentMembers.includes(emails[index])){
-            remove(emails[index])
-        }
-        // get rid of person
+        let r = [...removed];
+        let a = JSON.parse(JSON.stringify(added));
+        let u = JSON.parse(JSON.stringify(updated));
+
+        // check if removing from currentMembers / check for duplicates in removed 
+        if(currentMembers.includes(emails[index]) && !r.includes(emails[index]))
+            r.push(emails[index]);
+        // check if email is in added, remove it
+        if(added[emails[index]])
+            delete a[emails[index]];
+        // check if email is in updated, remove it
+        if(updated[emails[index]])
+            delete u[emails[index]];
+        // remove email from being dispalyed
         e.splice(index, 1);
         i.splice(index, 1);
-        this.setState({ emails : e, inputs : i });
+
+        this.setState({ emails : e, inputs : i, removed: r, added: a, updated: u });
     }
 
     updateInfo = (newInput, index) => {
         const {emails, highlightRed} = this.state;
-        let newHighlightRed = [...highlightRed];
+        let hlr = [...highlightRed];
         let newEmails = [...emails];
        
         newEmails[index] = newInput;
         this.setState({ emails : newEmails });
 
-        if(newHighlightRed[index] && regexCheck(newInput, 'email')){
-            newHighlightRed[index] = false;
-            this.setState({ highlightRed : newHighlightRed });
+        if(hlr[index] && regexCheck(newInput, 'email')){
+            hlr[index] = false;
+            this.setState({ highlightRed : hlr });
         }
     } 
 
     checkInput = () => {
         const {emails, highlightRed} = this.state;
-        let newHighlightRed = [...highlightRed];
+        let hlr = [...highlightRed];
         let allGood = true;
+
         for(let x = 0; x < emails.length; x++){
             let input = emails[x];
             if(input !== '' && input !== null && input !== undefined){
                 if(!regexCheck(input, 'email')){
-                    newHighlightRed[x] = true;
+                    hlr[x] = true;
                     allGood = false;
                 }
                 // check for duplicates
@@ -70,59 +86,70 @@ class EditMembers extends React.Component {
                 e.splice(x,1);
                 if(e.includes(input)){
                     allGood = false;
-                    newHighlightRed[x] = true;
+                    hlr[x] = true;
                 }
             }
             else{
-                newHighlightRed[x] = true;
+                hlr[x] = true;
                 allGood = false;
             }
         }
-        this.setState({ highlightRed : newHighlightRed });
+        this.setState({ highlightRed : hlr });
         if(allGood){
-            this.nextStep();
+            this.checkPermissions();
         }
     }
 
-    nextStep = () => {
-        const {emailObjs, emails} = this.state;
-        const {currentMembers} = this.props;
+    checkPermissions = () => {
+        const {emails, added, removed} = this.state;
+        const {groupData, currentMembers} = this.props;
         let add = {};
-        let ee = [];
+        let everyone = {};
+        const currEmails = getEmails_Permissions(groupData);
         emails.forEach(e => {
             if(!currentMembers.includes(e)){
                 add[e] = true; 
-                ee.push(e);
+                everyone[e] = true;
+            }
+            else{
+                everyone[e] = currEmails[e];
             }
         });
-        this.setState({ emailObjs: add, step: 1, emails: ee });
+        
+        this.setState({ added: add, step: 1, all: everyone });
     }
 
     backStep = () => {
-        this.setState({ emailObjs: null, step: 0 });
+        this.setState({ added: {}, all: {}, step: 0 });
     }
 
     onPermissionsChange = (event) => {
-        let e = JSON.parse(JSON.stringify(this.state.emailObjs));
-        e[event.target.name] = event.target.value === 'true';
-        this.setState({ emailObjs: e });
+        let u = JSON.parse(JSON.stringify(this.state.updated));
+        let a = JSON.parse(JSON.stringify(this.state.added));
+
+        if(a[event.target.name] === true || a[event.target.name] === false)
+            a[event.target.name] = event.target.value === 'true';
+        else
+            u[event.target.name] = event.target.value === 'true';
+        
+        this.setState({ updated: u, added: a });
     }
  
     submit = () => {
-        const {emailObjs} = this.state;
+        const {added, removed, updated } = this.state;
         const {submit} = this.props;
-        console.log(emailObjs);
-        submit(emailObjs);
+        
+        submit(removed, added, updated);
     }
 
     render(){
-        const {highlightRed, inputs, emails, step} = this.state;
-        const {close} = this.props;
-
+        const {highlightRed, inputs, emails, step, all} = this.state;
+        const {close, userEmail} = this.props;
+        
         const renderInputs = inputs.map((_,i) => {
             return (
                 <div key={inputs[i]}>
-                    {i === 0 ? null 
+                    {emails[i] === userEmail ? null 
                     :
                     <div className='pa2 mb2'>
                         <div>
@@ -139,20 +166,21 @@ class EditMembers extends React.Component {
         const renderPeopleList = emails.map((_,i) => {
             return (
                 <li key={uid(`cg_peoplelist${emails[i]}`, i)} className={i % 2 === 0 ? "bg-white" : "bg-near-white"}>
+                    {emails[i] === userEmail ? null :
                     <div className="pa2 b--black-10 ml2 confirm_people_grid" >
                         <div className="name mt0 lh-copy tc center">{emails[i]}</div>
-                        <select onChange={this.onPermissionsChange} className='permissions mt0 lh-copy tc center' name={emails[i]}>
+                        <select onChange={this.onPermissionsChange} className='permissions mt0 lh-copy tc center' name={emails[i]} defaultValue={all[emails[i]] ? 'true' : 'false'}>
                             <option value='true' >Can Add Chores to Group</option>
                             <option value='false' >Not Allowed to Add Chores</option>
                         </select>
-                    </div>
+                    </div>} 
                 </li>
             )
         });
 
-
         return (
             <div className='center mw6-ns br3 hidden mv4'>
+                <ProgressLine progress={step} size={3} />
                 {step === 0 ? <h2 className="black  mv0 pv2 ph3 tc">Delete / Add Members - Emails </h2> : <h2 className="black  mv0 pv2 ph3 tc">Edit Permissions</h2>}
                 <div className="pa3 bt b--black-10">
                     <div className="f6 f5-ns lh-copy measure mv0">
