@@ -16,7 +16,7 @@ class TextInput extends React.Component{
     
     render(){
         return (
-            <input onChange={this.onTextChange} className={this.props.red ? "pa2 input-reset ba bg-light-red hover-bg-near-white w-100" : "pa2 input-reset ba hover-bg-near-white w-100"} type="email" defaultValue={this.state.text}></input>
+            <input onChange={this.onTextChange} className={this.props.red ? "pa2 input-reset ba bg-light-red hover-bg-near-white w-100" : "pa2 input-reset ba hover-bg-near-white w-100"} type="email" defaultValue={this.state.text} readOnly={this.props.isReadOnly ? true : false}></input>
         )
     }
     

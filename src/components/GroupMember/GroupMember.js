@@ -1,6 +1,7 @@
 import React from 'react';
 import GroupChore from '../GroupChore/GroupChore';
 import './GroupMember.css';
+import ScrollBox from '../ScrollBox';
 
 const GroupMember = ({memberInfo}) => {
 
@@ -32,7 +33,10 @@ const GroupMember = ({memberInfo}) => {
                 <h3 className='score black-90 lh-copy tc center'>{memberChores[0].score}</h3>
             </div>
             <ul className="list pl0 ml0 mv0 mt0 center mw6 ba b--light-silver br2 ">
-                {renderMemberChores}
+                <ScrollBox maxHeight={'385'}>
+                    {renderMemberChores}
+                </ScrollBox>
+                
             </ul> 
         </div>
         

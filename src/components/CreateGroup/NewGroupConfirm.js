@@ -1,7 +1,6 @@
 import React from 'react';
 import BackButton from '../form_components/BackButton';
 import SubmitButton from '../form_components/SubmitButton';
-import ScrollBox from '../ScrollBox';
 import './CreateNewGroup.css';
 import {uid} from 'react-uid';
 

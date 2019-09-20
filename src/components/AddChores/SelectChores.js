@@ -21,17 +21,19 @@ class SelectChores extends React.Component {
     
     addCustomChore = () => {
 		if(regexCheck(this.state.customChore, 'plain')){
-            this.setState({ selectedChores : this.state.selectedChores.unshift(this.state.customChore), customChore : '' });
+            this.setState({ selectedChores : [this.state.customChore, ...this.state.selectedChores], customChore : '' });
             document.getElementById('customChoreInput').value = '';
 		}
     }
 
     addChore = (chore) => {
-		this.setState({ selectedChores : this.state.selectedChores.unshift(chore) });
+		this.setState({ selectedChores : [chore, ...this.state.selectedChores] });
 	}
 
 	removeChore = (chore) => {
-		this.setState({ selectedChores : this.state.selectedChores.splice(this.state.selectedChores.indexOf(chore),1) });
+        let sc = [...this.state.selectedChores];
+        sc.splice(sc.indexOf(chore),1)
+		this.setState({ selectedChores : sc });
 	}
 
 	onSubmitSelectedChores = () => {
@@ -41,8 +43,8 @@ class SelectChores extends React.Component {
 
 
     render(){
-        console.log('typeof this.state',typeof this.state.selectedChores,' typeof this.props', typeof this.props.chores,' print of this.props',this.props.chores)
-        const renderedSelectableChores = this.state.allChores.filter(chore => !this.state.selectedChores.includes(chore));
+        const {selectedChores, allChores} = this.state;
+        const renderedSelectableChores = allChores.filter(chore => !selectedChores.includes(chore));
 
         return (
             <div className="measure center">
