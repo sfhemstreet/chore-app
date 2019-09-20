@@ -37,16 +37,15 @@ class GroupsPage extends React.Component {
     }
 
     submitNewChores = (chores) => {
-        console.log('yo', chores)
         const id = getGroupId(this.state.groupData);
         this.props.requestAddChores(id,chores);
         this.close();
         this.props.requestChoreUpdate();
     }
 
-    submitGroupEdits = (remove, add) => {
+    submitGroupEdits = (removed, added, updated) => {
         const id = getGroupId(this.state.groupData);
-        this.props.requestEditGroup(id,remove,add);
+        this.props.requestEditGroup(id,removed,added,updated);
         this.close();
         this.props.requestChoreUpdate();
     }
@@ -69,6 +68,7 @@ class GroupsPage extends React.Component {
     };
     
     render(){
+
         const groupsArray = this.createGroupsArray(this.props.groups);
         const renderAllGroups = groupsArray.map((_,i) => {
             const canEdit = checkEditAuth(this.props.createdGroups, groupsArray[i].memberInfo);
@@ -88,11 +88,11 @@ class GroupsPage extends React.Component {
         return(
             <div className='vh-100 bg-light-blue dt w-100'>
                 {this.props.isPending ? 
-                    <div>LOADING</div> 
+                    <div className='' >LOADING</div> 
                     :
                     <div>
                     {
-                        this.state.editingGroup ? <EditGroup groupName={this.state.modGroupName} groupData={this.state.groupData} submitEdits={this.submitGroupEdits} delete={this.deleteGroup} quit={this.close} /> :
+                        this.state.editingGroup ? <EditGroup userEmail={this.props.email} groupName={this.state.modGroupName} groupData={this.state.groupData} submitEdits={this.submitGroupEdits} delete={this.deleteGroup} quit={this.close} /> :
                         this.state.addingChores ? <AddChores groupName={this.state.modGroupName} groupData={this.state.groupData} submit={this.submitNewChores} quit={this.close}/> :
                         Object.keys(this.props.groups).length > 0 ?
                             <div>
@@ -133,7 +133,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         requestChoreUpdate: () => dispatch(getChores()),
         requestAddChores: (groupID, newChores) => dispatch(addChores(groupID, newChores)),
-        requestEditGroup: (id,remove,add) => dispatch(editGroup(id,remove,add)),
+        requestEditGroup: (id,removed,added, updated) => dispatch(editGroup(id,removed,added,updated)),
         requestDeleteGroup: (id) => dispatch(deleteGroup(id)),
         // requestMessages: (groupID) => dispatch(getGroupMessages(groupID))
         // submitMessage: (groupID, message) => dispatch(sendMessage(groupID, message))

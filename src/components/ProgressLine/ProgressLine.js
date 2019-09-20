@@ -1,10 +1,10 @@
 import React from 'react';
 import './ProgressLine.css';
 
-const ProgressLine = ({progress}) => {
+const ProgressLine = ({progress, size}) => {
     
 
-    let p = new Array(9);
+    let p = new Array(size);
     for(let x = 0; x < p.length; x++){
         if((progress * 2) > x){
             p[x] = true;

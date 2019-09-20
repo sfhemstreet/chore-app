@@ -4,10 +4,18 @@ export const getGroupId = (groupData) => {
     return id;
 }
 
+export const getEmails_Permissions = (groupData) => {
+    let emails_and_permissions = {};
+    Object.keys(groupData).forEach(person => {
+        emails_and_permissions[groupData[person][0].assign_email] = groupData[person][0].canAddChores;
+    });
+    return emails_and_permissions;
+}
+
 export const getEmails = (groupData) => {
     let emails = [];
     Object.keys(groupData).forEach(person => {
-        emails.push(groupData[person][0].assign_email)
+        emails.push(groupData[person][0].assign_email);
     });
     return emails;
 }
