@@ -2,6 +2,12 @@ import {
     CREATE_GROUP_PENDING,
     CREATE_GROUP_SUCCESS,
     CREATE_GROUP_FAILED,
+    DELETE_GROUP_PENDING,
+    DELETE_GROUP_SUCCESS,
+    DELETE_GROUP_FAILED,
+    EDIT_GROUP_PENDING,
+    EDIT_GROUP_SUCCESS,
+    EDIT_GROUP_FAILED
 } from '../constants/group_constants';
 
 import {SIGN_OUT_USER} from '../constants/user_constants.js';
@@ -62,5 +68,69 @@ export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
             pauseOnHover: true,
             draggable: true
         });
+    });
+}
+
+export const editGroup = (groupID, newMembers, removedMembers) => (dispatch) => {
+    dispatch({type: EDIT_GROUP_PENDING});
+    fetch('http://localhost:4000/editgroup', { 
+        method: 'PATCH',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            groupID,
+            newMembers,
+            removedMembers
+        })
+    })
+    .then(response => response.json())
+    .then(res => {
+        if(res === 'Group Edited'){
+            dispatch({ type: EDIT_GROUP_SUCCESS });
+        }
+        else if(res === "MUST LOGIN"){
+            dispatch({ type: SIGN_OUT_USER });
+        }
+        else {
+            dispatch({ type: EDIT_GROUP_FAILED })
+        }
+    })
+    .catch(error => {
+        dispatch({ type: EDIT_GROUP_FAILED })
+    });
+}
+
+export const deleteGroup = (groupID) => (dispatch) => {
+    dispatch({type: DELETE_GROUP_PENDING});
+    fetch('http://localhost:4000/deletegroup', { 
+        method: 'DELETE',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            groupID
+        })
+    })
+    .then(response => response.json())
+    .then(res => {
+        if(res === 'Group Deleted'){
+            dispatch({ type: DELETE_GROUP_SUCCESS });
+        }
+        else if(res === "MUST LOGIN"){
+            dispatch({ type: SIGN_OUT_USER });
+        }
+        else {
+            dispatch({ type: DELETE_GROUP_FAILED })
+        }
+    })
+    .catch(error => {
+        dispatch({ type: DELETE_GROUP_FAILED })
     });
 }

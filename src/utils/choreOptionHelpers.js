@@ -30,7 +30,7 @@ export function makeHLRObjs(chores){
     for(let x = 0; x < chores.length; x++){
         hlr[chores[x]] = JSON.parse(JSON.stringify(redObj));
     }
-
+    
     return hlr;
 }
 

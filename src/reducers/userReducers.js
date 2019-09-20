@@ -12,7 +12,6 @@ import {
     REQUEST_CHORES_SUCCESS, 
     REQUEST_CHORES_FAILED } from '../constants/chore_constants';
 
-
 const userInitialState = {
     auth: 'guest',
     username: '',
@@ -39,7 +38,7 @@ export const user = (state = userInitialState, action = {}) => {
                 email: action.payload.userData.email, 
                 score: action.payload.userData.score,
                 isPending: false 
-              });
+            });
         case REQUEST_SIGNIN_FAILED:
             return Object.assign({}, state, { error: action.payload , auth: 'guest' });
         
@@ -65,7 +64,7 @@ export const user = (state = userInitialState, action = {}) => {
                 auth: 'guest', 
                 email: action.payload.email, 
                 isPending: false
-                });
+            });
         case REQUEST_REGISTER_FAILED:
             return Object.assign({}, state, { error: action.payload , auth: 'guest', isPending: false });
 

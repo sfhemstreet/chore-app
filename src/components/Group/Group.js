@@ -1,8 +1,7 @@
 import React from 'react';
 import GroupMember from '../GroupMember/GroupMember';
-import AddButton from '../form_components/AddButton';
 
-const Group = ({groupInfo, auth, addChores}) => {
+const Group = ({groupInfo, canAddChores, addChores, canEditGroup, editGroup}) => {
 
     const groupName = groupInfo.name.replace('_', ' ');
     const memberData = groupInfo.memberInfo;
@@ -29,11 +28,16 @@ const Group = ({groupInfo, auth, addChores}) => {
         <div  className='list center mw6 pa3 ba b--light-silver bg-light-gray br2'>
             <div className='tc pa2'>
                 <div className='black-90 f3' >{groupName}</div>
-                {auth === true ?
-                    <div className='gray pointer grow hover-blue' onClick={() => addChores(groupName, memberData)}>Add Chores</div>
-                    :
-                    null
-                }
+                <div className='flex justify-between' >
+                    {canAddChores ?
+                        <div className='gray pointer grow hover-blue' onClick={() => addChores(groupName, memberData)}>Add Chores</div>
+                        : null
+                    }
+                    {canEditGroup ? 
+                        <div className='gray pointer grow hover-blue' onClick={() => editGroup(groupName, memberData)}>Edit Group</div>
+                        : null
+                    }
+                </div>
             </div>
             <div>
                 {renderAllMembers}
