@@ -8,11 +8,15 @@ import {deleteGroup, editGroup} from '../../actions/groupActions';
 import AddChores from '../AddChores/AddChores';
 import EditGroup from '../EditGroup/EditGroup';
 import {getGroupId, checkEditAuth} from '../../utils/addChoresHelpers';
+import Tilt from 'react-tilt';
+import {createGroupsArray} from '../../utils/groupsPageHelpers';
 
 class GroupsPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            inFocus: Object.keys(this.props.groups).length === 1 ? createGroupsArray(this.props.groups)[0] : null,
+            canEdit: Object.keys(this.props.groups).length === 1 ? checkEditAuth(this.props.createdGroups,createGroupsArray(this.props.groups)[0].memberInfo) : null,
             addingChores: false,
             editingGroup: false,
             groupData: null,
@@ -22,6 +26,14 @@ class GroupsPage extends React.Component {
 
     componentDidMount(){
         this.props.requestChoreUpdate();
+    }
+
+    changeFocus = (groupData, canEdit) => {
+        this.setState({ inFocus: groupData, canEdit: canEdit });
+    }
+
+    endGroupFocus = () => {
+        this.setState({ inFocus: null, canEdit: null });
     }
 
     editGroup = (groupName, groupData) => {
@@ -57,34 +69,41 @@ class GroupsPage extends React.Component {
         this.props.requestChoreUpdate(); 
     }
  
-    createGroupsArray = (groups) => {
-        let array = [];
-        Object.entries(groups).forEach((g) => {
-            // g[0] is the groupName , g[1] is all the info
-            let groupObj = {name : g[0], memberInfo : g[1]}
-            array.push(groupObj);
-        });
-        return array;
-    };
+    
     
     render(){
+        const {inFocus, addingChores, editingGroup, groupData, modGroupName, canEdit} = this.state;
+        const {email, groups, groupAuth, username} = this.props;
 
-        const groupsArray = this.createGroupsArray(this.props.groups);
-        const renderAllGroups = groupsArray.map((_,i) => {
+        const groupsArray = createGroupsArray(this.props.groups);
+
+        
+
+        const renderGroupThumbnails = groupsArray.map((_,i) => {
             const canEdit = checkEditAuth(this.props.createdGroups, groupsArray[i].memberInfo);
+
+            const renderMemberNames = Object.keys(groupsArray[i].memberInfo).map(member => {
+                return (
+                    member === username ? null :
+                    <div className='pa1 tc green'>
+                        {member}
+                    </div>
+                )
+            });
+
             return (
-                <div key={uid('Group',i)} className='mb3'>
-                   <Group   
-                        groupInfo={groupsArray[i]} 
-                        canAddChores={this.props.groupAuth[groupsArray[i].name]} 
-                        addChores={this.addChoresToGroup} 
-                        canEditGroup={canEdit} 
-                        editGroup={this.editGroup}
-                    /> 
-                </div>
+                <Tilt 
+                className="Tilt pointer ma3 pa3 ba b--light-silver bg-light-gray br2 shadow-1 hover-orange mw5 center" 
+                options={{ max : 55 }} 
+                >
+                    <div key={uid('Group',i)} className='pa1' onClick={() => this.changeFocus(groupsArray[i], canEdit)}>
+                        <div className='tc f3 fw3 '>{groupsArray[i].name.replace('_', ' ')} </div>
+                        <div className='flex justify-around bt b--black-10 pa2 hover-blue'>{renderMemberNames} </div>
+                    </div>
+                </Tilt>
             )
         });
-        
+
         return(
             <div className='vh-100 bg-light-blue dt w-100'>
                 {this.props.isPending ? 
@@ -92,13 +111,22 @@ class GroupsPage extends React.Component {
                     :
                     <div>
                     {
-                        this.state.editingGroup ? <EditGroup userEmail={this.props.email} groupName={this.state.modGroupName} groupData={this.state.groupData} submitEdits={this.submitGroupEdits} delete={this.deleteGroup} quit={this.close} /> :
-                        this.state.addingChores ? <AddChores groupName={this.state.modGroupName} groupData={this.state.groupData} submit={this.submitNewChores} quit={this.close}/> :
-                        Object.keys(this.props.groups).length > 0 ?
-                            <div>
-                                <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">Your Groups</h2>
-                                <div className=''>
-                                    {renderAllGroups}
+                        editingGroup ? <EditGroup userEmail={email} groupName={modGroupName} groupData={groupData} submitEdits={this.submitGroupEdits} delete={this.deleteGroup} quit={this.close} /> :
+                        addingChores ? <AddChores groupName={modGroupName} groupData={groupData} submit={this.submitNewChores} quit={this.close}/> :
+                        inFocus !== null ? 
+                        <Group 
+                            groupInfo={inFocus} 
+                            canAddChores={groupAuth[inFocus.name]} 
+                            addChores={this.addChoresToGroup} 
+                            canEditGroup={canEdit} 
+                            editGroup={this.editGroup}
+                            close={this.endGroupFocus}
+                        /> :
+                        Object.keys(groups).length > 0 ?
+                            <div className='center'>
+                                <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3 mw6">Your Groups</h2>
+                                <div className='flex-wrap items-center bt b--black-10'>
+                                    {renderGroupThumbnails}
                                 </div>
                             </div>
                         : 

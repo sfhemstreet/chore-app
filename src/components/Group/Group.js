@@ -1,7 +1,9 @@
 import React from 'react';
 import GroupMember from '../GroupMember/GroupMember';
+import XButton from '../form_components/XButton';
 
-const Group = ({groupInfo, canAddChores, addChores, canEditGroup, editGroup}) => {
+
+const Group = ({groupInfo, canAddChores, addChores, canEditGroup, editGroup, close}) => {
 
     const groupName = groupInfo.name.replace('_', ' ');
     const memberData = groupInfo.memberInfo;
@@ -25,16 +27,17 @@ const Group = ({groupInfo, canAddChores, addChores, canEditGroup, editGroup}) =>
     });
 
     return (
-        <div  className='list center mw6 pa3 ba b--light-silver bg-light-gray br2'>
+        <div  className='list center mw6 pa3 ma4 ba b--light-silver bg-light-gray br2'>
+            <div className='pa1 f6 fr'><XButton className='tc center' click={close} index={-1}/></div>
             <div className='tc pa2'>
-                <div className='black-90 f3' >{groupName}</div>
-                <div className='flex justify-between' >
+                <div className='tc f1 fw2 black-90 mv3' >{groupName}</div>
+                <div className='flex justify-between bt b--black-10 pt2' >
                     {canAddChores ?
-                        <div className='gray pointer grow hover-blue' onClick={() => addChores(groupName, memberData)}>Add Chores</div>
+                        <div className='blue pointer grow hover-green' onClick={() => addChores(groupName, memberData)}>Add Chores</div>
                         : null
                     }
                     {canEditGroup ? 
-                        <div className='gray pointer grow hover-blue' onClick={() => editGroup(groupName, memberData)}>Edit Group</div>
+                        <div className='blue pointer grow hover-green' onClick={() => editGroup(groupName, memberData)}>Edit Group</div>
                         : null
                     }
                 </div>
