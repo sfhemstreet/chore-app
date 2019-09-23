@@ -51,17 +51,19 @@ class AddChores extends React.Component {
         const {groupName} = this.props;
         
         return (
-            <div className='center'>
-                <div className='tc flex justify-center f1 fw2 black-90 mv3' >Add Chores to {groupName} 
-                    <div className='pa3 f6'><XButton className='tc center' click={this.onQuit} index={-1}/></div>
-                </div>
-                {{
-                    0:  <SelectChores chores={this.state.chores} choreChange={this.updateChores} goForward={this.nextStage}/>,
-                    1:  <NewChoreOptions chores={this.state.chores} choresWithOptions={this.state.choresWithOptions} updateOptions={this.updateChoreOptions} people={this.state.people} goForward={this.nextStage} goBack={this.previousStage} />,   
-                    2:  <ConfirmChores chores={this.state.chores} choreOptions={this.state.choresWithOptions} submit={this.onSubmit} goBack={this.previousStage} />,
-                    default:  <SelectChores chores={this.state.chores} choreChange={this.updateChores} goForward={this.nextStage}/>
-                }[this.state.stage]}
+            <div className='list center mw6 pa3 ma4'>
+                <div className='pa1 fr f6'><XButton className='tc center' click={this.onQuit} index={-1}/></div>
+                <div className='center'>
+                    <div className='tc f1 fw2 black-90 mv3' >Add Chores to {groupName}</div>
+                    {{
+                        0:  <SelectChores chores={this.state.chores} choreChange={this.updateChores} goForward={this.nextStage}/>,
+                        1:  <NewChoreOptions chores={this.state.chores} choresWithOptions={this.state.choresWithOptions} updateOptions={this.updateChoreOptions} people={this.state.people} goForward={this.nextStage} goBack={this.previousStage} />,   
+                        2:  <ConfirmChores chores={this.state.chores} choreOptions={this.state.choresWithOptions} submit={this.onSubmit} goBack={this.previousStage} />,
+                        default:  <SelectChores chores={this.state.chores} choreChange={this.updateChores} goForward={this.nextStage}/>
+                    }[this.state.stage]}
+                </div>    
             </div>
+            
         )
     }
 
