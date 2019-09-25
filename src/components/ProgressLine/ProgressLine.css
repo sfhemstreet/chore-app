@@ -5,11 +5,10 @@
 
 .line {
     display: block;
-    border: 1px solid black ;
     height: 5px;
     width: 100%;
-    background-color: black;
-   
+    background: rgb(0,0,0);
+    background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(105,105,105,1) 48%, rgba(143,143,143,1) 60%, rgba(105,105,105,1) 69%, rgba(0,0,0,1) 100%);
 }
 
 .step {
@@ -18,7 +17,8 @@
     min-height: 25px;
     min-width: 25px;
     border-radius: 50%;
-    background-color: black;
+    background: rgb(0,192,255);
+    background: radial-gradient(circle, rgba(0,192,255,1) 0%, rgba(37,13,18,1) 100%);
 }
 
 .incompleteStep {
@@ -27,7 +27,8 @@
     min-height: 25px;
     min-width: 25px;
     border-radius: 50%;
-    background-color: white;
+    background: rgb(221,221,221);
+    background: radial-gradient(circle, rgba(221,221,221,1) 0%, rgba(37,13,18,1) 100%);
 }
 
 .onStep {
@@ -35,6 +36,7 @@
     border: 1px solid black;
     min-height: 25px;
     min-width: 25px;
-    border-radius: 10%;
-    background-color: black;
+    border-radius: 50%;
+    background: rgb(18,255,0);
+    background: radial-gradient(circle, rgba(18,255,0,1) 0%, rgba(37,13,18,1) 100%);
 }

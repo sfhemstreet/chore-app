@@ -115,7 +115,6 @@ class AddPeople extends React.Component {
     render(){
         const {highlightRed, inputs, emails} = this.state;
         const {goBack} = this.props;
-        console.log('render emails', emails);
 
         const renderInputs = inputs.map((_,i) => {
             return (
@@ -134,8 +133,8 @@ class AddPeople extends React.Component {
         })
        
         return (
-            <div className='center mw6-ns br3 hidden mv4 bg-light-blue'>
-                <h2 className=" black  mv0 pv2 ph3 tc">Please Enter Other Group Member Emails</h2>
+            <div className='center mw6-ns br3 hidden mv4'>
+                <h3 className="black-90 mv0 pv2 ph3 tc">Enter Emails of Group Members</h3>
                 <div className="pa3 bt b--black-10">
                     <div className="f6 f5-ns lh-copy measure mv0">
                         <main className="black-80">

@@ -1,5 +1,5 @@
 import React from 'react';
-import ScrollBox from '../ScrollBox';
+import ScrollBox from './ScrollBox/ScrollBox';
 
 const ChoreSelectBox = ({items, click, userChores}) => {
 

@@ -28,9 +28,9 @@ const Navigation = (props) => {
                         Groups
                     </NavLink>
                     <NavLink  
-                        to='/creategroup'
+                        to='/settings'
                         className="link hover-purple dark-gray f6 f5-l dib mr3 mr4-l pointer">
-                        Create Group
+                        Settings
                     </NavLink>
                     <NavLink 
                         to='/signin'

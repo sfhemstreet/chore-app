@@ -1,8 +1,8 @@
-import {todaysDate} from './todaysDate';
+import { nextWeek } from './todaysDate';
 
 export function makeChoreObjs(chores){
     var choreObj = {
-        dueDate : todaysDate(),
+        dueDate : nextWeek(),
         assignment : 'Randomly',
         description : '',
         exempt : 'None'
@@ -36,7 +36,7 @@ export function makeHLRObjs(chores){
 
 export function checkChoresForOptions(choresWithOptions, chores){
     var choreObj = {
-        dueDate : todaysDate(),
+        dueDate : nextWeek(),
         assignment : 'Randomly',
         description : '',
         exempt : 'No one'

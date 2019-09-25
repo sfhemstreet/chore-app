@@ -27,7 +27,7 @@ const Group = ({groupInfo, canAddChores, addChores, canEditGroup, editGroup, clo
     });
 
     return (
-        <div  className='list center mw6 pa3 ma4 ba b--light-silver bg-light-gray br2'>
+        <div  className='list center mw6 pa3 ma4 ba b--light-silver bg-light-gray br2 shadow-2'>
             <div className='pa1 f6 fr'><XButton className='tc center' click={close} index={-1}/></div>
             <div className='tc pa2'>
                 <div className='tc f1 fw2 black-90 mv3' >{groupName}</div>

@@ -10,6 +10,8 @@ import EditGroup from '../EditGroup/EditGroup';
 import {getGroupId, checkEditAuth} from '../../utils/addChoresHelpers';
 import Tilt from 'react-tilt';
 import {createGroupsArray} from '../../utils/groupsPageHelpers';
+import {NavLink} from 'react-router-dom';
+import PlusButton from '../form_components/PlusButton';
 
 class GroupsPage extends React.Component {
     constructor(props){
@@ -67,6 +69,7 @@ class GroupsPage extends React.Component {
         this.props.requestDeleteGroup(id);
         this.close();
         this.props.requestChoreUpdate(); 
+        this.setState({ inFocus: null, canEdit: null });
     }
  
     
@@ -76,8 +79,6 @@ class GroupsPage extends React.Component {
         const {email, groups, groupAuth, username} = this.props;
 
         const groupsArray = createGroupsArray(this.props.groups);
-
-        
 
         const renderGroupThumbnails = groupsArray.map((_,i) => {
             const canEdit = checkEditAuth(this.props.createdGroups, groupsArray[i].memberInfo);
@@ -123,7 +124,8 @@ class GroupsPage extends React.Component {
                             close={this.endGroupFocus}
                         /> :
                         Object.keys(groups).length > 0 ?
-                            <div className='center'>
+                            <div className='center mw6'>
+                                <div className='pa1 f6 fr'><NavLink to='/creategroup'><PlusButton click={null} /></NavLink></div>
                                 <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3 mw6">Your Groups</h2>
                                 <div className='flex-wrap items-center bt b--black-10'>
                                     {renderGroupThumbnails}
@@ -133,6 +135,7 @@ class GroupsPage extends React.Component {
                             <div>
                                 <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">You aren't in any groups...</h2>
                                 <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">Wanna make one?</h2>
+                                <div className='center tc'><NavLink className="tc link f6 dim ph3 pv2 mb2 br2 dib white bg-green center" to='/creategroup'>Create a group</NavLink></div>
                             </div>
                     }
                     </div>

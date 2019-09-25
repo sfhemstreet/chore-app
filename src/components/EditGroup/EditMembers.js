@@ -7,7 +7,6 @@ import genInputKeys from '../../utils/genInputKeys';
 import BackButton from '../form_components/BackButton';
 import SubmitButton from '../form_components/SubmitButton';
 import NextButton from '../form_components/NextButton';
-import ProgressLine from '../ProgressLine/ProgressLine'
 import {getEmails_Permissions} from '../../utils/addChoresHelpers';
 
 class EditMembers extends React.Component {
@@ -101,7 +100,7 @@ class EditMembers extends React.Component {
     }
 
     checkPermissions = () => {
-        const {emails, added, removed} = this.state;
+        const {emails, removed} = this.state;
         const {groupData, currentMembers} = this.props;
         let add = {};
         let everyone = {};
@@ -110,6 +109,10 @@ class EditMembers extends React.Component {
             if(!currentMembers.includes(e)){
                 add[e] = true; 
                 everyone[e] = true;
+            }
+            else if(removed.includes(e)){
+                removed.splice(removed.indexOf(e),1);
+                everyone[e] = currEmails[e];
             }
             else{
                 everyone[e] = currEmails[e];
@@ -180,7 +183,6 @@ class EditMembers extends React.Component {
 
         return (
             <div className='center mw6-ns br3 hidden mv4'>
-                <ProgressLine progress={step} size={3} />
                 {step === 0 ? <h2 className="black  mv0 pv2 ph3 tc">Delete / Add Members - Emails </h2> : <h2 className="black  mv0 pv2 ph3 tc">Edit Permissions</h2>}
                 <div className="pa3 bt b--black-10">
                     <div className="f6 f5-ns lh-copy measure mv0">

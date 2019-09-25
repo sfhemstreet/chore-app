@@ -11,6 +11,7 @@ import Home from '../../components/Home/Home.js';
 import Dash from '../../components/Dash/Dash';
 import CreateNewGroup from '../../components/CreateGroup/CreateNewGroup.js';
 import GroupsPage from '../../components/GroupsPage/GroupsPage.js';
+import Settings from '../../components/Settings/Settings';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -31,13 +32,14 @@ class App extends React.Component {
       <div>
         <Navigation />
         <Switch>
-          <Route exact path='/'             render={() => <Home  />}/>
-          <ProtectedRoute auth={this.props.auth} exact path='/dash'      render={() => <Dash    />}/>
-          <ProtectedRoute auth={this.props.auth} exact path='/creategroup'  render={() => <CreateNewGroup/>}/>
-          <ProtectedRoute auth={this.props.auth} exact path='/groups'       render={() => <GroupsPage     />}/>
+          <Route exact path='/'             render={() => <Home       />}/>
           <Route exact path='/signin'       render={() => <SignIn     />}/>
           <Route exact path='/register'     render={() => <Register   />}/>
           <Route exact path='/about'        render={() => <About      />}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/dash'         render={() => <Dash           />}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/creategroup'  render={() => <CreateNewGroup />}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/groups'       render={() => <GroupsPage     />}/>
+          <ProtectedRoute auth={this.props.auth} exact path='/settings'     render={() => <Settings       />}/>
         </Switch>
         <ToastContainer />
       </div>

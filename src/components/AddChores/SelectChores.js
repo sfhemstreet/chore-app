@@ -20,7 +20,7 @@ class SelectChores extends React.Component {
     }
     
     addCustomChore = () => {
-		if(regexCheck(this.state.customChore, 'plain')){
+		if(regexCheck(this.state.customChore, 'plain') && this.state.customChore !== ''){
             this.setState({ selectedChores : [this.state.customChore, ...this.state.selectedChores], customChore : '' });
             document.getElementById('customChoreInput').value = '';
 		}

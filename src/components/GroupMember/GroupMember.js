@@ -1,7 +1,7 @@
 import React from 'react';
 import GroupChore from '../GroupChore/GroupChore';
 import './GroupMember.css';
-import ScrollBox from '../ScrollBox';
+import ScrollBox from '../form_components/ScrollBox/ScrollBox';
 
 const GroupMember = ({memberInfo}) => {
 

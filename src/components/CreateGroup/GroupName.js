@@ -47,11 +47,11 @@ class GroupName extends React.Component{
                         <main className="black-80">
                             <div className="measure center">
                                 <fieldset className="ba b--transparent ph0 mh0">
-                                    <h4 className="black mv0 pv2 ph3 tc">Please enter the name of your new group.</h4> 
+                                    <h4 className="black-90 mv0 pv2 ph3 tc">Please enter the name of your new group.</h4> 
                                     <div className='tc'>
                                         <input onChange={this.updateGroupName} className={highlightRed ? "pa2 input-reset ba bg-light-red hover-bg-near-white w-50" : "pa2 input-reset ba hover-bg-near-white w-50"} defaultValue={gName} ></input>
                                     </div>
-                                    <div className="">
+                                    <div className="ma2">
                                         <div className='tc pa2'>
                                             <NextButton click={this.onSubmit} />
                                         </div>
