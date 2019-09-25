@@ -11,7 +11,7 @@ class ChoreOptions extends React.Component {
         super(props);
         this.state = {
             choresWOptions : this.props.choresWithOptions ? checkChoresForOptions(this.props.choresWithOptions, this.props.chores) : JSON.parse(JSON.stringify(makeChoreObjs(this.props.chores))),
-            highlightred : JSON.parse(JSON.stringify(makeHLRObjs(this.props.chores)))
+            highlightred : JSON.parse(JSON.stringify(makeHLRObjs(this.props.chores))),
         }
     }
 
@@ -135,9 +135,11 @@ class ChoreOptions extends React.Component {
         }
     }
 
-    render(){
-        const {chores,people,group,goBack} = this.props;
-        const {choresWOptions, highlightred} = this.state;
+    renderChores = (choresWOptions) => {
+        const {people} = this.props;
+        const { highlightred} = this.state;
+
+        const chores = Object.keys(choresWOptions);
 
         const renderSelectOptions = people.map((_,i) => {
             return (
@@ -145,31 +147,39 @@ class ChoreOptions extends React.Component {
             )
         });
 
-        const renderChoreOptions = chores.map((_,i) => {
+        return chores.map((_,i) => {
             return (
-                <div key={uid(`choreoption${chores[i]}`, i)} className={i % 2 === 0 ? "pa2 ma3 b--black-10 bg-white" : "pa2 ma3 b--black-10 bg-near-white"}>
+                <div key={uid(`choreoption${chores[i]}`, i)} className="pa2 ma3 bt b--black">
                     <h3 className="underline">{chores[i]}</h3>
-                    <div className="">Due Date</div>
+                    <div className="pt2">Due Date</div>
                     <input onChange={this.updateDueDate} name={chores[i]} type='date' min={todaysDate()} defaultValue={choresWOptions[chores[i]].dueDate} ></input>
-                    <div className="">Assign {i > 0 ? null : "(Random, or pick who does this chore)"}</div>
+                    <div className="pt2">Assign {i > 0 ? null : "(Random, or pick who does this chore)"}</div>
                     <select onChange={this.updateAssignment} name={chores[i]} defaultValue={choresWOptions[chores[i]].assignment} className={highlightred[chores[i]].assignment ? 'pa1 db tc f6 lh-title bg-red' : 'pa1 db tc f6 lh-title'} >
                         <option value='Randomly'>Randomly</option>
                         {renderSelectOptions}
                     </select>
-                    <div className="">Exemption {i > 0 ? "(Optional)" : "(Optional, selected person will not get this chore)"}</div>
+                    <div className="pt2">Exemption {i > 0 ? null : "(Selected person will not be assigned this chore randomly)"}</div>
                     <select onChange={this.updateExempt} name={chores[i]} defaultValue={choresWOptions[chores[i]].exempt} className={highlightred[chores[i]].exempt ? 'pa1 db tc f6 lh-title bg-red' : 'pa1 db tc f6 lh-title'} >
                         <option value='None'>None</option>
                         {renderSelectOptions}
                     </select>
-                    <div className="">Description (Optional)</div>
+                    <div className="pt2">Description</div>
                     <input onChange={this.updateDescription} className={highlightred[chores[i]].description ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100":"pa2 input-reset ba  hover-bg-near-white w-100"} name={chores[i]} type='text' defaultValue={choresWOptions[chores[i]].description}></input>    
                 </div>
             )
         });
 
+    }
+
+    render(){
+        const {group,goBack} = this.props;
+        const {choresWOptions} = this.state;
+        console.log('rendered')
+        const renderChoreOptions = this.renderChores(choresWOptions);
+        
         return (
-            <div className='center mw6-ns br3 hidden mv4 bg-light-blue'>
-                <h1 className="f4 black b mv0 pv2 ph3 tc">Edit Chores for {group}</h1>
+            <div className='center mw6-ns br3 hidden mv4'>
+                <h1 className="f4 black b mv0 pv2 ph3 tc">Assign Chores for {group}</h1>
                 <div className="pa3 bt b--black-10">
                     <fieldset className="ba b--transparent ph0 mh0">
                         <div>

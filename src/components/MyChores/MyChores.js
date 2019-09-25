@@ -1,6 +1,6 @@
 import React from 'react';
 import Chore from '../Chore/Chore';
-import ScrollBox from '../ScrollBox';
+import ScrollBox from '../form_components/ScrollBox/ScrollBox';
 import '../Chore/Chore.css';
 
 const MyChores = ({chores, onChoreCompleted}) => {

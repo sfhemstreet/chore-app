@@ -4,7 +4,14 @@ import {REQUEST_SIGNIN_PENDING,
         REQUEST_REGISTER_PENDING,
         REQUEST_REGISTER_SUCCESS,
         REQUEST_REGISTER_FAILED,
-        SIGN_OUT_USER } from '../constants/user_constants.js';
+        SIGN_OUT_USER,
+        PASSWORD_CHANGE_PENDING,
+        PASSWORD_CHANGE_SUCCESS,
+        PASSWORD_CHANGE_FAILED,
+        DELETE_ACCOUNT_FAILED,
+        DELETE_ACCOUNT_PENDING,
+        DELETE_ACCOUNT_SUCCESS
+} from '../constants/user_constants.js';
 
 import { toast } from "react-toastify";
 
@@ -103,3 +110,65 @@ export const register = (registerName, registerEmail, registerPassword, history)
 export const signOut = () => (dispatch) => {
     dispatch({ type: SIGN_OUT_USER });
 };
+
+
+// CHANGE PASSWORD
+export const changePassword = (oldPW, newPW) => (dispatch) => {
+    dispatch({ type: PASSWORD_CHANGE_PENDING })
+    fetch('http://localhost:4000/changepassword', {
+        method: 'patch',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            oldPassword: oldPW,
+            newPassword: newPW
+        })
+    })
+    .then(response => response.json())
+    .then(res => {
+        if(res === 'Password Changed'){
+            dispatch({ type: PASSWORD_CHANGE_SUCCESS });
+        }
+        else {
+            dispatch({ type: PASSWORD_CHANGE_FAILED })
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        dispatch({ type: PASSWORD_CHANGE_FAILED })
+    });
+}
+
+// DELETE ACCOUNT
+export const deleteAccount = (password) => (dispatch) => {
+    dispatch({ type: DELETE_ACCOUNT_PENDING })
+    fetch('http://localhost:4000/deleteaccount', {
+        method: 'delete',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            password: password
+        })
+    })
+    .then(response => response.json())
+    .then(res => {
+        if(res === 'Account Deleted'){
+            dispatch({ type: DELETE_ACCOUNT_SUCCESS });
+        }
+        else {
+            dispatch({ type: DELETE_ACCOUNT_FAILED })
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        dispatch({ type: DELETE_ACCOUNT_FAILED })
+    });
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, NavLink} from 'react-router-dom';
 import {submitCreatedGroup} from '../../actions/groupActions';
 import {assignChores} from '../../utils/assignChores';
 //compontents
@@ -10,6 +10,7 @@ import ChoreSelection from './ChoreSelection';
 import ChoreOptions from './ChoreOptions';
 import NewGroupConfirm from './NewGroupConfirm';
 import ProgressLine from '../ProgressLine/ProgressLine';
+import XButton from '../form_components/XButton';
 
 class CreateNewGroup extends React.Component {
     constructor(props){
@@ -130,6 +131,10 @@ class CreateNewGroup extends React.Component {
     }
 
 
+    cancel = () => {
+        this.props.history.push('/groups');
+    }
+
     render(){
         const {groupName, stage, people, chores, choresWithOptions} = this.state;
 
@@ -165,9 +170,19 @@ class CreateNewGroup extends React.Component {
 
         return (
             <div className='vh-100 bg-light-blue dt w-100' >
-                <ProgressLine progress={this.state.stage} size={9}/>
-                {groupName !== '' ? <div className='f4 black mv0 pv2 ph3 tc'>{groupName}</div> : null}
-                {outPut}
+                <div className='center mw6'>
+                    <div className='mb2'>
+                        <div className='pa1 f6 fr'><NavLink to='/groups'><XButton click={this.cancel} index={-1}/></NavLink></div>
+                        <div className='w-100 h2'></div>
+                    </div>
+                    
+                    <ProgressLine progress={this.state.stage} size={9}/>
+                    <div className='list center mw6 pa3 ma4 ba b--light-silver bg-washed-blue br2 shadow-2'>
+                        {groupName !== '' ? <div className='f4 black mv0 pv2 ph3 tc'>{groupName}</div> : null}
+                        {outPut}    
+                    </div>    
+                </div>
+                
             </div> 
         )
     }

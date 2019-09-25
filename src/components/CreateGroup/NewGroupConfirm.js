@@ -53,7 +53,7 @@ const NewGroupConfirm = ({chores,choreOptions,people,group,submit,goBack}) => {
     });
 
     return (
-        <div className='center mw6-ns br3 hidden mv4 bg-light-blue'>
+        <div className='center mw6-ns br3 hidden mv4 '>
             <h1 className="f4 black b mv0 pv2 ph3 tc">Confirm New Group - {group}</h1>
             <div className="pa3 bt b--black-10">
                 <div className="f6 f5-ns lh-copy measure mv0">

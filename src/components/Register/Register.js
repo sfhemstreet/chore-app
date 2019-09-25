@@ -49,7 +49,7 @@ class Register extends React.Component {
                         <div className="f6 f5-ns lh-copy measure mv0">
                             <main className="pa4 black-80">
                                 <div className="measure center">
-                                    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
+                                    <fieldset className="ba b--transparent ph0 mh0">
                                     <div className="mt3">
                                         <label className="db fw6 lh-copy f6" >Name</label>
                                         <input onChange={this.onNameChange} className="pa2 input-reset ba  hover-bg-near-white  w-100" type="email" />
