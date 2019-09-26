@@ -12,6 +12,7 @@ import Tilt from 'react-tilt';
 import {createGroupsArray} from '../../utils/groupsPageHelpers';
 import {NavLink} from 'react-router-dom';
 import PlusButton from '../form_components/PlusButton';
+import LoadingScreen from '../LoadingScreen/LoadingScreen.js';
 
 class GroupsPage extends React.Component {
     constructor(props){
@@ -50,11 +51,12 @@ class GroupsPage extends React.Component {
         this.setState({ addingChores : false, editingGroup: false });    
     }
 
-    submitNewChores = (chores) => {
+    submitAddChores = (chores) => {
         const id = getGroupId(this.state.groupData);
         this.props.requestAddChores(id,chores);
         this.close();
         this.props.requestChoreUpdate();
+        this.setState({ inFocus: null, canEdit: null })
     }
 
     submitGroupEdits = (removed, added, updated) => {
@@ -108,12 +110,12 @@ class GroupsPage extends React.Component {
         return(
             <div className='vh-100 bg-light-blue dt w-100'>
                 {this.props.isPending ? 
-                    <div className='' >LOADING</div> 
+                    <LoadingScreen /> 
                     :
                     <div>
                     {
                         editingGroup ? <EditGroup userEmail={email} groupName={modGroupName} groupData={groupData} submitEdits={this.submitGroupEdits} delete={this.deleteGroup} quit={this.close} /> :
-                        addingChores ? <AddChores groupName={modGroupName} groupData={groupData} submit={this.submitNewChores} quit={this.close}/> :
+                        addingChores ? <AddChores groupName={modGroupName} groupData={groupData} submit={this.submitAddChores} quit={this.close}/> :
                         inFocus !== null ? 
                         <Group 
                             groupInfo={inFocus} 

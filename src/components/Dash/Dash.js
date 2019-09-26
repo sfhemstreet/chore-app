@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom';
 import {getChores, submitChore} from '../../actions/choreActions';
 import MyChores from '../MyChores/MyChores';
 import welcomeMessage from '../../utils/welcomeMessage';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 class Dash extends React.Component {
     componentDidMount(){
@@ -24,7 +25,7 @@ class Dash extends React.Component {
                 {message}
                 </h2>
                 { this.props.isPending ?
-                    <div>LOADING</div>
+                    <LoadingScreen />
                 :
                     <div>
                             <MyChores 

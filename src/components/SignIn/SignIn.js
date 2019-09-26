@@ -16,7 +16,8 @@ class SignIn extends React.Component {
         this.state = {
             signInEmail: '',
             signInPassword: '',
-            quote: randomQuote()
+            quote: randomQuote(),
+            highlightRed: Array(2).fill(false)
         }
         
     }
@@ -24,21 +25,31 @@ class SignIn extends React.Component {
     // EMAIL & PASSWORD INPUT ONCHANGE 
     onInputChange = (event) => {
         const {name, value} = event.target;
-        this.setState({ [name]: value});
+        this.setState({ [name]: value , highlightRed: Array(2).fill(false) });
     }
 
     // SUBMIT HANDLER
     onSubmitSignIn = (e) => {
-        const { signInEmail, signInPassword } = this.state;
+        const { signInEmail, signInPassword, highlightRed } = this.state;
         const { dispatch } = this.props;
-        if(regexCheck(signInEmail, 'email') &&  signInPassword) {
+        if(signInEmail === '' || !regexCheck(signInEmail, 'email')){
+            let hlr = [...highlightRed];
+            hlr[0] = true;
+            this.setState({ highlightRed: hlr });
+        }
+        if(signInPassword === '' || !regexCheck(signInPassword,'special')){
+            let hlr = [...highlightRed];
+            hlr[1] = true;
+            this.setState({ highlightRed: hlr });
+        }
+        if(regexCheck(signInEmail, 'email') && regexCheck(signInPassword,'special') && signInPassword !== '' && signInEmail !== '') {
             dispatch(signIn(signInEmail, signInPassword, this.props.history));
         }
     }
     
 
     render(){
-        
+        const {highlightRed} = this.state;
         return (
             <div className='vh-100 bg-light-blue dt w-100'>
                 <div className="">
@@ -52,11 +63,11 @@ class SignIn extends React.Component {
                                             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                                             <div className="mt3">
                                                 <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                                                <input onChange={this.onInputChange} className="pa2 input-reset ba  hover-bg-near-white w-100" name="signInEmail" type="email" />
+                                                <input onChange={this.onInputChange} className={highlightRed[0] ? "pa2 input-reset ba bg-red hover-bg-near-white w-100" : "pa2 input-reset ba hover-bg-near-white w-100"} name="signInEmail" type="email" />
                                             </div>
                                             <div className="mv3">
                                                 <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                                                <input onChange={this.onInputChange} className="b pa2 input-reset ba  hover-bg-near-white w-100" name="signInPassword" type="password" />
+                                                <input onChange={this.onInputChange} className={highlightRed[1] ? "pa2 input-reset ba bg-red hover-bg-near-white w-100" : "pa2 input-reset ba hover-bg-near-white w-100"} name="signInPassword" type="password" />
                                             </div>
                                             </fieldset>
                                             <div className="">

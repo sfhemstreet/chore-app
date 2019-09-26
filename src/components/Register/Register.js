@@ -12,35 +12,53 @@ class Register extends React.Component {
             registerName: '',
             registerEmail: '',
             registerPassword: '',
+            highlightRed: new Array(3).fill(false)
         }
     }
 
     // NAME
     onNameChange = (event) => {
-        this.setState({registerName: event.target.value});
+        let hlr = [...this.state.highlightRed];
+        hlr[0] = false;
+        this.setState({ registerName: event.target.value, highlightRed : hlr });
     }
     // EMAIL
     onEmailChange = (event) => {
-       this.setState({registerEmail: event.target.value});
+        let hlr = [...this.state.highlightRed];
+        hlr[1] = false;
+        this.setState({ registerEmail: event.target.value, highlightRed: hlr });
     }
     // PASSWORD 
     onPasswordChange = (event) => {
-        this.setState({registerPassword: event.target.value});
+        let hlr = [...this.state.highlightRed];
+        hlr[2] = false;
+        this.setState({ registerPassword: event.target.value, highlightRed: hlr });
     }
     // SUBMIT
-    onRegisterSubmit = (event) => {
+    onRegisterSubmit = () => {
         const {registerEmail, registerName, registerPassword} = this.state;
-        if(!regexCheck(registerEmail, 'email') || !regexCheck(registerName, 'special') || !regexCheck(registerPassword,'special')){
-            return console.log('Bad Input');
-        }
-        else{
-            //console.log(registerEmail)
+        let hlr = [...this.state.highlightRed];
+        if(registerName === '' || !regexCheck(registerName, 'special'))
+            hlr[0] = true;
+        
+        if(registerEmail === '' || !regexCheck(registerEmail, 'email'))
+            hlr[1] = true;
+        
+        if(registerPassword === '' || !regexCheck(registerPassword,'special'))
+            hlr[2] = true;
+          
+        if(registerName !== '' && registerEmail !== '' && registerPassword !== '' && 
+           regexCheck(registerName, 'special') && regexCheck(registerEmail, 'email') && regexCheck(registerPassword,'special'))
+        {
             this.props.dispatch(register(registerName,registerEmail,registerPassword,this.props.history))
         }
         
+        this.setState({ highlightRed : hlr })
     }
 
     render(){
+        const {highlightRed} = this.state;
+
         return (
             <div className='vh-100 bg-lightest-blue dt w-100'>
                 <div className="center mw6-ns br3 hidden mv4 bg-near-white">
@@ -52,15 +70,15 @@ class Register extends React.Component {
                                     <fieldset className="ba b--transparent ph0 mh0">
                                     <div className="mt3">
                                         <label className="db fw6 lh-copy f6" >Name</label>
-                                        <input onChange={this.onNameChange} className="pa2 input-reset ba  hover-bg-near-white  w-100" type="email" />
+                                        <input onChange={this.onNameChange} className={highlightRed[0] ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100" : "pa2 input-reset ba  hover-bg-near-white w-100"} type="email" />
                                     </div>
                                     <div className="mt3">
                                         <label className="db fw6 lh-copy f6" >Email</label>
-                                        <input onChange={this.onEmailChange} className="pa2 input-reset ba  hover-bg-near-white  w-100" type="email" />
+                                        <input onChange={this.onEmailChange} className={highlightRed[1] ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100" : "pa2 input-reset ba  hover-bg-near-white w-100"} type="email" />
                                     </div>
                                     <div className="mv3">
                                         <label className="db fw6 lh-copy f6" >Password</label>
-                                        <input onChange={this.onPasswordChange} className="b pa2 input-reset ba  hover-bg-near-white  w-100" type="password" />
+                                        <input onChange={this.onPasswordChange} className={highlightRed[2] ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100" : "pa2 input-reset ba  hover-bg-near-white w-100"} type="password" />
                                     </div>
                                     </fieldset>
                                     <div className="">
