@@ -3,7 +3,9 @@ import TextInput from '../form_components/TextInput';
 import BackButton from '../form_components/BackButton';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {deleteAccount} from '../../actions/userActions';
+import {deleteAccount} from '../../actions/settingsActions';
+import AccountDeleted from './AccountDeleted';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
 
 class DeleteAccount extends React.Component {
      constructor(props){
@@ -11,6 +13,7 @@ class DeleteAccount extends React.Component {
         this.state = {
             confirmPassword: '',
             red: false,
+            init: false
         }
     }
 
@@ -21,7 +24,8 @@ class DeleteAccount extends React.Component {
     onSubmit = () => {
         const {confirmPassword} = this.state;
         if(confirmPassword !== ''){
-            this.props.submit(confirmPassword)
+            this.setState({ init: true });
+            this.props.requestDeleteAccount(confirmPassword);
         }
         else{
             this.setState({ red: true });
@@ -30,34 +34,34 @@ class DeleteAccount extends React.Component {
 
     render(){
         return (
-            <div className='pa2 center'>
-                <div className='tc center f3 fw2 black-90 mv3'>Delete Account</div>
-                <div className='pa3'>
-                    To delete your account, please confirm your password:
-                </div>
-                <TextInput type={'password'} red={this.state.red} change={this.onInputPassword} />
-                <fieldset className="ba b--transparent ph0 mh0 flex">
-                    <BackButton click={this.props.cancel} />
-                    <div className="f6 link br2 ph3 pv2 mb2 dib white bg-blue hover-bg-red grow pointer" onClick={this.onSubmit}>Delete My Account</div>
-                </fieldset>
+            <div>
+                {this.props.isPending ? <LoadingScreen /> 
+                :
+                this.state.init && !this.props.isPending && this.props.error === '' ? <AccountDeleted /> :
+                <div className='pa2 center'>
+                    <div className='tc center f3 fw2 black-90 mv3'>Delete Account</div>
+                    {this.props.error ? <div className='tc center f3 black-90 mv3' >Unable to delete your account,<br/> double check password and try again</div> : null }
+                    <div className='pa3'>
+                        To delete your account, please confirm your password:
+                    </div>
+                    <TextInput type={'password'} red={this.state.red} change={this.onInputPassword} />
+                    <fieldset className="ba b--transparent ph0 mh0 flex">
+                        <BackButton click={this.props.cancel} />
+                        <div className="f6 link br2 ph3 pv2 mb2 dib white bg-blue hover-bg-red grow pointer" onClick={this.onSubmit}>Delete My Account</div>
+                    </fieldset>
+                </div>}  
             </div>
+            
         )
     }
      
 }
 
 const mapStateToProps = (state) => {
-    const {user} = state;
+    const {settings} = state;
     return {
-      auth: user.auth,
-      username: user.username,
-      email: user.email,
-      groups: user.groups,
-      createdGroups: user.createdGroups,
-      groupAuth: user.groupAuth,
-      score: user.score,
-      error: user.error,
-      isPending: user.isPending
+        isPending: settings.isPending,
+        error: settings.deleteError
     }
 }
 

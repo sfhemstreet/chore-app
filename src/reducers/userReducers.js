@@ -1,11 +1,11 @@
-import {
-    REQUEST_SIGNIN_PENDING,
+import {REQUEST_SIGNIN_PENDING,
     REQUEST_SIGNIN_SUCCESS,
     REQUEST_SIGNIN_FAILED,
     REQUEST_REGISTER_PENDING,
     REQUEST_REGISTER_SUCCESS,
     REQUEST_REGISTER_FAILED,
-    SIGN_OUT_USER } from '../constants/user_constants.js';
+    SIGN_OUT_USER
+} from '../constants/user_constants.js';
 
 import {
     REQUEST_CHORES_PENDING, 
@@ -86,6 +86,8 @@ export const user = (state = userInitialState, action = {}) => {
                 error: action.payload, 
                 isPending: false
                 });
+
+        
     
         // DEFAULT
         default:
