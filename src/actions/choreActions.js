@@ -73,7 +73,7 @@ export const submitChore = (choreID) => (dispatch) => {
     
 }
 
-export const addChores = (groupID, newChores) => (dispatch) =>{
+export const addChores = (groupID, newChores, emails) => (dispatch) =>{
     dispatch({type: ADD_CHORES_PENDING});
     fetch('http://localhost:4000/addchores', { 
         method: 'POST',
@@ -85,7 +85,8 @@ export const addChores = (groupID, newChores) => (dispatch) =>{
         },
         body: JSON.stringify({
             groupID,
-            chores: newChores
+            chores: newChores,
+            emails
         })
     })
     .then(response => response.json())

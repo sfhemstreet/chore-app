@@ -20,7 +20,7 @@ const ChoreSelectBox = ({items, click, userChores}) => {
     });
 
     return (
-        <ul className="list pl0 ml0 mv0 mt0 center mw5 ba b--light-silver br2 ">
+        <ul className="list pl0 ml0 mv0 mt0 center mw5 ba b--light-silver br2 shadow-5">
             <ScrollBox maxHeight={'315'}>
                 {renderItems}
             </ScrollBox>

@@ -171,14 +171,13 @@ class CreateNewGroup extends React.Component {
         return (
             <div className='vh-100 bg-light-blue dt w-100' >
                 <div className='center mw6'>
-                    <div className='mb2'>
-                        <div className='pa1 f6 fr'><NavLink to='/groups'><XButton click={this.cancel} index={-1}/></NavLink></div>
-                        <div className='w-100 h2'></div>
-                    </div>
-                    
-                    <ProgressLine progress={this.state.stage} size={9}/>
-                    <div className='list center mw6 pa3 ma4 ba b--light-silver bg-washed-blue br2 shadow-2'>
-                        {groupName !== '' ? <div className='f4 black mv0 pv2 ph3 tc'>{groupName}</div> : null}
+                    <div className='list center pa3 ma4 ba b--light-silver bg-light-gray br2 shadow-2'>
+                        <div className='ma2'>
+                            <div className='pa1 ma1 f6 fr'><NavLink to='/groups'><XButton click={this.cancel} index={-1}/></NavLink></div>
+                            <div className='w-100 h2'></div>
+                        </div>
+                        <ProgressLine className='ma2' progress={this.state.stage} size={9}/>
+                        {groupName !== '' ? <div className='f2 black mt1 mb0 fw2 pv2 ph3 tc'>{groupName}</div> : null}
                         {outPut}    
                     </div>    
                 </div>

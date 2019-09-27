@@ -12,9 +12,9 @@ const Home = () => {
                     </div>
                 </header>
                 <div className="serif ph3 ph4-m ph5-l">
-                <p className="lh-copy f5 f3-m f1-l measure center pv4">
-                    Create a group, choose what needs to be done, and have accountablity.</p>
-                    <div className="dtc-l v-mid f6 f5-m f4-l measure "><NavLink className="f6 link dim ph3 pv2 mb2 dib white bg-dark-blue center" to='/register'>Get Started</NavLink></div>
+                    <p className="lh-copy f5 f3-m f1-l measure center">
+                    Create a group, choose what needs to be done, and have accountablity.
+                    </p>                    
                     <div className="f5 f3-m lh-copy">
                         <div className="cf dt-l w-100 bt b--black-10 pv4">
                             <div className="dtc-l v-mid mw6 pr3-l">
@@ -27,10 +27,10 @@ const Home = () => {
                                     Chore helps remind everyone what needs to be done and when. Choose who does what or let us assign the chores.
                                     Everyone gets rated so you know who is ontop of their sh*t. 
                                 </p>
-                                
                             </div>
                         </div>
                     </div>
+                    <div className="dtc-l v-mid f5-m f4-l measure tc"><NavLink className="f4 link dim ph4 pv3 mb3 dib white bg-dark-blue center" to='/register'>Get Started</NavLink></div>    
                 </div>
             </article>
       </div>

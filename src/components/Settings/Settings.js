@@ -27,7 +27,7 @@ class Settings extends React.Component {
         const {deletingAccount, passwordChange} = this.state;
 
         return (
-            <div className='vh-100 bg-lightest-blue dt w-100'>
+            <div className='vh-100 bg-light-purple dt w-100'>
                 <div className='list center mw6 pa3 ma4 ba b--light-silver bg-light-gray br2 shadow-2'>
                     <div className='tc f1 fw2 black-90 mv3' >Settings</div>
                         <div className='bt b--black-10 pb2' />
@@ -36,8 +36,8 @@ class Settings extends React.Component {
                         :
                     <div className='tc pa2'>    
                         <fieldset className="ba b--transparent ph0 mh0">
-                            <div className='tc hover-green pa2 pointer' onClick={this.onPasswordChange} >Change Password</div>
-                            <div className='tc hover-red pa2 pointer' onClick={this.onDeleteAccount} >Delete Account</div>
+                            <div className='tc f3 hover-green pa2 pointer' onClick={this.onPasswordChange} >Change Password</div>
+                            <div className='tc f3 hover-red pa2 pointer mt2' onClick={this.onDeleteAccount} >Delete Account</div>
                         </fieldset>
                     </div>}
                 </div> 

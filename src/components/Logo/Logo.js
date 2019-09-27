@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
-import Tilt from 'react-tilt';
+
 import './Logo.css';
 import logo from './logo.png';
 import {connect} from 'react-redux';
@@ -14,9 +14,8 @@ const mapStateToProps = (state) => {
 const Logo = (props) => {
     return(
         <div className="db dtc-l v-mid mid-gray link w-100 w-25-l tc tl-l mb2 mb0-l">
-            <Tilt 
-                className="Tilt center  dib w2 h2 pointer" 
-                options={{ max : 55 }} 
+            <div 
+                className="center grow dib w2 h2 pointer" 
                 style={{ height: 50, width: 100 }} >
                 {
                     props.auth === 'user' ?
@@ -28,7 +27,7 @@ const Logo = (props) => {
                     <img className=" br1 center "  alt="UChore" src={logo}/> 
                     </ NavLink>
                 }
-            </Tilt>
+            </div>
         </div>
     )
 }

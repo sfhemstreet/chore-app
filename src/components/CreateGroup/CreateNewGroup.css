@@ -18,7 +18,7 @@
 
 .confirm_people_grid {
     display: grid;
-    grid-template-columns: 1fr 1fr ;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "name permissions";
 }
@@ -33,3 +33,14 @@
     grid-template-rows: 1fr 1fr;
     grid-template-areas: "chore chore due due" "assign assign exempt exempt";
 }
+
+.chore-options_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "descript thing thing";
+  }
+  
+  .descript { grid-area: descript; }
+  
+  .thing { grid-area: thing; }

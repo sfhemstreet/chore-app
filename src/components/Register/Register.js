@@ -61,7 +61,7 @@ class Register extends React.Component {
 
         return (
             <div className='vh-100 bg-lightest-blue dt w-100'>
-                <div className="center mw6-ns br3 hidden mv4 bg-near-white">
+                <div className="center mw6-ns br3 hidden mv4 bg-near-white shadow-2">
                     <h1 className="f4 bg-blue br3 br--top white mv0 pv2 ph3">Register</h1>
                     <div className="pa3 bt b--black-10">
                         <div className="f6 f5-ns lh-copy measure mv0">
@@ -70,15 +70,15 @@ class Register extends React.Component {
                                     <fieldset className="ba b--transparent ph0 mh0">
                                     <div className="mt3">
                                         <label className="db fw6 lh-copy f6" >Name</label>
-                                        <input onChange={this.onNameChange} className={highlightRed[0] ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100" : "pa2 input-reset ba  hover-bg-near-white w-100"} type="email" />
+                                        <input onChange={this.onNameChange} className={highlightRed[0] ? "pa2 input-reset ba  bg-animate hover-bg-washed-green bg-red w-100" : "pa2 input-reset ba bg-animate hover-bg-washed-green w-100"} type="text" />
                                     </div>
                                     <div className="mt3">
                                         <label className="db fw6 lh-copy f6" >Email</label>
-                                        <input onChange={this.onEmailChange} className={highlightRed[1] ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100" : "pa2 input-reset ba  hover-bg-near-white w-100"} type="email" />
+                                        <input onChange={this.onEmailChange} className={highlightRed[1] ? "pa2 input-reset ba  bg-animate hover-bg-washed-green bg-red w-100" : "pa2 input-reset ba bg-animate hover-bg-washed-green w-100"} type="email" />
                                     </div>
                                     <div className="mv3">
                                         <label className="db fw6 lh-copy f6" >Password</label>
-                                        <input onChange={this.onPasswordChange} className={highlightRed[2] ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100" : "pa2 input-reset ba  hover-bg-near-white w-100"} type="password" />
+                                        <input onChange={this.onPasswordChange} className={highlightRed[2] ? "pa2 input-reset ba  bg-animate hover-bg-washed-green bg-red w-100" : "pa2 input-reset ba bg-animate hover-bg-washed-green w-100"} type="password" />
                                     </div>
                                     </fieldset>
                                     <div className="">

@@ -11,8 +11,8 @@ class ChoreSelection extends React.Component {
 		super(props);
 		this.state = {
 			customChore: '',
-			selectedChores : localStorage.getItem('chores') === null ? [] : localStorage.getItem('chores').split(','),
-			allChores : CHORE_LIST,
+			selectedChores : this.props.doNotSave ? [...this.props.chores] : localStorage.getItem('chores') === null ? [] : localStorage.getItem('chores').split(','),
+			allChores : [...CHORE_LIST],
 		}
 	}
 
@@ -32,7 +32,9 @@ class ChoreSelection extends React.Component {
 			sc.unshift(this.state.customChore);
 			this.setState({selectedChores : sc, customChore : ''});
 			document.getElementById('customChoreInput').value = '';
-			localStorage.setItem('chores', sc);
+			
+			if(!this.props.doNotSave)
+				localStorage.setItem('chores', sc);
 		}
 	}
 
@@ -40,20 +42,25 @@ class ChoreSelection extends React.Component {
 		let sc = [...this.state.selectedChores];
 		sc.unshift(chore);
 		this.setState({selectedChores : sc});
-		localStorage.setItem('chores', sc);	
-		this.props.choreOptionChange()
+
+		if(!this.props.doNotSave)
+			localStorage.setItem('chores', sc);	
 	}
 
 	removeChore = (chore) => {
 		let sc = [...this.state.selectedChores];
 		sc.splice(sc.indexOf(chore),1);
 		this.setState({selectedChores : sc});
-		localStorage.setItem('chores', sc);
+		
+		if(!this.props.doNotSave)
+			localStorage.setItem('chores', sc);
 	}
 
 	onSubmitSelectedChores = () => {
-		localStorage.setItem('stage', '3');
-		localStorage.setItem('chores', this.state.selectedChores);
+		if(!this.props.doNotSave){
+			localStorage.setItem('stage', '3');
+			localStorage.setItem('chores', this.state.selectedChores);	
+		}
 		this.props.choreChange(this.state.selectedChores)
 		this.props.goForward();
 	}
@@ -83,8 +90,8 @@ class ChoreSelection extends React.Component {
 										<input id="customChoreInput" onChange={this.editCustomChore} placeholder='Enter your own chore here' className="pa2 input-reset ba  hover-bg-near-white w-50"/> 
 										<AddButton click={this.addCustomChore} />
 									</div>
-									<div className='tc pa2 ma2'>
-										<BackButton click={this.props.goBack}/>
+									<div className='tc pa2 mt2'>
+										{this.props.doNotSave ? null : <BackButton click={this.props.goBack}/>}
 										{this.state.selectedChores.length > 0 ? <NextButton click={this.onSubmitSelectedChores}/> : null }
 									</div>
 								</fieldset>
