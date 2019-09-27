@@ -32,16 +32,16 @@ class SignIn extends React.Component {
     onSubmitSignIn = (e) => {
         const { signInEmail, signInPassword, highlightRed } = this.state;
         const { dispatch } = this.props;
-        if(signInEmail === '' || !regexCheck(signInEmail, 'email')){
-            let hlr = [...highlightRed];
+        let hlr = [...highlightRed];
+
+        if(signInEmail === '' || !regexCheck(signInEmail, 'email'))
             hlr[0] = true;
-            this.setState({ highlightRed: hlr });
-        }
-        if(signInPassword === '' || !regexCheck(signInPassword,'special')){
-            let hlr = [...highlightRed];
+            
+        if(signInPassword === '' || !regexCheck(signInPassword,'special'))
             hlr[1] = true;
-            this.setState({ highlightRed: hlr });
-        }
+            
+        this.setState({ highlightRed: hlr });
+        
         if(regexCheck(signInEmail, 'email') && regexCheck(signInPassword,'special') && signInPassword !== '' && signInEmail !== '') {
             dispatch(signIn(signInEmail, signInPassword, this.props.history));
         }
@@ -54,7 +54,7 @@ class SignIn extends React.Component {
             <div className='vh-100 bg-light-blue dt w-100'>
                 <div className="">
                     <div className="">
-                        <div className="center  mw6-ns br3 hidden  mv4 bg-near-white">
+                        <div className="center  mw6-ns br3 hidden  mv4 bg-near-white shadow-2">
                             <h1 className="f4 br3 br--top black-80 mv0 pv2 ph3 bg-blue white">Sign In</h1>
                             <div className="pa3 bt b--black-10">
                                 <div className="f6 f5-ns lh-copy measure mv0">
@@ -63,11 +63,11 @@ class SignIn extends React.Component {
                                             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                                             <div className="mt3">
                                                 <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                                                <input onChange={this.onInputChange} className={highlightRed[0] ? "pa2 input-reset ba bg-red hover-bg-near-white w-100" : "pa2 input-reset ba hover-bg-near-white w-100"} name="signInEmail" type="email" />
+                                                <input onChange={this.onInputChange} className={highlightRed[0] ? "pa2 input-reset ba bg-red bg-animate hover-bg-washed-green w-100" : "pa2 input-reset ba bg-animate hover-bg-washed-green w-100"} name="signInEmail" type="email" />
                                             </div>
                                             <div className="mv3">
                                                 <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                                                <input onChange={this.onInputChange} className={highlightRed[1] ? "pa2 input-reset ba bg-red hover-bg-near-white w-100" : "pa2 input-reset ba hover-bg-near-white w-100"} name="signInPassword" type="password" />
+                                                <input onChange={this.onInputChange} className={highlightRed[1] ? "pa2 input-reset ba bg-red bg-animate hover-bg-washed-green w-100" : "pa2 input-reset ba bg-animate hover-bg-washed-green w-100"} name="signInPassword" type="password" />
                                             </div>
                                             </fieldset>
                                             <div className="">

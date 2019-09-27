@@ -20,20 +20,22 @@ class Dash extends React.Component {
         const message = welcomeMessage(this.props.username);
         
         return (
-            <div className='vh-100 bg-light-blue dt w-100'>
-                <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">
-                {message}
-                </h2>
-                { this.props.isPending ?
-                    <LoadingScreen />
-                :
-                    <div>
-                            <MyChores 
-                                chores={this.props.chores}
-                                onChoreCompleted={this.sendCompletedChore}
-                            />
-                    </div>
-                }
+            <div className='vh-100 bg-blue dt w-100'>
+                <div className='mw6 list center pa3 ma4 ba b--light-silver bg-near-white br2 shadow-2'>
+                    <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3">
+                    {message}
+                    </h2>
+                    { this.props.isPending ?
+                        <LoadingScreen />
+                    :
+                        <div>
+                                <MyChores 
+                                    chores={this.props.chores}
+                                    onChoreCompleted={this.sendCompletedChore}
+                                />                           
+                        </div>
+                    }    
+                </div>
             </div>
         )
     }

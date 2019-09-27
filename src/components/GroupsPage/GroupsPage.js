@@ -7,8 +7,7 @@ import {getChores, addChores} from '../../actions/choreActions';
 import {deleteGroup, editGroup} from '../../actions/groupActions';
 import AddChores from '../AddChores/AddChores';
 import EditGroup from '../EditGroup/EditGroup';
-import {getGroupId, checkEditAuth} from '../../utils/addChoresHelpers';
-import Tilt from 'react-tilt';
+import {getGroupId, checkEditAuth, getEmails} from '../../utils/addChoresHelpers';
 import {createGroupsArray} from '../../utils/groupsPageHelpers';
 import {NavLink} from 'react-router-dom';
 import PlusButton from '../form_components/PlusButton';
@@ -18,8 +17,8 @@ class GroupsPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            inFocus: Object.keys(this.props.groups).length === 1 ? createGroupsArray(this.props.groups)[0] : null,
-            canEdit: Object.keys(this.props.groups).length === 1 ? checkEditAuth(this.props.createdGroups,createGroupsArray(this.props.groups)[0].memberInfo) : null,
+            inFocus: null,
+            canEdit: null,
             addingChores: false,
             editingGroup: false,
             groupData: null,
@@ -53,7 +52,7 @@ class GroupsPage extends React.Component {
 
     submitAddChores = (chores) => {
         const id = getGroupId(this.state.groupData);
-        this.props.requestAddChores(id,chores);
+        this.props.requestAddChores(id,chores,getEmails(this.state.groupData));
         this.close();
         this.props.requestChoreUpdate();
         this.setState({ inFocus: null, canEdit: null })
@@ -64,6 +63,7 @@ class GroupsPage extends React.Component {
         this.props.requestEditGroup(id,removed,added,updated);
         this.close();
         this.props.requestChoreUpdate();
+        this.setState({ inFocus: null, canEdit: null });
     }
 
     deleteGroup = () => {
@@ -88,22 +88,20 @@ class GroupsPage extends React.Component {
             const renderMemberNames = Object.keys(groupsArray[i].memberInfo).map(member => {
                 return (
                     member === username ? null :
-                    <div className='pa1 tc green'>
-                        {member}
+                    <div key={uid('GroupMember',i + member)} className='dib mr2'>
+                        <div className='f6 f5-ns b db pa2 link dim green'>
+                            {member}
+                        </div>    
                     </div>
+                    
                 )
             });
 
             return (
-                <Tilt 
-                className="Tilt pointer ma3 pa3 ba b--light-silver bg-light-gray br2 shadow-1 hover-orange mw5 center" 
-                options={{ max : 55 }} 
-                >
-                    <div key={uid('Group',i)} className='pa1' onClick={() => this.changeFocus(groupsArray[i], canEdit)}>
-                        <div className='tc f3 fw3 '>{groupsArray[i].name.replace('_', ' ')} </div>
-                        <div className='flex justify-around bt b--black-10 pa2 hover-blue'>{renderMemberNames} </div>
-                    </div>
-                </Tilt>
+                <div key={uid('Group',i)} className='grow pointer ma3 pa3 ba b--light-silver bg-light-gray br2 shadow-1 hover-orange center' onClick={() => this.changeFocus(groupsArray[i], canEdit)}>
+                    <div className='tc f3 fw3 '>{groupsArray[i].name.replace('_', ' ')} </div>
+                    <div className='list ph3 ph5-ns pv4 bt b--black-10 pa2 hover-blue'>{renderMemberNames} </div>
+                </div>
             )
         });
 
@@ -129,7 +127,7 @@ class GroupsPage extends React.Component {
                             <div className='center mw6'>
                                 <div className='pa1 f6 fr'><NavLink to='/creategroup'><PlusButton click={null} /></NavLink></div>
                                 <h2 className="tc center f3 f2-m f1-l fw2 black-90 mv3 mw6">Your Groups</h2>
-                                <div className='flex-wrap items-center bt b--black-10'>
+                                <div className='bt b--black-10'>
                                     {renderGroupThumbnails}
                                 </div>
                             </div>
@@ -165,7 +163,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         requestChoreUpdate: () => dispatch(getChores()),
-        requestAddChores: (groupID, newChores) => dispatch(addChores(groupID, newChores)),
+        requestAddChores: (groupID, newChores, emails) => dispatch(addChores(groupID, newChores, emails)),
         requestEditGroup: (id,removed,added, updated) => dispatch(editGroup(id,removed,added,updated)),
         requestDeleteGroup: (id) => dispatch(deleteGroup(id)),
         // requestMessages: (groupID) => dispatch(getGroupMessages(groupID))

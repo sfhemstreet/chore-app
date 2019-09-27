@@ -44,7 +44,7 @@ class EditGroup extends React.Component {
     render(){
         const {groupName, editingPeople, deleting, groupMembers} = this.state;
         return (
-            <div className='list center mw6 pa3 ma4'>
+            <div  className='list center mw6 pa3 ma4 ba b--light-silver bg-light-gray br2 shadow-2'>
                 <div className='pa1 fr f6'><XButton className='tc center' click={this.props.quit} index={-1}/></div>
                 <div className='center'>
                     <div className='tc f1 fw2 black-90 mv3' >Edit {groupName}</div>
@@ -55,7 +55,7 @@ class EditGroup extends React.Component {
                         deleting ? <DeleteGroup close={this.onClose} submit={this.deleteGroup} />
                         :
                         <div>
-                            <div className='tc f3 pointer hover-white pa2' onClick={this.onEditGroupMembers} >Add/Remove Group Members <br/> Change Who Can Add Chores</div>
+                            <div className='tc f3 pointer hover-green pa2' onClick={this.onEditGroupMembers} >Add/Remove Group Members <br/> Change Who Can Add Chores</div>
                             <div className='tc f3 pointer hover-red pa2 mt2' onClick={this.onDelete} >Delete Group</div>
                         </div>
                     }

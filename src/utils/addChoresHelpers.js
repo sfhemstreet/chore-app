@@ -27,3 +27,22 @@ export const checkEditAuth = (createdGroups, groupData) => {
     }
     return false;
 }
+
+const getEmailsWithUsername = (groupData) => {
+    let emails = {};
+    Object.keys(groupData).forEach(person => {
+        emails[person] = groupData[person][0].assign_email;
+    });
+    return emails;
+}
+
+
+export const replaceUsernameWithEmail = (choreData,groupData) => {
+    let chores = JSON.parse(JSON.stringify(choreData));
+    const emails = getEmailsWithUsername(groupData);
+
+    for(let c in chores){
+        chores[c].assigned = emails[chores[c].assigned];
+    }
+    return chores
+}

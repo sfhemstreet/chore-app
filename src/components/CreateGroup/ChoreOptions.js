@@ -2,9 +2,10 @@ import React from 'react';
 import NextButton from '../form_components/NextButton';
 import BackButton from '../form_components/BackButton';
 import regexCheck from '../../utils/regexCheck';
-import {todaysDate} from '../../utils/todaysDate';
+import {todaysDate, nextWeek} from '../../utils/todaysDate';
 import {makeChoreObjs, makeHLRObjs, checkChoresForOptions} from '../../utils/choreOptionHelpers';
 import {uid} from 'react-uid';
+import './CreateNewGroup.css';
 
 class ChoreOptions extends React.Component {
     constructor(props){
@@ -16,7 +17,8 @@ class ChoreOptions extends React.Component {
     }
 
     componentDidMount(){
-        localStorage.setItem('confirmChoreGroup','false');
+        if(!this.props.doNotSave)
+            localStorage.setItem('confirmChoreGroup','false');
     }
 
     updateDescription = (event) => {
@@ -26,7 +28,10 @@ class ChoreOptions extends React.Component {
         if(regexCheck(event.target.value, 'special')){
             let c = JSON.parse(JSON.stringify(choresWOptions));
             c[event.target.name].description = event.target.value;
-            localStorage.setItem('choresWithOptions', JSON.stringify(c));
+            
+            if(!this.props.doNotSave)
+                localStorage.setItem('choresWithOptions', JSON.stringify(c));
+            
             optionChange(c);
 
             let hlr = JSON.parse(JSON.stringify(highlightred));
@@ -47,7 +52,10 @@ class ChoreOptions extends React.Component {
         let c = JSON.parse(JSON.stringify(choresWOptions));
         if(regexCheck(event.target.value, 'yyyy-mm-dd')){
             c[event.target.name].dueDate = event.target.value;
-            localStorage.setItem('choresWithOptions', JSON.stringify(c));
+            
+            if(!this.props.doNotSave)
+                localStorage.setItem('choresWithOptions', JSON.stringify(c));
+
             let hlr = JSON.parse(JSON.stringify(highlightred));
             hlr[event.target.name].dueDate = false;
             optionChange(c);
@@ -62,50 +70,37 @@ class ChoreOptions extends React.Component {
 
     updateAssignment = (event) => {
         const {optionChange} = this.props;
-        const {choresWOptions , highlightred} = this.state;
-
+        const {choresWOptions} = this.state;
         let c = JSON.parse(JSON.stringify(choresWOptions));
-        if(c[event.target.name].exempt === event.target.name){
-            let hlr = JSON.parse(JSON.stringify(highlightred));
-            hlr[event.target.name].assignment = true;
-            hlr[event.target.name].exempt = true;
-            this.setState({ highlightred : hlr });
-            return null;
-        }
-        else{
-            let hlr = JSON.parse(JSON.stringify(highlightred));
-            hlr[event.target.name].assignment = false;
-            hlr[event.target.name].exempt = false;
-            this.setState({ highlightred : hlr });
-        }
+
+        // check for exempt being same as assigned
+        if(c[event.target.name].exempt === event.target.value)
+            c[event.target.name].exempt = 'None';
+        
+        // update assignment in state and localStorage
         c[event.target.name].assignment = event.target.value;
-        localStorage.setItem('choresWithOptions', JSON.stringify(c));
-        optionChange(c);
         this.setState({ choresWOptions : c });
+        
+        if(!this.props.doNotSave)
+            localStorage.setItem('choresWithOptions', JSON.stringify(c));
+        
+        // send update to parent
+        optionChange(c);
     }
 
     updateExempt = (event) => {
         const {optionChange} = this.props;
-        const {choresWOptions , highlightred} = this.state;
-
+        const {choresWOptions} = this.state;
         let c = JSON.parse(JSON.stringify(choresWOptions));
-        if(c[event.target.name].assignment === event.target.value){
-            let hlr = JSON.parse(JSON.stringify(highlightred));
-            hlr[event.target.name].exempt = true;
-            hlr[event.target.name].assignment = true;
-            this.setState({ highlightred : hlr });
-            return null;
-        }
-        else{
-            let hlr = JSON.parse(JSON.stringify(highlightred));
-            hlr[event.target.name].exempt = false;
-            hlr[event.target.name].assignment = false;
-            this.setState({ highlightred : hlr });
-        }
+        // update exempt in state and localStorage
         c[event.target.name].exempt = event.target.value;
-        localStorage.setItem('choresWithOptions', JSON.stringify(c));
-        optionChange(c);
         this.setState({ choresWOptions : c });
+        
+        if(!this.props.doNotSave)
+            localStorage.setItem('choresWithOptions', JSON.stringify(c));
+        
+        // send update to parent
+        optionChange(c);
     }
 
     onSubmit = (event) => {
@@ -121,15 +116,10 @@ class ChoreOptions extends React.Component {
             if(hlr[chores[x]].dueDate){
                 allGood = false;
             }
-            if(hlr[chores[x]].assignment){
-                allGood = false;
-            }
-            if(hlr[chores[x]].exempt){
-                allGood = false;
-            }
         }
         if(allGood){
-            localStorage.setItem('choresWithOptions', JSON.stringify(choresWOptions));
+            if(!this.props.doNotSave)
+                localStorage.setItem('choresWithOptions', JSON.stringify(choresWOptions));
             optionChange(choresWOptions);
             goForward();
         }
@@ -150,21 +140,32 @@ class ChoreOptions extends React.Component {
         return chores.map((_,i) => {
             return (
                 <div key={uid(`choreoption${chores[i]}`, i)} className="pa2 ma3 bt b--black">
-                    <h3 className="underline">{chores[i]}</h3>
-                    <div className="pt2">Due Date</div>
-                    <input onChange={this.updateDueDate} name={chores[i]} type='date' min={todaysDate()} defaultValue={choresWOptions[chores[i]].dueDate} ></input>
-                    <div className="pt2">Assign {i > 0 ? null : "(Random, or pick who does this chore)"}</div>
-                    <select onChange={this.updateAssignment} name={chores[i]} defaultValue={choresWOptions[chores[i]].assignment} className={highlightred[chores[i]].assignment ? 'pa1 db tc f6 lh-title bg-red' : 'pa1 db tc f6 lh-title'} >
-                        <option value='Randomly'>Randomly</option>
-                        {renderSelectOptions}
-                    </select>
-                    <div className="pt2">Exemption {i > 0 ? null : "(Selected person will not be assigned this chore randomly)"}</div>
-                    <select onChange={this.updateExempt} name={chores[i]} defaultValue={choresWOptions[chores[i]].exempt} className={highlightred[chores[i]].exempt ? 'pa1 db tc f6 lh-title bg-red' : 'pa1 db tc f6 lh-title'} >
-                        <option value='None'>None</option>
-                        {renderSelectOptions}
-                    </select>
-                    <div className="pt2">Description</div>
-                    <input onChange={this.updateDescription} className={highlightred[chores[i]].description ? "pa2 input-reset ba  hover-bg-near-white bg-red w-100":"pa2 input-reset ba  hover-bg-near-white w-100"} name={chores[i]} type='text' defaultValue={choresWOptions[chores[i]].description}></input>    
+                    <h3 className="b tc">{chores[i]}</h3>
+                    <div className='pa1 ma1 chore-options_grid'>
+                        <div className="pt2 descript">Due Date</div>
+                        <input className={highlightred[chores[i]].dueDate ? 'bg-red pa1 db tc f6 lh-title thing' : 'pa1 db tc f6 lh-title thing'} onChange={this.updateDueDate} name={chores[i]} type='date' min={todaysDate()} defaultValue={nextWeek()} ></input>
+                    </div>
+                    <div className='pa1 ma1 chore-options_grid'>
+                        <div className="pt2 descript">Assign</div>
+                        <select onChange={this.updateAssignment} name={chores[i]} defaultValue={choresWOptions[chores[i]].assignment} className='pa2 db ba bg-animate hover-bg-washed-green tc f5 lh-title thing' >
+                            <option className='b pa2 input-reset ' value='Randomly'>Randomly</option>
+                            {renderSelectOptions}
+                        </select>    
+                    </div>
+                    {
+                    choresWOptions[chores[i]].assignment !== 'Randomly' ? null :
+                    <div className='pa1 ma1 chore-options_grid'>
+                        <div className="pt2 descript">Exempt</div>
+                        <select onChange={this.updateExempt} name={chores[i]} defaultValue={choresWOptions[chores[i]].exempt} className='pa2 db ba bg-animate hover-bg-washed-green tc f5 lh-title thing' >
+                            <option className='b pa2 input-reset ' value='None'>None</option>
+                            {renderSelectOptions}
+                        </select>    
+                    </div>
+                    }
+                    <div className='pa1 ma1 chore-options_grid'>
+                        <div className="pt2 descript">Description</div>
+                        <input onChange={this.updateDescription} className={highlightred[chores[i]].description ? "pa2 input-reset ba bg-animate hover-bg-washed-green bg-red w-100 thing":"pa2 input-reset ba bg-animate hover-bg-washed-green w-100 thing"} name={chores[i]} type='text' defaultValue={choresWOptions[chores[i]].description}></input>     
+                    </div>  
                 </div>
             )
         });
@@ -174,13 +175,18 @@ class ChoreOptions extends React.Component {
     render(){
         const {group,goBack} = this.props;
         const {choresWOptions} = this.state;
-        console.log('rendered')
+        
         const renderChoreOptions = this.renderChores(choresWOptions);
         
         return (
             <div className='center mw6-ns br3 hidden mv4'>
-                <h1 className="f4 black b mv0 pv2 ph3 tc">Assign Chores for {group}</h1>
+                {this.props.doNotSave ? <h1 className="f4 black b mv0 pv2 ph3 tc">Assign New Chores</h1> : <h1 className="f4 black b mv0 pv2 ph3 tc">Assign Chores for {group}</h1>}
                 <div className="pa3 bt b--black-10">
+                    <div className='pa1 f5 pl3'>
+                        Pick a due date<br/>
+                        Assign who does the chore<br/> 
+                        Exempt person will not get the chore<br/>
+                    </div>
                     <fieldset className="ba b--transparent ph0 mh0">
                         <div>
                             <div className=''>{renderChoreOptions}</div>

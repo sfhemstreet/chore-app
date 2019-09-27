@@ -20,9 +20,7 @@ export function makeChoreObjs(chores){
 export function makeHLRObjs(chores){
     var redObj = {
         dueDate : false,
-        assignment : false,
         description : false,
-        exempt : false
     }
 
     let hlr = {};
@@ -39,7 +37,7 @@ export function checkChoresForOptions(choresWithOptions, chores){
         dueDate : nextWeek(),
         assignment : 'Randomly',
         description : '',
-        exempt : 'No one'
+        exempt : 'None'
     }
     
     //check for out of date chores and delete them

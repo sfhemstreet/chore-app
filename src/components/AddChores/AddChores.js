@@ -1,12 +1,12 @@
 import React from 'react';
 import '../PopUp/PopUp.css';
-import SelectChores from './SelectChores';
-import NewChoreOptions from './NewChoreOptions';
-import ConfirmChores from './ConfirmChores';
+import ChoreOptions from '../CreateGroup/ChoreOptions';
 import {checkChoresForOptions} from '../../utils/choreOptionHelpers';
 import XButton from '../form_components/XButton';
 import {assignChores} from '../../utils/assignChores';
-import {getEmails} from '../../utils/addChoresHelpers';
+import {replaceUsernameWithEmail} from '../../utils/addChoresHelpers';
+import ChoreSelection from '../CreateGroup/ChoreSelection';
+import NewGroupConfirm from '../CreateGroup/NewGroupConfirm';
 
 class AddChores extends React.Component {
     constructor(props){
@@ -15,7 +15,7 @@ class AddChores extends React.Component {
             stage: 0,
             chores: [],
             choresWithOptions: {},
-            people: getEmails(this.props.groupData)
+            people: Object.keys(this.props.groupData)
         }
     }
 
@@ -39,7 +39,10 @@ class AddChores extends React.Component {
     }
 
     onSubmit = () => {
-        const assignedChores = assignChores(this.state.people, this.state.choresWithOptions);
+        // assign chores with usernames
+        const roughAssignedChores = assignChores(this.state.people, this.state.choresWithOptions);
+        // replace usernames with emails 
+        const assignedChores = replaceUsernameWithEmail(roughAssignedChores, this.props.groupData);
         this.props.submit(assignedChores);
     }
 
@@ -51,15 +54,15 @@ class AddChores extends React.Component {
         const {groupName} = this.props;
         
         return (
-            <div className='list center mw6 pa3 ma4'>
+            <div className='mw6 list center pa3 ma4 ba b--light-silver bg-near-white br2 shadow-2'>
                 <div className='pa1 fr f6'><XButton className='tc center' click={this.onQuit} index={-1}/></div>
                 <div className='center'>
                     <div className='tc f1 fw2 black-90 mv3' >Add Chores to {groupName}</div>
                     {{
-                        0:  <SelectChores chores={this.state.chores} choreChange={this.updateChores} goForward={this.nextStage}/>,
-                        1:  <NewChoreOptions chores={this.state.chores} choresWithOptions={this.state.choresWithOptions} updateOptions={this.updateChoreOptions} people={this.state.people} goForward={this.nextStage} goBack={this.previousStage} />,   
-                        2:  <ConfirmChores chores={this.state.chores} choreOptions={this.state.choresWithOptions} submit={this.onSubmit} goBack={this.previousStage} />,
-                        default:  <SelectChores chores={this.state.chores} choreChange={this.updateChores} goForward={this.nextStage}/>
+                        0:  <ChoreSelection doNotSave={true} chores={this.state.chores} choreChange={this.updateChores} goForward={this.nextStage}/>,
+                        1:  <ChoreOptions doNotSave={true} chores={this.state.chores} choresWithOptions={this.state.choresWithOptions} optionChange={this.updateChoreOptions} people={this.state.people} goForward={this.nextStage} goBack={this.previousStage} />,   
+                        2:  <NewGroupConfirm justChores={true} chores={this.state.chores} choreOptions={this.state.choresWithOptions} submit={this.onSubmit} goBack={this.previousStage} />,
+                        default:  <ChoreSelection doNotSave={true} chores={this.state.chores} choreChange={this.updateChores} goForward={this.nextStage}/>
                     }[this.state.stage]}
                 </div>    
             </div>
