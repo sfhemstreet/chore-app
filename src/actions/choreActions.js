@@ -74,6 +74,7 @@ export const submitChore = (choreID) => (dispatch) => {
 }
 
 export const addChores = (groupID, newChores, emails) => (dispatch) =>{
+    console.log('eeeee',emails);
     dispatch({type: ADD_CHORES_PENDING});
     fetch('http://localhost:4000/addchores', { 
         method: 'POST',
