@@ -62,7 +62,6 @@ export const user = (state = userInitialState, action = {}) => {
         case REQUEST_REGISTER_SUCCESS:
             return Object.assign({}, state, { 
                 auth: 'guest', 
-                email: action.payload.email, 
                 isPending: false
             });
         case REQUEST_REGISTER_FAILED:

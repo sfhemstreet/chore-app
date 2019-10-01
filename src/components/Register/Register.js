@@ -12,7 +12,8 @@ class Register extends React.Component {
             registerName: '',
             registerEmail: '',
             registerPassword: '',
-            highlightRed: new Array(3).fill(false)
+            verifyPassword: '',
+            highlightRed: new Array(4).fill(false)
         }
     }
 
@@ -34,9 +35,16 @@ class Register extends React.Component {
         hlr[2] = false;
         this.setState({ registerPassword: event.target.value, highlightRed: hlr });
     }
+    // Verify PASSWORD 
+    onVerifyPasswordChange = (event) => {
+        let hlr = [...this.state.highlightRed];
+        hlr[3] = false;
+        this.setState({ verifyPassword: event.target.value, highlightRed: hlr });
+    }
+
     // SUBMIT
     onRegisterSubmit = () => {
-        const {registerEmail, registerName, registerPassword} = this.state;
+        const {registerEmail, registerName, registerPassword, verifyPassword} = this.state;
         let hlr = [...this.state.highlightRed];
         if(registerName === '' || !regexCheck(registerName, 'special'))
             hlr[0] = true;
@@ -46,8 +54,16 @@ class Register extends React.Component {
         
         if(registerPassword === '' || !regexCheck(registerPassword,'special'))
             hlr[2] = true;
+
+        if(verifyPassword === '' || !regexCheck(verifyPassword,'special'))
+            hlr[3] = true;
+
+        if(verifyPassword !== registerPassword){
+            hlr[2] = true;
+            hlr[3] = true;
+        }
           
-        if(registerName !== '' && registerEmail !== '' && registerPassword !== '' && 
+        if(registerName !== '' && registerEmail !== '' && registerPassword !== '' && registerPassword === verifyPassword &&
            regexCheck(registerName, 'special') && regexCheck(registerEmail, 'email') && regexCheck(registerPassword,'special'))
         {
             this.props.dispatch(register(registerName,registerEmail,registerPassword,this.props.history))
@@ -79,6 +95,10 @@ class Register extends React.Component {
                                     <div className="mv3">
                                         <label className="db fw6 lh-copy f6" >Password</label>
                                         <input onChange={this.onPasswordChange} className={highlightRed[2] ? "pa2 input-reset ba  bg-animate hover-bg-washed-green bg-red w-100" : "pa2 input-reset ba bg-animate hover-bg-washed-green w-100"} type="password" />
+                                    </div>
+                                    <div className="mv3">
+                                        <label className="db fw6 lh-copy f6" >Confirm Password</label>
+                                        <input onChange={this.onVerifyPasswordChange} className={highlightRed[3] ? "pa2 input-reset ba  bg-animate hover-bg-washed-green bg-red w-100" : "pa2 input-reset ba bg-animate hover-bg-washed-green w-100"} type="password" />
                                     </div>
                                     </fieldset>
                                     <div className="">
