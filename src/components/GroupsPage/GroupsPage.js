@@ -17,8 +17,8 @@ class GroupsPage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            inFocus: null,
-            canEdit: null,
+            inFocus: Object.keys(this.props.groups).length === 1 ? createGroupsArray(this.props.groups)[0] : null,
+            canEdit: Object.keys(this.props.groups).length === 1 ? checkEditAuth(this.props.createdGroups,createGroupsArray(this.props.groups)[0].memberInfo) : null,
             addingChores: false,
             editingGroup: false,
             groupData: null,
@@ -55,7 +55,10 @@ class GroupsPage extends React.Component {
         this.props.requestAddChores(id,chores,getEmails(this.state.groupData));
         this.close();
         this.props.requestChoreUpdate();
-        this.setState({ inFocus: null, canEdit: null })
+        this.setState({ 
+            inFocus: Object.keys(this.props.groups).length === 1 ? createGroupsArray(this.props.groups)[0] : null,
+            canEdit: Object.keys(this.props.groups).length === 1 ? checkEditAuth(this.props.createdGroups,createGroupsArray(this.props.groups)[0].memberInfo) : null 
+        });
     }
 
     submitGroupEdits = (removed, added, updated) => {
@@ -63,7 +66,10 @@ class GroupsPage extends React.Component {
         this.props.requestEditGroup(id,removed,added,updated);
         this.close();
         this.props.requestChoreUpdate();
-        this.setState({ inFocus: null, canEdit: null });
+        this.setState({ 
+            inFocus: Object.keys(this.props.groups).length === 1 ? createGroupsArray(this.props.groups)[0] : null,
+            canEdit: Object.keys(this.props.groups).length === 1 ? checkEditAuth(this.props.createdGroups,createGroupsArray(this.props.groups)[0].memberInfo) : null 
+        });
     }
 
     deleteGroup = () => {
