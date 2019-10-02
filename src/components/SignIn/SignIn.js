@@ -50,10 +50,11 @@ class SignIn extends React.Component {
     
     // FORGOT PASSWORD
     onForgotPassword = () => {
-        this.setState({ forgotPassword: true })
+        this.setState({ forgotPassword: !this.state.forgotPassword })
     }
+
     onSubmitForgotPassword = () => {
-        const { signInEmail, signInPassword, highlightRed } = this.state;
+        const { signInEmail, highlightRed } = this.state;
         const { dispatch } = this.props;
         let hlr = [...highlightRed];
 
@@ -75,19 +76,21 @@ class SignIn extends React.Component {
                     <div className="">
                         {forgotPassword ? 
                         <div className="center  mw6-ns br3 hidden  mv4 bg-near-white shadow-2">
-                            <h1 className="f4 br3 br--top black-80 mv0 pv2 ph3 bg-blue white">Reset Password</h1>
+                            <h1 className="f4 br3 br--top black-80 mv0 pv2 ph3 bg-blue white">Forgot Password</h1>
                             <div className="pa3 bt b--black-10">
                                 <div className="f6 f5-ns lh-copy measure mv0">
                                     <main className="pa4 black-80">
+                                    <h4>Enter your account email below and we will send you a link so you can recover your account.</h4>
                                         <div className="measure center">
                                             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-                                            <div className="mt3">
+                                            <div className="">
                                                 <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
                                                 <input onChange={this.onInputChange} className={highlightRed[0] ? "pa2 input-reset ba bg-red bg-animate hover-bg-washed-green w-100" : "pa2 input-reset ba bg-animate hover-bg-washed-green w-100"} name="signInEmail" type="email" />
                                             </div>
                                             </fieldset>
-                                            <div className="">
-                                                <input onClick={this.onSubmitForgotPassword} className="b ph3 pv2 input-reset ba b--black  grow hover-bg-near-black hover-white pointer f6 dib" type="submit" value="Reset Password"/>
+                                            <div className="flex justify-around">
+                                                <input onClick={this.onForgotPassword} className="b ph3 pv2 input-reset ba b--black  grow hover-bg-blue hover-white pointer f6 dib" type="submit" value="Back"/>
+                                                <input onClick={this.onSubmitForgotPassword} className="b ph3 pv2 input-reset ba b--black  grow hover-bg-near-black hover-white pointer f6 dib" type="submit" value="Submit"/>
                                             </div>
                                         </div>
                                     </main>
@@ -118,7 +121,7 @@ class SignIn extends React.Component {
                                                 <NavLink to='/register' >
                                                 <p className="f6 link dim black db pointer mb0">Register</p>
                                                 </NavLink>
-                                                <p class="f6 link dim black db pointer underline mt0" onClick={this.onForgotPassword} >Forgot your password?</p>
+                                                <p className="f6 link dim black db pointer underline mt0" onClick={this.onForgotPassword} >Forgot your password?</p>
                                             </div>
                                         </div>
                                     </main>

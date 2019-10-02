@@ -40,7 +40,7 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
             dispatch({ type: REQUEST_SIGNIN_FAILED, payload: data})
             toast.error(data, {
                 position: "bottom-center",
-                autoClose: 2000,
+                autoClose: 4000,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true
@@ -74,7 +74,7 @@ export const register = (registerName, registerEmail, registerPassword, history)
             history.push('/signin');
             toast.success("Success! Please go to the email we just sent you to verify your account.", {
                 position: "bottom-center",
-                autoClose: 2000,
+                autoClose: 5000,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true
@@ -84,7 +84,7 @@ export const register = (registerName, registerEmail, registerPassword, history)
             dispatch({ type: REQUEST_REGISTER_FAILED, payload: res});
             toast.error(res, {
                 position: "bottom-center",
-                autoClose: 2000,
+                autoClose: 3000,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true
@@ -95,7 +95,7 @@ export const register = (registerName, registerEmail, registerPassword, history)
         dispatch({ type: REQUEST_REGISTER_FAILED, payload: error});
         toast.error(error, {
             position: "bottom-center",
-            autoClose: 2000,
+            autoClose: 3000,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true
@@ -124,9 +124,9 @@ export const forgotPassword = (email) => (dispatch) => {
         console.log(res)
         if(res === 'Success!'){
             dispatch({ type: RESET_PASSWORD_SUCCESS });
-            toast.success("Success! Please go to the email we sent you to reset your password.", {
+            toast.success("Please go to the email we sent you to reset your password.", {
                 position: "bottom-center",
-                autoClose: 2000,
+                autoClose: 5000,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true
@@ -136,7 +136,7 @@ export const forgotPassword = (email) => (dispatch) => {
             dispatch({ type: RESET_PASSWORD_FAILED });
             toast.error("Email was not valid", {
                 position: "bottom-center",
-                autoClose: 2000,
+                autoClose: 3000,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true
@@ -147,7 +147,7 @@ export const forgotPassword = (email) => (dispatch) => {
         dispatch({ type: REQUEST_REGISTER_FAILED });
         toast.error("Check email and try again.", {
             position: "bottom-center",
-            autoClose: 2000,
+            autoClose: 3000,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true
