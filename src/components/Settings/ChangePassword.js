@@ -104,7 +104,7 @@ const mapStateToProps = (state) => {
     const {settings} = state;
     return {
         isPending: settings.isPending,
-        error: settings.passwordChangeError
+        error: settings.passwordError
     }
 }
 
