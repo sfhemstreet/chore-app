@@ -1,43 +1,59 @@
 export const assignChores = (people, chores) => {
+    // holds all chores after assigned
+    let assignedChores = {};
+    // holds count of chores per person
     let p = {};
     people.forEach(person => {
         p[person] = 0;
     });
-    const assignedChores = {};
+    // array of everyone we will go thru to assign chore
+    let everyone = [...people];
+    shuffle(everyone);
+    // keeps index for everyone 
+    let i = 0;
+    const mod = everyone.length;
+
     for(let c in chores){
         assignedChores[c] = {};
-        
         // check if assigned to someone
         if(chores[c].assignment !== 'Randomly'){
             assignedChores[c].assigned = chores[c].assignment;
-            //assignedChores[c].picked = chores[c].assignment;
             p[chores[c].assignment] += 1;
         }
         // check for exemption
         else if(chores[c].exempt !== 'None'){
-            const index = randomlyAssignChore(people.length, people.indexOf(chores[c].exempt));
-            assignedChores[c].assigned = people[index];
-            //assignedChores[c].exempt = chores[c].exempt;
-            p[people[index]] += 1;
+            if(everyone[i % mod] === chores[c].exempt)
+                i++;
+            assignedChores[c].assigned = everyone[i % mod];
+            p[everyone[i % mod]] += 1;
+            i++;
         }
         // its just random
         else{
-            const index = randomlyAssignChore(people.length, 666);
-            assignedChores[c].assigned = people[index];
-            p[people[index]] += 1;
+            assignedChores[c].assigned = everyone[i % mod];
+            p[everyone[i % mod]] += 1;
+            i++;
         }
         assignedChores[c].dueDate = chores[c].dueDate;
         assignedChores[c].description = chores[c].description === '' ? null : chores[c].description;
     }
 
-    //const finalChores = checkDistro(assignedChores, p);
+    console.log(assignedChores)
     
     return assignedChores;
 }
 
-function randomlyAssignChore(numPeople, exemption){
+function shuffle(array) {
+    for(let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+/*
+function randomlyAssignChore(people, exemption){
     var randomNum;
-    if(exemption !== 666){
+    if(exemption !== -1){
         do{
             randomNum = Math.floor(Math.random() * (numPeople));
         }while(randomNum === exemption);
@@ -49,7 +65,17 @@ function randomlyAssignChore(numPeople, exemption){
     }
 }
 
-/*
+
+
+const index = randomlyAssignChore(people.length, people.indexOf(chores[c].exempt));
+            assignedChores[c].assigned = people[index];
+            //assignedChores[c].exempt = chores[c].exempt;
+            p[people[index]] += 1;
+
+const index = randomlyAssignChore(people.length, -1);
+            assignedChores[c].assigned = people[index];
+            p[people[index]] += 1;
+
 function checkDistro(chores, people){
     var max = 0;
     var maxIndex = 0;
