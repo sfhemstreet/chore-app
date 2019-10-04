@@ -8,9 +8,9 @@ import {
     RESET_PASSWORD_PENDING,
     RESET_PASSWORD_SUCCESS,
     RESET_PASSWORD_FAILED,
-    RESET_AUTH_PENDING,
-    RESET_AUTH_SUCCESS,
-    RESET_AUTH_FAILED
+    FORGOT_PASSWORD_PENDING, 
+    FORGOT_PASSWORD_SUCCESS, 
+    FORGOT_PASSWORD_FAILED,
 } from '../constants/settings_constants';
 
 import { SIGN_OUT_USER } from '../constants/user_constants';
@@ -82,6 +82,31 @@ export const deleteAccount = (password) => (dispatch) => {
     });
 }
 
+// FORGOT PASSWORD
+export const forgotPassword = (email) => (dispatch) => {
+    dispatch({ type: FORGOT_PASSWORD_PENDING })
+    fetch('http://localhost:4000/forgotpassword', {
+        method: 'post',
+        headers: {'Content-Type' : 'application/json'},
+        body: JSON.stringify({
+            email
+        })
+    })
+    .then(response => response.json())
+    .then(res => {
+        console.log(res)
+        if(res === 'Success!'){
+            dispatch({ type: FORGOT_PASSWORD_SUCCESS });
+        }
+        else {
+            dispatch({ type: FORGOT_PASSWORD_FAILED });
+        }
+    })
+    .catch(error => {
+        dispatch({ type: FORGOT_PASSWORD_FAILED });
+    }); 
+}
+
 // RESET PASSWORD
 export const resetPassword = (password,id,str) => (dispatch) => {
     dispatch({ type: RESET_PASSWORD_PENDING })
@@ -117,35 +142,3 @@ export const resetPassword = (password,id,str) => (dispatch) => {
     });
 }
 
-// CHECK FORGOT PASSWORD AUTH
-export const checkForgotPasswordAuth = (str) => (dispatch) => {
-    dispatch({ type: RESET_AUTH_PENDING })
-    fetch('http://localhost:4000/checkauthforgotpassword', {
-        method: 'post',
-        mode: 'cors',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            str
-        })
-    })
-    .then(response => response.json())
-    .then(res => {
-        if(res.success){
-            dispatch({ type: RESET_AUTH_SUCCESS, payload: res.id});
-        }
-        else if(res ==='MUST LOGIN'){
-            dispatch({type: SIGN_OUT_USER})
-        }
-        else {
-            dispatch({ type: RESET_AUTH_FAILED })
-        }
-    })
-    .catch(error => {
-        console.log(error);
-        dispatch({ type: RESET_PASSWORD_FAILED })
-    });
-}

@@ -5,9 +5,6 @@ import {REQUEST_SIGNIN_PENDING,
         REQUEST_REGISTER_SUCCESS,
         REQUEST_REGISTER_FAILED,
         SIGN_OUT_USER,
-        RESET_PASSWORD_PENDING,
-        RESET_PASSWORD_SUCCESS,
-        RESET_PASSWORD_FAILED
 } from '../constants/user_constants.js';
 
 import { toast } from "react-toastify";
@@ -109,50 +106,6 @@ export const signOut = () => (dispatch) => {
     dispatch({ type: SIGN_OUT_USER });
 };
 
-// FORGOT PASSWORD
-export const forgotPassword = (email) => (dispatch) => {
-    dispatch({ type: RESET_PASSWORD_PENDING })
-    fetch('http://localhost:4000/forgotpassword', {
-        method: 'post',
-        headers: {'Content-Type' : 'application/json'},
-        body: JSON.stringify({
-            email
-        })
-    })
-    .then(response => response.json())
-    .then(res => {
-        console.log(res)
-        if(res === 'Success!'){
-            dispatch({ type: RESET_PASSWORD_SUCCESS });
-            toast.success("Please go to the email we sent you to reset your password.", {
-                position: "bottom-center",
-                autoClose: 5000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            });
-        }
-        else {
-            dispatch({ type: RESET_PASSWORD_FAILED });
-            toast.error("Email was not valid", {
-                position: "bottom-center",
-                autoClose: 3000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            });
-        }
-    })
-    .catch(error => {
-        dispatch({ type: REQUEST_REGISTER_FAILED });
-        toast.error("Check email and try again.", {
-            position: "bottom-center",
-            autoClose: 3000,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true
-            });
-    }); 
-}
+
 
 

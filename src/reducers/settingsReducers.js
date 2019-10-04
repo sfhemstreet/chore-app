@@ -7,10 +7,10 @@ import {
     DELETE_ACCOUNT_FAILED,
     RESET_PASSWORD_PENDING,
     RESET_PASSWORD_SUCCESS,
-    RESET_PASSWORD_FAILED,
-    RESET_AUTH_PENDING,
-    RESET_AUTH_SUCCESS,
-    RESET_AUTH_FAILED
+    RESET_PASSWORD_FAILED, 
+    FORGOT_PASSWORD_PENDING, 
+    FORGOT_PASSWORD_SUCCESS, 
+    FORGOT_PASSWORD_FAILED,
 } from '../constants/settings_constants';
 
 
@@ -59,6 +59,25 @@ export const settings = (state = userInitialState, action = {}) => {
                 deleteError: 'Unable to delete account'
             });
 
+        // FORGOT PASSWORD
+        case RESET_PASSWORD_PENDING:
+            return Object.assign({}, state, {  
+                isPending: true,
+                passwordError: '' 
+            });
+        case RESET_PASSWORD_SUCCESS:
+            return Object.assign({}, state, { 
+                isPending: false,
+                passwordError: '',
+                success: true 
+            });
+        case RESET_PASSWORD_FAILED:
+            return Object.assign({}, state, { 
+                passwordError: 'Unable to perform forgot password' , 
+                isPending: false,
+                success: false
+            });
+
         // RESET PASSWORD
         case RESET_PASSWORD_PENDING:
             return Object.assign({}, state, {  
@@ -76,24 +95,6 @@ export const settings = (state = userInitialState, action = {}) => {
                 passwordError: 'Unable to reset password' , 
                 isPending: false,
                 success: false
-            });
-
-        // RESET PASSWORD AUTH CHECK
-        case RESET_AUTH_PENDING:
-            return Object.assign({}, state, {  
-                isPending: true,
-                passwordError: '', 
-            });
-        case RESET_AUTH_SUCCESS:
-            return Object.assign({}, state, { 
-                isPending: false,
-                passwordError: '',
-                data: action.payload
-            });
-        case RESET_AUTH_FAILED:
-            return Object.assign({}, state, { 
-                passwordError: 'Unauthorized' , 
-                isPending: false,
             });
 
         // DEFAULT
