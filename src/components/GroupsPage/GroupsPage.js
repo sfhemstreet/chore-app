@@ -55,15 +55,11 @@ class GroupsPage extends React.Component {
         this.props.requestAddChores(id,chores,getEmails(this.state.groupData));
         this.close();
         this.props.requestChoreUpdate();
-        this.setState({ 
-            inFocus: Object.keys(this.props.groups).length === 1 ? createGroupsArray(this.props.groups)[0] : null,
-            canEdit: Object.keys(this.props.groups).length === 1 ? checkEditAuth(this.props.createdGroups,createGroupsArray(this.props.groups)[0].memberInfo) : null 
-        });
     }
 
     submitGroupEdits = (removed, added, updated) => {
         const id = getGroupId(this.state.groupData);
-        this.props.requestEditGroup(id,removed,added,updated);
+        this.props.requestEditGroup(id,this.state.modGroupName,removed,added,updated);
         this.close();
         this.props.requestChoreUpdate();
         this.setState({ 
@@ -170,7 +166,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         requestChoreUpdate: () => dispatch(getChores()),
         requestAddChores: (groupID, newChores, emails) => dispatch(addChores(groupID, newChores, emails)),
-        requestEditGroup: (id,removed,added, updated) => dispatch(editGroup(id,removed,added,updated)),
+        requestEditGroup: (id,groupName,removed,added, updated) => dispatch(editGroup(id,groupName,removed,added,updated)),
         requestDeleteGroup: (id) => dispatch(deleteGroup(id)),
         // requestMessages: (groupID) => dispatch(getGroupMessages(groupID))
         // submitMessage: (groupID, message) => dispatch(sendMessage(groupID, message))

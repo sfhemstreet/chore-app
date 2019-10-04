@@ -3,7 +3,7 @@ import TextInput from '../form_components/TextInput';
 import LoadingScreen from '../LoadingScreen/LoadingScreen';
 import regexCheck from '../../utils/regexCheck';
 import {connect} from 'react-redux';
-import {resetPassword, checkForgotPasswordAuth} from '../../actions/settingsActions';
+import {resetPassword} from '../../actions/settingsActions';
 import {withRouter} from 'react-router-dom';
 
 
@@ -14,14 +14,40 @@ class ForgotPassword extends React.Component {
             password: '',
             verifyPW: '',
             verifyRed: false,
-            pwRed: false
+            pwRed: false,
+            authPending: true,
+            id: null
         }
     }
 
     componentDidMount(){
         const {str} = this.props.match.params;
-        console.log(str)
-        this.props.requestCheckAuth(str);
+        // CHECK AUTH - if user doesnt have str in DB redirect to home
+        fetch('http://localhost:4000/checkauthforgotpassword', {
+            method: 'post',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                str
+            })
+        })
+        .then(response => response.json())
+        .then(res => {
+            if(res.success){
+                this.setState({ id: res.id, authPending: false }) ;
+            }
+            else{
+                this.props.history.push('/');
+            }
+        })
+        .catch(error => {
+            console.log('Forgot Password fetch error',error);
+            this.props.history.push('/');
+        });
     }
 
     onChangePW = (input) => {
@@ -50,7 +76,7 @@ class ForgotPassword extends React.Component {
     }
 
     render(){
-        const {pwRed, verifyRed} = this.state;
+        const {pwRed, verifyRed, authPending} = this.state;
         const {isPending, error, success} = this.props;
 
         return(
@@ -58,7 +84,7 @@ class ForgotPassword extends React.Component {
                 <div className='list center mw6 pa3 ma4 ba b--light-silver bg-light-gray br2 shadow-2'>
                     <div className='tc f1 fw2 black-90 mv3' >Reset Password</div>
                     <div className='bt b--black-10 pb2' />
-                    {isPending ? <LoadingScreen /> :
+                    {authPending || isPending ? <LoadingScreen /> :
                     success ? 
                     <div className='tc pa2'> 
                         <fieldset className="ba b--transparent ph0 mh0">
@@ -99,13 +125,13 @@ const mapStateToProps = (state) => {
         isPending: settings.isPending,
         error: settings.passwordChangeError,
         success: settings.success,
-        id: settings.data
+        id: settings.data,
+        auth: settings.auth
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        requestCheckAuth: (str) => dispatch(checkForgotPasswordAuth(str)),
         requestResetPassword: (password, id, str) => dispatch(resetPassword(password,id,str))
     }
 }

@@ -71,7 +71,7 @@ export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
     });
 }
 
-export const editGroup = (groupID, removed, added, updated) => (dispatch) => {
+export const editGroup = (groupID, groupName, removed, added, updated) => (dispatch) => {
     dispatch({type: EDIT_GROUP_PENDING});
     fetch('http://localhost:4000/editgroup', { 
         method: 'PATCH',
@@ -83,6 +83,7 @@ export const editGroup = (groupID, removed, added, updated) => (dispatch) => {
         },
         body: JSON.stringify({
             groupID: groupID,
+            groupName: groupName,
             newMembers : added,
             removedMembers: removed,
             updatedMembers: updated

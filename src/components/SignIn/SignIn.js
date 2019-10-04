@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {NavLink} from 'react-router-dom';
-import {signIn, signOut, forgotPassword} from '../../actions/userActions';
+import {signIn, signOut} from '../../actions/userActions';
+import {forgotPassword} from '../../actions/settingsActions';
 import {withRouter} from 'react-router-dom';
 import randomQuote from '../../utils/choreQuotes';
 import regexCheck from '../../utils/regexCheck';
@@ -11,7 +12,7 @@ class SignIn extends React.Component {
     constructor(props){
         super(props);
 
-        this.props.dispatch(signOut());
+        this.props.requestSignOut();
         
         this.state = {
             signInEmail: '',
@@ -32,7 +33,6 @@ class SignIn extends React.Component {
     // SUBMIT HANDLER
     onSubmitSignIn = (e) => {
         const { signInEmail, signInPassword, highlightRed } = this.state;
-        const { dispatch } = this.props;
         let hlr = [...highlightRed];
 
         if(signInEmail === '' || !regexCheck(signInEmail, 'email'))
@@ -44,7 +44,7 @@ class SignIn extends React.Component {
         this.setState({ highlightRed: hlr });
         
         if(regexCheck(signInEmail, 'email') && regexCheck(signInPassword,'special') && signInPassword !== '' && signInEmail !== '') {
-            dispatch(signIn(signInEmail, signInPassword, this.props.history));
+            this.props.requestSignIn(signInEmail, signInPassword, this.props.history);
         }
     }
     
@@ -55,7 +55,6 @@ class SignIn extends React.Component {
 
     onSubmitForgotPassword = () => {
         const { signInEmail, highlightRed } = this.state;
-        const { dispatch } = this.props;
         let hlr = [...highlightRed];
 
         if(signInEmail === '' || !regexCheck(signInEmail, 'email'))
@@ -64,7 +63,7 @@ class SignIn extends React.Component {
         this.setState({ highlightRed: hlr });
         
         if(regexCheck(signInEmail, 'email') && signInEmail !== '') {
-            dispatch(forgotPassword(signInEmail));
+            this.props.requestForgotPassword(signInEmail);
         }
     }
 
@@ -140,10 +139,19 @@ class SignIn extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const {user} = state;
     return{
-        auth: state.user.auth
+        auth: user.auth
     }
     
 }
 
-export default withRouter(connect(mapStateToProps)(SignIn));
+const mapDispatchToProps = (dispatch) => {
+    return {
+        requestSignIn: (email, password, history) => dispatch(signIn(email,password,history)),
+        requestForgotPassword: (email) => dispatch(forgotPassword(email)),
+        requestSignOut: () => dispatch(signOut())
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignIn));
