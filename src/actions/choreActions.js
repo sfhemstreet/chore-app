@@ -14,7 +14,7 @@ import { SIGN_OUT_USER } from '../constants/user_constants';
 
 export const getChores = () => (dispatch) => {
     dispatch({type: REQUEST_CHORES_PENDING});
-    fetch('http://localhost:4000/getchores', { 
+    fetch(`${process.env.REACT_APP_BACKEND_URL}getchores`, { 
         method: 'get',
         mode: 'cors',
         credentials: 'include',
@@ -43,7 +43,7 @@ export const getChores = () => (dispatch) => {
 export const submitChore = (choreID) => (dispatch) => {
    
     dispatch({type: SUBMIT_CHORE_PENDING});
-    fetch('http://localhost:4000/submitchore', { 
+    fetch(`${process.env.REACT_APP_BACKEND_URL}submitchore`, { 
         method: 'PATCH',
         mode: 'cors',
         credentials: 'include',
@@ -74,9 +74,8 @@ export const submitChore = (choreID) => (dispatch) => {
 }
 
 export const addChores = (groupID, newChores, emails) => (dispatch) =>{
-    console.log('eeeee',emails);
     dispatch({type: ADD_CHORES_PENDING});
-    fetch('http://localhost:4000/addchores', { 
+    fetch(`${process.env.REACT_APP_BACKEND_URL}addchores`, { 
         method: 'POST',
         mode: 'cors',
         credentials: 'include',

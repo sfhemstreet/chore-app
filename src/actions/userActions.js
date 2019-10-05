@@ -7,13 +7,10 @@ import {REQUEST_SIGNIN_PENDING,
         SIGN_OUT_USER,
 } from '../constants/user_constants.js';
 
-import { toast } from "react-toastify";
-
-
 // SIGN IN
 export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
     dispatch({ type: REQUEST_SIGNIN_PENDING })
-    fetch('http://localhost:4000/signin', {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}signin`, {
         method: 'post',
         mode: 'cors',
         credentials: 'include',
@@ -35,13 +32,6 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
         }
         else {
             dispatch({ type: REQUEST_SIGNIN_FAILED, payload: data})
-            toast.error(data, {
-                position: "bottom-center",
-                autoClose: 4000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-                });
         }
     })
     .catch(error => {
@@ -52,9 +42,10 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
 }
 
 // REGISTER
-export const register = (registerName, registerEmail, registerPassword, history) => (dispatch) => {
+export const register = (registerName, registerEmail, registerPassword) => (dispatch) => {
+    console.log(registerEmail)
     dispatch({ type: REQUEST_REGISTER_PENDING })
-    fetch('http://localhost:4000/register', {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}register`, {
         method: 'post',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({
@@ -68,35 +59,13 @@ export const register = (registerName, registerEmail, registerPassword, history)
         console.log(res)
         if(res === 'Success!'){
             dispatch({ type: REQUEST_REGISTER_SUCCESS, payload: res });
-            history.push('/signin');
-            toast.success("Success! Please go to the email we just sent you to verify your account.", {
-                position: "bottom-center",
-                autoClose: 5000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            });
         }
         else {
             dispatch({ type: REQUEST_REGISTER_FAILED, payload: res});
-            toast.error(res, {
-                position: "bottom-center",
-                autoClose: 3000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            });
         }
     })
     .catch(error => {
-        dispatch({ type: REQUEST_REGISTER_FAILED, payload: error});
-        toast.error(error, {
-            position: "bottom-center",
-            autoClose: 3000,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true
-            });
+        dispatch({ type: REQUEST_REGISTER_FAILED });
     }); 
     
 }

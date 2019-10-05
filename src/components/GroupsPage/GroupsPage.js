@@ -55,6 +55,10 @@ class GroupsPage extends React.Component {
         this.props.requestAddChores(id,chores,getEmails(this.state.groupData));
         this.close();
         this.props.requestChoreUpdate();
+        this.setState({ 
+            inFocus: null,
+            canEdit: null 
+        });
     }
 
     submitGroupEdits = (removed, added, updated) => {
@@ -63,8 +67,8 @@ class GroupsPage extends React.Component {
         this.close();
         this.props.requestChoreUpdate();
         this.setState({ 
-            inFocus: Object.keys(this.props.groups).length === 1 ? createGroupsArray(this.props.groups)[0] : null,
-            canEdit: Object.keys(this.props.groups).length === 1 ? checkEditAuth(this.props.createdGroups,createGroupsArray(this.props.groups)[0].memberInfo) : null 
+            inFocus: null,
+            canEdit: null 
         });
     }
 
@@ -95,7 +99,6 @@ class GroupsPage extends React.Component {
                             {member}
                         </div>    
                     </div>
-                    
                 )
             });
 

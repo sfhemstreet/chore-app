@@ -40,7 +40,7 @@ const StatusBar = ({status, timeLeft, isCompleted}) => {
     
     return (
         <div>
-           <div className='status_bar pointer b' style={{color: textColor, background: `linear-gradient(to right, ${urgencyColor} 0%,${urgencyColor} ${status}%,#dddddd ${status}%,#dddddd 100%)`}}>{text}</div> 
+           <div className='status_bar pointer b' style={{color: textColor, background: `linear-gradient(to right, ${urgencyColor} 0%,${urgencyColor} ${100}%,#dddddd ${status}%,#dddddd 100%)`}}>{text}</div> 
         </div>
     )
 }

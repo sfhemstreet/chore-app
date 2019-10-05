@@ -16,6 +16,7 @@ const GroupMember = ({memberInfo}) => {
                 key = {i}
                 num = {i}
                 assignName = {memberName}
+                type = {memberChores[i].type}
                 choreNum = {memberChores[i].chore_id}
                 assignDate = {memberChores[i].assign_date}
                 choreName = {memberChores[i].chore_name} 

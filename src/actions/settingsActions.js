@@ -18,7 +18,7 @@ import { SIGN_OUT_USER } from '../constants/user_constants';
 // CHANGE PASSWORD
 export const changePassword = (oldPW, newPW) => (dispatch) => {
     dispatch({ type: PASSWORD_CHANGE_PENDING })
-    fetch('http://localhost:4000/changepassword', {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}changepassword`, {
         method: 'PATCH',
         mode: 'cors',
         credentials: 'include',
@@ -44,7 +44,7 @@ export const changePassword = (oldPW, newPW) => (dispatch) => {
         }
     })
     .catch(error => {
-        console.log(error);
+        //console.log(error);
         dispatch({ type: PASSWORD_CHANGE_FAILED })
     });
 }
@@ -52,7 +52,7 @@ export const changePassword = (oldPW, newPW) => (dispatch) => {
 // DELETE ACCOUNT
 export const deleteAccount = (password) => (dispatch) => {
     dispatch({ type: DELETE_ACCOUNT_PENDING })
-    fetch('http://localhost:4000/deleteaccount', {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}deleteaccount`, {
         method: 'delete',
         mode: 'cors',
         credentials: 'include',
@@ -77,7 +77,7 @@ export const deleteAccount = (password) => (dispatch) => {
         }
     })
     .catch(error => {
-        console.log(error);
+        //console.log(error);
         dispatch({ type: DELETE_ACCOUNT_FAILED })
     });
 }
@@ -85,7 +85,7 @@ export const deleteAccount = (password) => (dispatch) => {
 // FORGOT PASSWORD
 export const forgotPassword = (email) => (dispatch) => {
     dispatch({ type: FORGOT_PASSWORD_PENDING })
-    fetch('http://localhost:4000/forgotpassword', {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}forgotpassword`, {
         method: 'post',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({
@@ -94,12 +94,11 @@ export const forgotPassword = (email) => (dispatch) => {
     })
     .then(response => response.json())
     .then(res => {
-        console.log(res)
         if(res === 'Success!'){
             dispatch({ type: FORGOT_PASSWORD_SUCCESS });
         }
         else {
-            dispatch({ type: FORGOT_PASSWORD_FAILED });
+            dispatch({ type: FORGOT_PASSWORD_FAILED, payload: res });
         }
     })
     .catch(error => {
@@ -110,7 +109,7 @@ export const forgotPassword = (email) => (dispatch) => {
 // RESET PASSWORD
 export const resetPassword = (password,id,str) => (dispatch) => {
     dispatch({ type: RESET_PASSWORD_PENDING })
-    fetch('http://localhost:4000/resetforgotpassword', {
+    fetch(`${process.env.REACT_APP_BACKEND_URL}resetforgotpassword`, {
         method: 'post',
         mode: 'cors',
         credentials: 'include',

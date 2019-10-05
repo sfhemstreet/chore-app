@@ -5,9 +5,10 @@ import regexCheck from '../../utils/regexCheck';
 import {connect} from 'react-redux';
 import {resetPassword} from '../../actions/settingsActions';
 import {withRouter} from 'react-router-dom';
+import ResetSuccess from './ResetSuccess';
 
 
-class ForgotPassword extends React.Component {
+class ResetPassword extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -23,7 +24,7 @@ class ForgotPassword extends React.Component {
     componentDidMount(){
         const {str} = this.props.match.params;
         // CHECK AUTH - if user doesnt have str in DB redirect to home
-        fetch('http://localhost:4000/checkauthforgotpassword', {
+        fetch(`${process.env.REACT_APP_BACKEND_URL}checkauthforgotpassword`, {
             method: 'post',
             mode: 'cors',
             credentials: 'include',
@@ -45,7 +46,7 @@ class ForgotPassword extends React.Component {
             }
         })
         .catch(error => {
-            console.log('Forgot Password fetch error',error);
+            //console.log('Forgot Password fetch error',error);
             this.props.history.push('/');
         });
     }
@@ -71,13 +72,13 @@ class ForgotPassword extends React.Component {
             this.setState({ pwRed: true, verifyRed: true });
         }
         if(password !== '' && password === verifyPW && regexCheck(password, 'special')){
-            this.props.requestResetPassword(password, this.props.id, str)
+            this.props.requestResetPassword(password, this.state.id, str)
         }
     }
 
     render(){
         const {pwRed, verifyRed, authPending} = this.state;
-        const {isPending, error, success} = this.props;
+        const {isPending, success} = this.props;
 
         return(
             <div className='vh-100 bg-purple dt w-100'>
@@ -86,13 +87,7 @@ class ForgotPassword extends React.Component {
                     <div className='bt b--black-10 pb2' />
                     {authPending || isPending ? <LoadingScreen /> :
                     success ? 
-                    <div className='tc pa2'> 
-                        <fieldset className="ba b--transparent ph0 mh0">
-                            <div className='pa2 center'>
-                                Password Reset! You can now log in with your new password.
-                            </div>
-                        </fieldset>
-                    </div>
+                    <ResetSuccess history={this.props.history} /> 
                     :
                     <div className='tc pa2'>    
                         <fieldset className="ba b--transparent ph0 mh0">
@@ -136,4 +131,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ForgotPassword));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ResetPassword));
