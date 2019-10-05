@@ -22,7 +22,9 @@ const userInitialState = {
     groupAuth: {},
     score: '',
     isPending: false,
-    error: ''
+    registerError: '',
+    signinError: '',
+    registerSuccess: false
 }
 
 // SIGNIN, SIGNOUT, REGISTER, UPDATE CHORES
@@ -40,7 +42,7 @@ export const user = (state = userInitialState, action = {}) => {
                 isPending: false 
             });
         case REQUEST_SIGNIN_FAILED:
-            return Object.assign({}, state, { error: action.payload , auth: 'guest' });
+            return Object.assign({}, state, { signinError: action.payload , auth: 'guest', isPending: false });
         
         // SIGN OUT
         case SIGN_OUT_USER:
@@ -54,24 +56,27 @@ export const user = (state = userInitialState, action = {}) => {
                 groupAuth: {},
                 score: '',
                 isPending: false,
+                signinError: '',
+                registerError: ''
             });
         
         // REGISTER 
         case REQUEST_REGISTER_PENDING:
-            return Object.assign({}, state, { auth: 'guest', isPending: true });
+            return Object.assign({}, state, { auth: 'guest', isPending: true, registerError: '', signinError:'' });
         case REQUEST_REGISTER_SUCCESS:
             return Object.assign({}, state, { 
                 auth: 'guest', 
-                isPending: false
+                isPending: false,
+                registerSuccess: true
             });
         case REQUEST_REGISTER_FAILED:
-            return Object.assign({}, state, { error: action.payload , auth: 'guest', isPending: false });
+            return Object.assign({}, state, { registerError: action.payload , auth: 'guest', isPending: false });
 
         // UPDATE CHORES
         case REQUEST_CHORES_PENDING:
             return Object.assign({}, state, { 
                 isPending: true 
-                });
+            });
         case REQUEST_CHORES_SUCCESS:
             return Object.assign({}, state, { 
                 chores: action.payload.chores,
@@ -79,15 +84,12 @@ export const user = (state = userInitialState, action = {}) => {
                 createdGroups: action.payload.createdGroups,
                 groupAuth: action.payload.auth,
                 isPending: false
-                });
+            });
         case REQUEST_CHORES_FAILED:
-            return Object.assign({}, state, { 
-                error: action.payload, 
+            return Object.assign({}, state, {  
                 isPending: false
-                });
+            });
 
-        
-    
         // DEFAULT
         default:
             return state;

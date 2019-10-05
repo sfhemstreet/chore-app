@@ -12,7 +12,7 @@ import Dash from '../../components/Dash/Dash';
 import CreateNewGroup from '../../components/CreateGroup/CreateNewGroup.js';
 import GroupsPage from '../../components/GroupsPage/GroupsPage.js';
 import Settings from '../../components/Settings/Settings';
-import ForgotPassword from '../../components/ForgotPassword/ForgotPassword';
+import ResetPassword from '../../components/ResetPassword/ResetPassword';
 
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -41,7 +41,7 @@ class App extends React.Component {
           <ProtectedRoute auth={this.props.auth} exact path='/creategroup'  render={() => <CreateNewGroup />}/>
           <ProtectedRoute auth={this.props.auth} exact path='/groups'       render={() => <GroupsPage     />}/>
           <ProtectedRoute auth={this.props.auth} exact path='/settings'     render={() => <Settings       />}/>
-          <Route path='/forgotpassword:str' render={() => <ForgotPassword />}/>
+          <Route path='/resetpassword/:str' render={() => <ResetPassword />}/>
         </Switch>
         <ToastContainer />
       </div>

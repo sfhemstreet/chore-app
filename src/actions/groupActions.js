@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
 
     dispatch({type: CREATE_GROUP_PENDING});
-    fetch('http://localhost:4000/creategroup', { 
+    fetch(`${process.env.REACT_APP_BACKEND_URL}creategroup`, { 
         method: 'POST',
         mode: 'cors',
         credentials: 'include',
@@ -73,7 +73,7 @@ export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
 
 export const editGroup = (groupID, groupName, removed, added, updated) => (dispatch) => {
     dispatch({type: EDIT_GROUP_PENDING});
-    fetch('http://localhost:4000/editgroup', { 
+    fetch(`${process.env.REACT_APP_BACKEND_URL}editgroup`, { 
         method: 'PATCH',
         mode: 'cors',
         credentials: 'include',
@@ -108,7 +108,7 @@ export const editGroup = (groupID, groupName, removed, added, updated) => (dispa
 
 export const deleteGroup = (groupID) => (dispatch) => {
     dispatch({type: DELETE_GROUP_PENDING});
-    fetch('http://localhost:4000/deletegroup', { 
+    fetch(`${process.env.REACT_APP_BACKEND_URL}deletegroup`, { 
         method: 'DELETE',
         mode: 'cors',
         credentials: 'include',

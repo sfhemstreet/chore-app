@@ -8,6 +8,7 @@ class GroupChore extends React.Component {
         super(props);
         this.state = {
             num : this.props.num,
+            type: this.props.type,
             assignName : this.props.assignName,
             assignDate : (new Date(this.props.assignDate)).toDateString(),
             choreName : this.props.choreName,
@@ -26,7 +27,7 @@ class GroupChore extends React.Component {
     
     render(){
         
-        const { assignName, assignDate, choreName, completeDate, description, dueDate, isDone, isPopUp, num} = this.state;
+        const { assignName, assignDate, choreName, completeDate, description, dueDate, isDone, isPopUp, num, type} = this.state;
         const displayDueDate = dueDate.slice(0, dueDate.length - 4);
         // catch chores that are null AKA no chores for this user
         if(this.state.choreName === null){
@@ -48,12 +49,15 @@ class GroupChore extends React.Component {
         // used by popup and status bar
         const now = Date.now();
         const daysLeft = Math.floor((Date.parse(dueDate)/86400000) - (now/86400000)) + 1;
+        // fix this to display percentage out of 5 days 
         const percent = ((now - Date.parse(assignDate)) / (Date.parse(dueDate) - Date.parse(assignDate))) * 100;
+        // type display ie randomly assigned, assigned with exempt, etc
+        let displayType = type === 'R' ? 'Randomly Assigned' : type === 'A' ? 'Explicitly Assigned' : 'Randomly Assigned with one member exempt'; 
         // text when user clicks on chore
         const popUpText = {
             info: 
                 <dl className='lh-title pa4 mt0'>
-                    <dt className='f6 pa1'>Assigned to</dt>
+                    <dt className='f6 pa1'>Member</dt>
                     <dd className='ml0 f4 b pa1'>{assignName}</dd>
                     <dt className='f6 pa1'>Chore Name</dt>
                     <dd className='ml0 f4 b pa1'>{choreName}</dd>
@@ -70,6 +74,7 @@ class GroupChore extends React.Component {
                     : 
                     (<><dt className='f6  mt2 pa1'>Completed On</dt>
                     <dd className='ml0 f4 b pa1' >{completeDate}</dd></>)}
+                    <dt className='f6 pa1'>{displayType}</dt>
                 </dl>
         };
 

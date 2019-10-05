@@ -4,8 +4,6 @@ import ScrollBox from './ScrollBox/ScrollBox';
 const ChoreSelectBox = ({items, click, userChores}) => {
 
     const itemSelected = (item) => {
-        
-        console.log(item)
         click(item);
     }
 

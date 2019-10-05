@@ -19,7 +19,8 @@ const userInitialState = {
     deleteError: '',
     passwordError: '',
     success: false,
-    data: null
+    data: null,
+    forgotPasswordSuccess: false
 }
 
 // SEETINGS - change password
@@ -60,22 +61,23 @@ export const settings = (state = userInitialState, action = {}) => {
             });
 
         // FORGOT PASSWORD
-        case RESET_PASSWORD_PENDING:
+        case FORGOT_PASSWORD_PENDING:
             return Object.assign({}, state, {  
                 isPending: true,
-                passwordError: '' 
+                passwordError: '',
+                forgotPasswordSuccess: false 
             });
-        case RESET_PASSWORD_SUCCESS:
+        case FORGOT_PASSWORD_SUCCESS:
             return Object.assign({}, state, { 
                 isPending: false,
                 passwordError: '',
-                success: true 
+                forgotPasswordSuccess: true 
             });
-        case RESET_PASSWORD_FAILED:
+        case FORGOT_PASSWORD_FAILED:
             return Object.assign({}, state, { 
-                passwordError: 'Unable to perform forgot password' , 
+                passwordError: action.payload || 'Unable to find email.' , 
                 isPending: false,
-                success: false
+                forgotPasswordSuccess: false
             });
 
         // RESET PASSWORD

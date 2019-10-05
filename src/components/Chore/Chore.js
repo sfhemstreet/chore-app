@@ -8,6 +8,7 @@ class Chore extends React.Component {
         super(props);
         this.state = {
             num : this.props.num,
+            type : this.props.type,
             assignDate : (new Date(this.props.assignDate)).toDateString(),
             choreName : this.props.choreName,
             completeDate : this.props.completeDate !== null ? (new Date(this.props.completeDate)).toDateString() : null,
@@ -30,7 +31,7 @@ class Chore extends React.Component {
     
     render(){
         
-        const {assignDate, choreName, completeDate, description, dueDate, groupName, isDone, isPopUp, num} = this.state; 
+        const {assignDate, choreName, completeDate, description, dueDate, groupName, isDone, isPopUp, num, type} = this.state; 
         const displayDueDate = dueDate.slice(0, dueDate.length - 4);
 
         // dont display full chore name if over 25 char
@@ -42,6 +43,9 @@ class Chore extends React.Component {
         const now = Date.now();
         const daysLeft = Math.floor((Date.parse(dueDate)/86400000) - (now/86400000)) + 1;
         const percent = ((now - Date.parse(assignDate)) / (Date.parse(dueDate) - Date.parse(assignDate))) * 100;
+
+        let displayType = type === 'R' ? 'Randomly Assigned' : type === 'A' ? 'Explicitly Assigned' : 'Randomly Assigned with one member exempt'; 
+
         // text when user clicks on chore
         const popUpText = {
             info: 
@@ -64,6 +68,7 @@ class Chore extends React.Component {
                     : 
                     (<><dt className='f6  mt2'>Did this chore?</dt>
                     <dd className="f6 center link dim br3 ph3 pv3 mb2 mt2 dib white bg-green grow pointer" onClick={this.onChoreCompleted} >Submit Chore</dd></>)}
+                    <dt className='f6 '>{displayType}</dt>
                 </dl>
         };
 

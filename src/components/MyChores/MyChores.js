@@ -14,6 +14,7 @@ const MyChores = ({chores, onChoreCompleted}) => {
             <Chore 
                 key = {i}
                 num = {i}
+                type = {organizedChores[i].type}
                 choreNum = {organizedChores[i].chore_id}
                 assignDate = {organizedChores[i].assign_date}
                 choreName = {organizedChores[i].chore_name} 

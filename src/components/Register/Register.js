@@ -3,11 +3,13 @@ import {connect} from 'react-redux';
 import {NavLink,withRouter} from 'react-router-dom';
 import {register, signOut} from '../../actions/userActions';
 import regexCheck from '../../utils/regexCheck';
+import LoadingScreen from '../LoadingScreen/LoadingScreen';
+import RegisterSuccess from './RegisterSuccess';
 
 class Register extends React.Component {
     constructor(props){
         super(props)
-        this.props.dispatch(signOut());
+        this.props.requestSignOut();
         this.state = {
             registerName: '',
             registerEmail: '',
@@ -66,14 +68,15 @@ class Register extends React.Component {
         if(registerName !== '' && registerEmail !== '' && registerPassword !== '' && registerPassword === verifyPassword &&
            regexCheck(registerName, 'special') && regexCheck(registerEmail, 'email') && regexCheck(registerPassword,'special'))
         {
-            this.props.dispatch(register(registerName,registerEmail,registerPassword,this.props.history))
+            this.props.requestRegister(registerName,registerEmail,registerPassword);
         }
         
         this.setState({ highlightRed : hlr })
     }
 
     render(){
-        const {highlightRed} = this.state;
+        const {highlightRed, registerName, registerEmail} = this.state;
+        const {isPending, error, success} = this.props;
 
         return (
             <div className='vh-100 bg-lightest-blue dt w-100'>
@@ -82,7 +85,10 @@ class Register extends React.Component {
                     <div className="pa3 bt b--black-10">
                         <div className="f6 f5-ns lh-copy measure mv0">
                             <main className="pa4 black-80">
+                                {isPending ? <LoadingScreen /> :
+                                success ? <RegisterSuccess email={registerEmail} name={registerName} /> :
                                 <div className="measure center">
+                                    {error ? <div className='red' >{error}</div>  : null}
                                     <fieldset className="ba b--transparent ph0 mh0">
                                     <div className="mt3">
                                         <label className="db fw6 lh-copy f6" >Name</label>
@@ -108,9 +114,8 @@ class Register extends React.Component {
                                         <NavLink to='/signin' >
                                         <p className="f6 link dim black db pointer">Already Registered? Sign In</p>
                                         </NavLink>
-                                        {/*<p href="#0" class="f6 link dim black db">Forgot your password?</p>*/}
                                     </div>
-                                </div>
+                                </div>}
                             </main>
                         </div>
                     </div>
@@ -122,9 +127,19 @@ class Register extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    const {user} = state;
     return {
-        auth: state.user.auth 
+        error: user.registerError,
+        isPending: user.isPending,
+        success: user.registerSuccess 
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Register));
+const mapDispatchToProps = (dispatch) => {
+    return {
+        requestRegister: (registerName,registerEmail,registerPassword) => dispatch(register(registerName,registerEmail,registerPassword)),
+        requestSignOut: () => dispatch(signOut())
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));
