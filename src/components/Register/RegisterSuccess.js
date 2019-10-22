@@ -1,6 +1,7 @@
 import React from 'react';
 
-const RegisterSuccess = ({email, name}) => {
+const RegisterSuccess = ({email, name, history}) => {
+    setTimeout(() => history.push('/signin'), 20000);
     return (
         <div className='tc pa2'> 
             <fieldset className="ba b--transparent ph0 mh0">

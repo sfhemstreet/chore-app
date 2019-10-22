@@ -86,7 +86,7 @@ class Register extends React.Component {
                         <div className="f6 f5-ns lh-copy measure mv0">
                             <main className="pa4 black-80">
                                 {isPending ? <LoadingScreen /> :
-                                success ? <RegisterSuccess email={registerEmail} name={registerName} /> :
+                                success ? <RegisterSuccess email={registerEmail} name={registerName} history={this.props.history}/> :
                                 <div className="measure center">
                                     {error ? <div className='red' >{error}</div>  : null}
                                     <fieldset className="ba b--transparent ph0 mh0">
