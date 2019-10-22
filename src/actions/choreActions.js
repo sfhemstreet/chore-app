@@ -41,7 +41,6 @@ export const getChores = () => (dispatch) => {
 }
 
 export const submitChore = (choreID) => (dispatch) => {
-   
     dispatch({type: SUBMIT_CHORE_PENDING});
     fetch(`${process.env.REACT_APP_BACKEND_URL}submitchore`, { 
         method: 'PATCH',
