@@ -76,7 +76,7 @@ class SignIn extends React.Component {
                                     <main className="pa4 black-80">
                                         {isPending ? <LoadingScreen /> :
                                         <div className="measure center">
-                                            {error ? <div className='red' >{error}</div>  : null}
+                                            {error ? <div className='red' >{str(error)}</div>  : null}
                                             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                                             <div className="mt3">
                                                 <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
