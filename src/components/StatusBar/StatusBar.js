@@ -20,7 +20,7 @@ const StatusBar = ({status, timeLeft, isCompleted}) => {
     }
     // due in 1 or more days
     else{
-        text = `Due in ${timeLeft} days`;
+        text = `Due in ${(timeLeft - 1)} days`;
         // 2 or less days is yellow
         if(timeLeft <= 2){
             urgencyColor = 'yellow';
