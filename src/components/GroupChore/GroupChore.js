@@ -63,7 +63,7 @@ class GroupChore extends React.Component {
                     <dd className='ml0 f4 b pa1'>{choreName}</dd>
                     {description !== null ? 
                     (<><dt className='f6  mt2 pa1'>Description</dt>
-                    <dd className='ml0 f4 b' pa1>{description}</dd></>)
+                    <dd className='ml0 f4 b pa1'>{description}</dd></>)
                     : null}
                     <dt className='f6  mt2 pa1'>Due Date</dt>
                     {percent >= 100 && !isDone ? <dd className='ml0 f4 b red pa1'>{dueDate}</dd> : <dd className='ml0 f4 b pa1'>{dueDate}</dd>}
