@@ -13,7 +13,6 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}signin`, {
         method: 'post',
         mode: 'cors',
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -47,6 +46,7 @@ export const register = (registerName, registerEmail, registerPassword) => (disp
     dispatch({ type: REQUEST_REGISTER_PENDING })
     fetch(`${process.env.REACT_APP_BACKEND_URL}register`, {
         method: 'post',
+        mode: 'cors',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify({
             email: registerEmail,
