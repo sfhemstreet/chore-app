@@ -12,7 +12,7 @@ import {
 
 import {SIGN_OUT_USER} from '../constants/user_constants.js';
 
-import { toast } from "react-toastify";
+
 
 export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
 
@@ -22,6 +22,7 @@ export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
         mode: 'cors',
         credentials: 'include',
         headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('_auth_')}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
@@ -35,13 +36,6 @@ export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
     .then(res => {
         if(res === 'Group Created'){
             dispatch({ type: CREATE_GROUP_SUCCESS });
-            toast.success('Created New Group!', {
-                position: "bottom-center",
-                autoClose: 2000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            });
             history.push('/dash');
             localStorage.clear();
         }
@@ -50,24 +44,10 @@ export const submitCreatedGroup = (groupInfo, history) => (dispatch) => {
         }
         else {
             dispatch({ type: CREATE_GROUP_FAILED , payload: res});
-            toast.error('failed', {
-                position: "bottom-center",
-                autoClose: 2000,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true
-            });
         }
     })
     .catch(error => {
         dispatch({ type: CREATE_GROUP_FAILED , payload: error});
-        toast.error('failed', {
-            position: "bottom-center",
-            autoClose: 2000,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true
-        });
     });
 }
 
@@ -78,6 +58,7 @@ export const editGroup = (groupID, groupName, removed, added, updated) => (dispa
         mode: 'cors',
         credentials: 'include',
         headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('_auth_')}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
@@ -113,6 +94,7 @@ export const deleteGroup = (groupID) => (dispatch) => {
         mode: 'cors',
         credentials: 'include',
         headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('_auth_')}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },

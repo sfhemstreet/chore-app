@@ -17,7 +17,8 @@ class ResetPassword extends React.Component {
             verifyRed: false,
             pwRed: false,
             authPending: true,
-            id: null
+            id: null,
+            auth: null
         }
     }
 
@@ -39,7 +40,7 @@ class ResetPassword extends React.Component {
         .then(response => response.json())
         .then(res => {
             if(res.success){
-                this.setState({ id: res.id, authPending: false }) ;
+                this.setState({ id: res.id, auth: res.auth, authPending: false }) ;
             }
             else{
                 this.props.history.push('/');
@@ -72,7 +73,7 @@ class ResetPassword extends React.Component {
             this.setState({ pwRed: true, verifyRed: true });
         }
         if(password !== '' && password === verifyPW && regexCheck(password, 'special')){
-            this.props.requestResetPassword(password, this.state.id, str)
+            this.props.requestResetPassword(password, this.state.id, this.state.auth, str)
         }
     }
 
@@ -127,7 +128,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        requestResetPassword: (password, id, str) => dispatch(resetPassword(password,id,str))
+        requestResetPassword: (password, id, auth, str) => dispatch(resetPassword(password,id,auth,str))
     }
 }
 

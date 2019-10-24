@@ -23,6 +23,7 @@ export const changePassword = (oldPW, newPW) => (dispatch) => {
         mode: 'cors',
         credentials: 'include',
         headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('_auth_')}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
@@ -57,6 +58,7 @@ export const deleteAccount = (password) => (dispatch) => {
         mode: 'cors',
         credentials: 'include',
         headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('_auth_')}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
@@ -107,13 +109,14 @@ export const forgotPassword = (email) => (dispatch) => {
 }
 
 // RESET PASSWORD
-export const resetPassword = (password,id,str) => (dispatch) => {
+export const resetPassword = (password,id,auth,str) => (dispatch) => {
     dispatch({ type: RESET_PASSWORD_PENDING })
     fetch(`${process.env.REACT_APP_BACKEND_URL}resetforgotpassword`, {
         method: 'post',
         mode: 'cors',
         credentials: 'include',
         headers: {
+            'Authorization': `Bearer ${auth}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
