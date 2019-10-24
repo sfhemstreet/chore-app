@@ -19,6 +19,7 @@ export const getChores = () => (dispatch) => {
         mode: 'cors',
         credentials: 'include',
         headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('_auth_')}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         }
@@ -47,6 +48,7 @@ export const submitChore = (choreID) => (dispatch) => {
         mode: 'cors',
         credentials: 'include',
         headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('_auth_')}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
@@ -79,6 +81,7 @@ export const addChores = (groupID, newChores, emails) => (dispatch) =>{
         mode: 'cors',
         credentials: 'include',
         headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('_auth_')}`,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },

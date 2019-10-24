@@ -13,18 +13,8 @@ import CreateNewGroup from '../../components/CreateGroup/CreateNewGroup.js';
 import GroupsPage from '../../components/GroupsPage/GroupsPage.js';
 import Settings from '../../components/Settings/Settings';
 import ResetPassword from '../../components/ResetPassword/ResetPassword';
-
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-
 import ProtectedRoute from '../../components/ProtectedRoute';
 
-toast.configure({
-  position:"bottom-center",
-  autoClose:2000,
-  newestOnTop:false,
-  rtl:false
-})
 
 class App extends React.Component {
   
@@ -43,7 +33,6 @@ class App extends React.Component {
           <ProtectedRoute auth={this.props.auth} exact path='/settings'     render={() => <Settings       />}/>
           <Route path='/resetpassword/:str' render={() => <ResetPassword />}/>
         </Switch>
-        <ToastContainer />
       </div>
     )
   }

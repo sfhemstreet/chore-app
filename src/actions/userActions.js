@@ -27,6 +27,7 @@ export const signIn = (signInEmail, signInPassword, history) => (dispatch) => {
     .then(data => {
         //console.log(data)
         if(data.userData){
+            sessionStorage.setItem('_auth_',data.auth)
             dispatch({ type: REQUEST_SIGNIN_SUCCESS, payload: data });
             history.push('/dash');
         }
@@ -73,6 +74,7 @@ export const register = (registerName, registerEmail, registerPassword) => (disp
 
 // SIGN OUT
 export const signOut = () => (dispatch) => {
+    sessionStorage.clear();
     dispatch({ type: SIGN_OUT_USER });
 };
 
